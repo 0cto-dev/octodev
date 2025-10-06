@@ -1,34 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OctoDev
 
-## Getting Started
+**OctoDev** é um aplicativo web educacional voltado ao ensino de **programação** por meio de uma abordagem **gamificada, dinâmica e acessível**.  
+Inspirado em plataformas de ensino Gamificado, o OctoDev transforma o aprendizado de linguagens de programação em uma experiência **envolvente e interativa**, unindo **teoria, prática e suporte em tempo real**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Descrição
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O **OctoDev** tem como missão tornar o aprendizado de programação acessível a todos os públicos — desde iniciantes até desenvolvedores intermediários — utilizando **recursos interativos, desafios e recompensas** para manter o engajamento e promover o aprendizado contínuo.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+As lições são curtas, diretas e organizadas em **Árvores de habilidades**, permitindo acompanhar o progresso de forma intuitiva.  
+Cada módulo combina **explicações teóricas**, **exercícios práticos** e **feedback imediato**, criando um ciclo de aprendizado completo e eficiente.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Aprendizado Gamificado** — Avance em trilhas, complete desafios e conquiste medalhas.
+- **Suporte com IA Integrada** — Tire dúvidas em tempo real com o auxílio de uma inteligência artificial.
+- **Lições Teóricas e Práticas** — Exercícios curtos e diretos baseados em situações reais de desenvolvimento.
+- **Sistema de Progresso e Recompensas** — Acompanhe sua evolução e ganhe pontos conforme aprende.
+- **Fornecimento de Certificados** — Ganhe certificados ao concluir cada curso.
+- **Multilíngue em Programação** — Suporte a diversas linguagens, incluindo:
+  - C
+  - C++
+  - C#
+  - Rust
+  - PHP
+  - Python
+  - JavaScript
+- **Conteúdos Extras**
+  - Lógica de programação usando a linguagem **Tenda**
+  - Banco de dados
+  - Tutoriais em vídeo
+  - Rankings e conquistas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Público-Alvo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+O **OctoDev** é ideal para:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Iniciantes** — que estão dando seus primeiros passos no mundo da programação.  
+- **Intermediários** — que desejam aprofundar seus conhecimentos com foco prático e desafios reais.  
+
+---
+
+## Tecnologias (previstas)
+
+- **Back-end/Front-end:** Next.js / React  
+- **Banco de dados:** MongoDB  
+- **IA Integrada:** Hugging Face / OpenRouter
+
+---
+
+## Status do Projeto
+ **Em desenvolvimento** — novas funcionalidades e melhorias estão sendo implementadas.
+
+---
+
+## Contribuições
+
+Contribuições são bem-vindas!  
+Sinta-se à vontade para abrir uma **issue** ou enviar um **pull request** com sugestões, correções ou novas ideias.
+
+---
+
+## Teste e modifique na sua máquina
+    git clone https://github.com/0cto-dev/octodev.git
+    cd octodev
+    npm i
+    npm run dev
+
+## Contato
+
+Caso queira saber mais sobre o projeto ou colaborar, entre em contato:  
+
+**Renan Rodrigues**  
+- *[renanrdemeneses@gmail.com](mailto:renanrdemeneses@gmail.com)*  
+
+**Pedro Henrique**  
+ - *[presendegomes@gmail.com](mailto:presendegomes@gmail.com)* 
+
+**Gabriel Chagas**  
+ - *[gabrielch.anzolini@gmail.com](mailto:gabrielch.anzolini@gmail.com)* 
+---
+
+
+# Parcerias e Agradecimentos
+ Como parte do nosso plano de ensino, usamos o [Tenda](https://github.com/gabrielbrunop/tenda), uma linguagem 100% brasileira, com foco em simplicidade, mordernidade e facilitar o estudo de programação para brasileiros!
