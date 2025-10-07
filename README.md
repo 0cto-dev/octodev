@@ -88,4 +88,5 @@ Caso queira saber mais sobre o projeto ou colaborar, entre em contato:
 
 
 # Parcerias e Agradecimentos
- Como parte do nosso plano de ensino, usamos [Tenda] (https://github.com/gabrielbrunop/tenda), uma linguagem 100% brasileira, com foco em simplicidade, mordernidade e facilitar o estudo de programação para brasileiros!Por isso gostaríamos de agradecer o criador (Gabriel Bruno) por permiter e nos auxiliar nesse nosso projeto. 
+ Como parte do nosso plano de ensino, usamos [Tenda] (https://github.com/gabrielbrunop/tenda), uma linguagem 100% brasileira, com foco em simplicidade, mordernidade e facilitar o estudo de programação para brasileiros!
+ Por isso gostaríamos de agradecer o criador (Gabriel Bruno) por permitir e nos auxiliar no nosso projeto. 
