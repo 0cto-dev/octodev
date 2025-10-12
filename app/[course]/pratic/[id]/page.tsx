@@ -18,7 +18,7 @@ export default async function Home({ params }: HomeProps) {
     const actualLesson = 6
     const completedLessons = actualLesson-1
     const lessonProgress = (completedLessons/totalLessons)*100
-    console.log(lessonProgress)
+    
     if (!course || !id) error = true
 
     const data = await getLesson(course, id);
