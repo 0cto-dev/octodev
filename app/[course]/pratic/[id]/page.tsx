@@ -1,9 +1,11 @@
 'use client';
 import { IoMdTime } from 'react-icons/io';
+import { FaArrowLeftLong } from "react-icons/fa6";
+
 import './page.css';
 import React, { useEffect, useState } from 'react';
 import { lessonType, paramsType } from '@/types/types';
-import { fetchData } from './fechData';
+import { fetchData } from './lessonsData';
 
 const errorFetch: lessonType = {
     id: ' ',
@@ -30,6 +32,9 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
         <main>
             <nav>
                 <div className="left">
+                    <div className="exit">
+                        <FaArrowLeftLong size={22} />
+                    </div>
                     <div className="description">
                         <h1>{data.titulo}</h1>
                         <p>{data.descricao}</p>
