@@ -41,7 +41,7 @@ body,html{
 }
 
 main{
-    width: 70%;
+    width:80%;
     height: 80%;
     padding: 20px;
     background: var(--card);
