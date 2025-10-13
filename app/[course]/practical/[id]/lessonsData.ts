@@ -8,7 +8,7 @@ async function getLesson(course: string, id: string): Promise<lessonType> {
 		return exerciseData;
 	} catch (error) {
 		console.log(error)
-		console.log('Voce esta numa versão de teste, provavelmente clonou o repositorio do github, certo? experimente criar seus proprios exercicios, criando uma pasta chamada "date" na raiz do projeto e faça o seguinte aninhamento: date>practical>[nome do curso que deseja criar os exercicios]/lessons.json, caso precise de uma base, aqui esta:')
+		console.log('Voce esta numa versão de teste, provavelmente clonou o repositorio do github, certo? experimente criar seus proprios exercicios, criando uma pasta chamada "data" na raiz do projeto e faça o seguinte aninhamento: date>practical>[nome do curso que deseja criar os exercicios]/lessons.json, caso precise de uma base, aqui esta:')
 		console.log(`COPIE E COLE NO "lessons.json" QUE VOCE CRIOU: \n${JSON.stringify(fakeData)}`)
 		return fakeData[1];
 	}
