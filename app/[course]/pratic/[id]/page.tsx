@@ -1,36 +1,43 @@
 'use client';
 import './page.css';
 import React, { useEffect, useState } from 'react';
-import { lessonType, paramsType } from '@/types/types';
+import { alternativasType, errorFetch, lessonType, paramsType } from '@/types/types';
 import { fetchData } from './lessonsData';
 import NavBar from './NavBar';
+import shuffle from './shuffler';
 
-const errorFetch: lessonType = {
-    id: ' ',
-    titulo: ' ',
-    descricao: '  ',
-    exercicios: [],
-};
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
-    const [course, setCourse] = useState('');
-    const [id, setId] = useState('');
-    const [data, setData] = useState<lessonType>(errorFetch);
-    const totalLessons = 10;
-    const currentLesson = 7;
-    const completedLessons = currentLesson - 1;
-    const lessonProgress = (completedLessons / totalLessons) * 100;
+    const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType, });
+    const [loaded, setLoaded] = useState(false)
+    const totalExercises = lesson.data.exercicios.length;
+    const currentExercise = 1;
+    const completedExercises = currentExercise - 1;
+    const lessonProgress = (completedExercises / totalExercises) * 100;
     const paramsObj = React.use(params);
 
     useEffect(() => {
-        fetchData(paramsObj, { setCourse, setId, setData });
-    }, [course, id, paramsObj]);
+        fetchData(paramsObj, setLesson, setLoaded);
+    }, [paramsObj]);
 
-    if (!data) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>
-
+    const shuffledAlternatives = loaded? shuffle(lesson.data.exercicios[currentExercise - 1].alternativas) as alternativasType[]:[];
+    if (!lesson.data) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>
+    if (!lesson.data.exercicios) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>
     return (
-        <main>
-            <NavBar data={data} currentLesson={currentLesson} totalLessons={totalLessons} lessonProgress={lessonProgress} />
-        </main>
-    );
+loaded&&<main>
+            <NavBar data={lesson.data} currentExercise={currentExercise} totalExercises={totalExercises} lessonProgress={lessonProgress} />
+            <section>
+                <h1>{lesson.data.exercicios[currentExercise - 1].pergunta}</h1>
+                <div className="options">
+                    {shuffledAlternatives.map((option) => {
+                        return (<button key={option.id} >{option.valor}</button>)
+                    })}
+                </div>
+            </section>
+            <footer>
+                <button>
+                    Verificar
+                </button>
+            </footer>
+        </main>);
 }

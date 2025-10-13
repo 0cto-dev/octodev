@@ -11,6 +11,7 @@
   --error: oklch(0.577 0.245 27.325);/* error color */
   --input: oklch(0.25 0.04 285);/* inputs color */
   --magenta: oklch(0.55 0.22 320);/* magenta */
+  --red: oklch(58.305% 0.23863 28.392 / 0.764);/* error color */
   --blue: oklch(0.7 0.15 270);/* blue */
   --green: oklch(0.7 0.2 180);/* green */
   --orange: oklch(0.75 0.18 60);/* orange */
@@ -26,6 +27,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    line-height: 1.6;
 
 }
 
@@ -42,7 +44,7 @@ body,html{
 
 main{
     width:80%;
-    height: 80%;
+    min-height: 80%;
     padding: 20px;
     background: var(--card);
     border-radius: 15px;

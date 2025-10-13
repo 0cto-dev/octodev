@@ -1,4 +1,5 @@
 import { lessonType, paramsType, Setters } from '@/types/types';
+import { Dispatch, SetStateAction } from 'react';
 
 
 async function getLesson(course: string, id: string): Promise<lessonType> {
@@ -8,13 +9,11 @@ async function getLesson(course: string, id: string): Promise<lessonType> {
 }
 
 
-export const fetchData = async (params: paramsType, { setCourse, setId, setData }: Setters) => {
+export const fetchData = async (params: paramsType, setLesson: Setters, setLoaded: Dispatch<SetStateAction<boolean>>) => {
 	const courseValue = await params.course;
-	setCourse(courseValue);
 	const idValue = await params.id;
-	setId(idValue);
-
+	
 	const dataValue = await getLesson(courseValue, idValue);
-	setData(dataValue);
-
+	setLesson({course: courseValue, id: idValue, data: dataValue})
+	setLoaded(true)
 };

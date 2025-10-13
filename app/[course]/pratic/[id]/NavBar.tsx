@@ -1,11 +1,13 @@
 import { lessonType } from "@/types/types"
 import { FaArrowLeftLong } from "react-icons/fa6"
 import { IoMdTime } from "react-icons/io"
+import { GoHeartFill } from "react-icons/go";
 
-export default function NavBar({ data, currentLesson, totalLessons, lessonProgress }: {
+
+export default function NavBar({ data, currentExercise, totalExercises, lessonProgress }: {
     data: lessonType,
-    currentLesson: number,
-    totalLessons: number,
+    currentExercise: number,
+    totalExercises: number,
     lessonProgress: number
 }) {
     return (
@@ -20,15 +22,22 @@ export default function NavBar({ data, currentLesson, totalLessons, lessonProgre
                 </div>
             </div>
             <div className="right">
+
+                <div className="lives">
+                    <p>5</p>
+                    <GoHeartFill color="var(--red)" size={20} />
+                </div>
                 <div className="progress">
                     <p>
-                        <span className="purple">Questão {currentLesson}</span> de {totalLessons}
+                        <span className="purple">Questão {currentExercise}</span> de {totalExercises}
                     </p>
                 </div>
+
                 <div className="timer">
                     <IoMdTime size={20} />
                     <p>05:00</p>
                 </div>
+
             </div>
             <div
                 className="progress-bar"
