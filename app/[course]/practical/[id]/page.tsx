@@ -10,17 +10,17 @@ import shuffle from './shuffler';
 export default function Home({ params }: { params: Promise<paramsType> }) {
     const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType, });
     const [loaded, setLoaded] = useState(false)
-    const totalExercises = lesson.data.exercicios.length;
-    const currentExercise = 1;
-    const completedExercises = currentExercise - 1;
-    const lessonProgress = (completedExercises / totalExercises) * 100;
     const paramsObj = React.use(params);
-
+    
     useEffect(() => {
         fetchData(paramsObj, setLesson, setLoaded);
     }, [paramsObj]);
-
-    const shuffledAlternatives = loaded? shuffle(lesson.data.exercicios[currentExercise - 1].alternativas) as alternativasType[]:[];
+    
+    const totalExercises = lesson.data?.exercicios.length;
+    const currentExercise = 1;
+    const completedExercises = currentExercise - 1;
+    const lessonProgress = (completedExercises / totalExercises) * 100;
+    const shuffledAlternatives = loaded? shuffle(lesson.data?.exercicios[currentExercise - 1]?.alternativas||[]) as alternativasType[]:[];
     if (!lesson.data) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>
     if (!lesson.data.exercicios) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>
     return (
