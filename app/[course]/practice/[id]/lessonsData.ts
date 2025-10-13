@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 async function getLesson(course: string, id: string): Promise<lessonType> {
 	try {
-		const data = await import(`@/data/${course}/practical/lessons.json`);
+		const data = await import(`@/data/${course}/practice/lessons.json`);
 		const exerciseData = data.default.find((ex: lessonType) => ex.id == id);
 		return exerciseData;
 	} catch (error) {
