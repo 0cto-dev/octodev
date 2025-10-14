@@ -12,21 +12,22 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [loaded, setLoaded] = useState(false);
 	const [exercise, setExercise] = useState({
 		selectedAlternative: { id: 0, valor: '', correto: false } as alternativasType,
-		currentExercise: 11,
+		currentExercise: 1,
 		completedExercises: 0,
 		exerciseStatus: '',
 	});
 	const shuffledAlternatives = useMemo(() => {
-        console.log(exercise.currentExercise > lesson.data.exercicios.length)
+		console.log(exercise.currentExercise > lesson.data.exercicios.length);
 		setExercise(exercise => ({
 			...exercise,
-			currentExercise: loaded&&exercise.currentExercise > lesson.data.exercicios.length ? 1 : exercise.currentExercise,
+			currentExercise:
+				loaded && exercise.currentExercise > lesson.data.exercicios.length ? 1 : exercise.currentExercise,
 		}));
 		setExercise(exercise => ({ ...exercise, completedExercises: exercise.currentExercise - 1 }));
 
 		//sempre o numero de exercicios completos vai ser o valor de exercicio atual menos 1
 		return shuffle(lesson.data?.exercicios[exercise.currentExercise - 1]?.alternativas || []) as alternativasType[];
-	}, [lesson.data, exercise.currentExercise,loaded]);
+	}, [lesson.data, exercise.currentExercise, loaded]);
 
 	useEffect(() => {
 		fetchData(params, setLesson, setLoaded);
@@ -50,7 +51,12 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		loaded && (
 			<main
 				className={exercise.exerciseStatus}
-				onAnimationEnd={() => setExercise(exercise => ({ ...exercise, exerciseStatus: '' }))}
+				onAnimationEnd={() =>
+					setExercise(exercise => ({
+						...exercise,
+						exerciseStatus: exercise.exerciseStatus === 'wrong' ? '' : exercise.exerciseStatus,
+					}))
+				}
 			>
 				<NavBar
 					data={lesson.data}
@@ -60,7 +66,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				/>
 				<LessonSection
 					lesson={lesson}
-                    exerciseStatus={exercise.exerciseStatus}
+					exerciseStatus={exercise.exerciseStatus}
 					setExercise={setExercise}
 					exercise={exercise}
 					shuffledAlternatives={shuffledAlternatives}

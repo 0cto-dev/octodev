@@ -5,16 +5,12 @@ body {
 	10% {
 		border: 2px solid var(--red);
 	}
-	20% {
-		transform: rotate(0.7deg);
-	}
-	40% {
-		transform: rotate(-0.7deg);
-	}
+	20%,
 	60% {
 		transform: rotate(0.7deg);
 	}
-	80% {
+	80%,
+	40% {
 		transform: rotate(-0.7deg);
 	}
 	100% {
@@ -22,6 +18,27 @@ body {
 		transform: rotate(0.7deg);
 	}
 }
+@keyframes fall {
+  0%   { transform: translateY(0); opacity: 1; }
+  10%  { transform: translateY(6px); opacity: 1; }
+  20%  { transform: translateY(24px); opacity: 1; }
+  30%  { transform: translateY(54px); opacity: 1; }
+  40%  { transform: translateY(96px); opacity: 1; }
+  50%  { transform: translateY(150px); opacity: 1; }
+  60%  { transform: translateY(216px); opacity: 1; }
+  70%  { transform: translateY(294px); opacity: 0.66; }
+  80%  { transform: translateY(384px); opacity: 0.33; }
+  90%  { transform: translateY(486px); opacity: 0.15; }
+  100% { transform: translateY(600px); opacity: 0; }
+}
+
+
+@keyframes rotate {
+    100%{
+        transform: rotate(0deg);
+    }    
+}
+
 main {
 	display: flex;
 	flex-direction: column;
@@ -29,6 +46,7 @@ main {
 	&.wrong {
 		animation: wrong 0.8s linear 2 alternate;
 	}
+
 	&.correct {
 		button {
 			background-color: var(--green);
@@ -190,4 +208,12 @@ section button {
 		transform: scale(1.03);
 		box-shadow: 0 0 10px var(--primary);
 	}
+}
+
+div.wrong{
+    animation: 1s linear forwards fall;
+    button.wrong{
+    animation: 1s linear reverse rotate;
+        
+    }
 }
