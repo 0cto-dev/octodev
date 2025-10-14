@@ -1,6 +1,6 @@
 import { LessonSectionType } from "@/types/types"
 
-export default function LessonSection({ lesson, setExercise, exercise, shuffledAlternatives }: LessonSectionType) {
+export default function LessonSection({ lesson,exerciseStatus, setExercise, exercise, shuffledAlternatives }: LessonSectionType) {
     return (
         <section>
             <h1>{lesson.data.exercicios[exercise.currentExercise - 1].pergunta}</h1>
@@ -9,7 +9,7 @@ export default function LessonSection({ lesson, setExercise, exercise, shuffledA
                     return (
                         <button
                             key={option.id}
-                            onClick={() => setExercise(prev => ({ ...prev, selectedAlternative: option }))}
+                            onClick={() => exerciseStatus!="correct"&&setExercise(prev => ({ ...prev, selectedAlternative: option }))}
                             className={option.id === exercise.selectedAlternative.id ? "selected" : ''}
                         >
                             {option.valor}

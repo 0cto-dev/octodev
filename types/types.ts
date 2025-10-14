@@ -29,6 +29,7 @@ export type LessonSectionType = {
 		id: string;
 		data: lessonType;
 	};
+    exerciseStatus:string
 	setExercise: React.Dispatch<
 		SetStateAction<{
 			selectedAlternative: alternativasType;
