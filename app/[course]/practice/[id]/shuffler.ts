@@ -1,5 +1,5 @@
 export default function shuffle(array:unknown[]) {
-  const newArray = [...array] ;
+  const newArray = [...array];
   let i = array.length;
 
   while (i != 0) {

@@ -23,6 +23,25 @@ export type lessonType = {
 };
 export type Setters = Dispatch<SetStateAction<{ course: string; id: string; data: lessonType }>>;
 
+export type LessonSectionType = {
+    lesson: {
+        course: string;
+        id: string;
+        data: lessonType;
+    },
+    setExercise: React.Dispatch<SetStateAction<{
+        selectedAlternative: alternativasType;
+        currentExercise: number;
+        completedExercises: number;
+    }>>,
+    exercise: {
+        selectedAlternative: alternativasType;
+        currentExercise: number;
+        completedExercises: number;
+    },
+    shuffledAlternatives:alternativasType[]
+}
+
 export const errorFetch: lessonType = {
 	id: ' ',
 	titulo: ' ',
@@ -41,6 +60,7 @@ export const errorFetch: lessonType = {
 		},
 	],
 };
+
 export const fakeData = [
 	{
 		id: 'lesson1',

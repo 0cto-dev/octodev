@@ -109,6 +109,9 @@ main {
                 &:hover {
                     background: var(--primary);
                 }
+                &.selected{
+                    background-color: var(--primary);
+                }
             }
         }
     }

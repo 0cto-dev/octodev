@@ -15,12 +15,13 @@ async function getLesson(course: string, id: string): Promise<lessonType> {
 }
 
 export const fetchData = async (
-	params: paramsType,
+	params: Promise<paramsType>,
 	setLesson: Setters,
 	setLoaded: Dispatch<SetStateAction<boolean>>
 ) => {
-	const courseValue = await params.course;
-	const idValue = await params.id;
+	const paramsObj = await params;
+	const courseValue = await paramsObj.course;
+	const idValue = await paramsObj.id;
 
 	const dataValue = await getLesson(courseValue, idValue);
 	setLesson({ course: courseValue, id: idValue, data: dataValue });
