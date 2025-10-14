@@ -51,7 +51,7 @@ main {
 		button {
 			background-color: var(--green);
 			&:hover {
-				background: color-mix(in srgb, var(--accent) 80%, var(--background));
+				background: color-mix(in srgb, var(--green) 80%, var(--background));
 			}
 		}
 	}
