@@ -24,23 +24,27 @@ export type lessonType = {
 export type Setters = Dispatch<SetStateAction<{ course: string; id: string; data: lessonType }>>;
 
 export type LessonSectionType = {
-    lesson: {
-        course: string;
-        id: string;
-        data: lessonType;
-    },
-    setExercise: React.Dispatch<SetStateAction<{
-        selectedAlternative: alternativasType;
-        currentExercise: number;
-        completedExercises: number;
-    }>>,
-    exercise: {
-        selectedAlternative: alternativasType;
-        currentExercise: number;
-        completedExercises: number;
-    },
-    shuffledAlternatives:alternativasType[]
-}
+	lesson: {
+		course: string;
+		id: string;
+		data: lessonType;
+	};
+	setExercise: React.Dispatch<
+		SetStateAction<{
+			selectedAlternative: alternativasType;
+			currentExercise: number;
+			completedExercises: number;
+			exerciseStatus: string;
+		}>
+	>;
+	exercise: {
+		selectedAlternative: alternativasType;
+		currentExercise: number;
+		completedExercises: number;
+		exerciseStatus: string;
+	};
+	shuffledAlternatives: alternativasType[];
+};
 
 export const errorFetch: lessonType = {
 	id: ' ',
@@ -88,7 +92,7 @@ export const fakeData = [
 				id: 'ex001',
 				pergunta: 'Qual é a forma correta de escrever "Hello World" utilizando a Linguagem Tenda?',
 				alternativas: [
-					{ id: 1, valor: 'mostar("Hello World")', correto: false },
+					{ id: 1, valor: 'mostrar("Hello World")', correto: false },
 					{ id: 2, valor: 'exiba("Hello World")', correto: true },
 					{ id: 3, valor: 'escreva("Hello World")', correto: false },
 					{ id: 4, valor: 'print("Hello World")', correto: false },

@@ -6,6 +6,7 @@
   --card: oklch(0.16 0.03 285);/* lighter color for background items */
   --primary: oklch(0.65 0.25 285);/* main color for the app */
   --secondary: oklch(0.22 0.04 285);/* idk */
+  --primary-gradient: linear-gradient(90deg, #00f, #a0f);
   --accent: oklch(0.55 0.22 320);/* bright color for enphasis situations */
   --disabled-foreground: oklch(0.65 0.02 285);/* darker color for disabled effect or darker texts */
   --error: oklch(0.577 0.245 27.325);/* error color */

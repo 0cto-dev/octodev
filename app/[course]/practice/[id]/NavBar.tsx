@@ -13,9 +13,9 @@ export default function NavBar({ data, currentExercise, totalExercises, lessonPr
     return (
         <nav>
             <div className="left">
-                <div className="exit">
+                <button className="exit">
                     <FaArrowLeftLong size={20} />
-                </div>
+                </button>
                 <div className="description">
                     <h1>{data.titulo}</h1>
                     <p>{data.descricao}</p>
@@ -42,9 +42,18 @@ export default function NavBar({ data, currentExercise, totalExercises, lessonPr
             <div
                 className="progress-bar"
                 style={{
-                    background: `linear-gradient(90deg, var(--primary) ${lessonProgress}%, var(--input) ${lessonProgress}%)`,
+                    background: `
+                        linear-gradient(
+                            90deg,
+                            var(--primary), 
+                            color-mix(in srgb, var(--accent)70% ,var(--primary)) 
+                        ),
+                        var(--input)
+                        `,
+                    backgroundSize: `${lessonProgress}% 100%, 100% 100%`,
+                    backgroundRepeat: 'no-repeat',
                 }}
-            ></div>
+            ></div>{/* create am gradient effect on progress bar */}
         </nav>
     )
 }
