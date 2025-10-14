@@ -17,7 +17,6 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		exerciseStatus: '',
 	});
 	const shuffledAlternatives = useMemo(() => {
-		console.log(exercise.currentExercise > lesson.data.exercicios.length);
 		setExercise(exercise => ({
 			...exercise,
 			currentExercise:

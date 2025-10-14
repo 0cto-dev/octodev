@@ -14,7 +14,7 @@ export default function LessonSection({
 				{shuffledAlternatives.map(option => {
 					const buttonIsWrong = exerciseStatus === 'correct' && !option.correto;
 					return (
-						<div key={option.id} className={buttonIsWrong ? 'wrong' : 'correct'}>
+						<div key={option.id} className={buttonIsWrong ? 'wrong' : ''}>
 							<button
 								key={option.id}
 								onClick={() =>
@@ -22,9 +22,16 @@ export default function LessonSection({
 									setExercise(prev => ({ ...prev, selectedAlternative: option }))
 								}
 								className={`${option.id === exercise.selectedAlternative.id ? 'selected' : ''} ${
-									buttonIsWrong ? 'wrong' : 'correct'
+									buttonIsWrong ? 'wrong' : ''
 								}`}
-                                style={{transform:`${buttonIsWrong?`rotate(${Math.random()*500}deg)`:''}`}}
+                                style={{
+                                    transform:`${buttonIsWrong?`rotate(${Math.random()*500}deg)`:`${
+                                        exerciseStatus === 'correct'&&!buttonIsWrong?'translate(-50%,-150%)':'initial'
+                                    }`}`,
+                                    position:`${exerciseStatus === 'correct'&&!buttonIsWrong?'absolute':'static'}`,
+                                    top:`${exerciseStatus === 'correct'&&!buttonIsWrong?'50%':'initial'}`,
+                                    left:`${exerciseStatus === 'correct'&&!buttonIsWrong?'50%':'initial'}`,
+                                }}
 							>
 								{option.valor}
 							</button>
