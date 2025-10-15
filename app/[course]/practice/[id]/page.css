@@ -1,5 +1,5 @@
 body {
-	background: radial-gradient(circle at 30% 30%, #181825, #0b0b13);
+	background: radial-gradient(circle,var(--background) 80%,#000 150%);
 }
 @keyframes wrong {
 	10% {
