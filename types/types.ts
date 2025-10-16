@@ -14,6 +14,7 @@ export type exercisesType = {
 	pergunta: string;
 	alternativas: alternativasType[];
 };
+
 export type lessonType = {
 	// Type of lesson object
 	id: string;
@@ -29,24 +30,25 @@ export type LessonSectionType = {
 		id: string;
 		data: lessonType;
 	};
-    exerciseStatus:string
 	setExercise: React.Dispatch<
 		SetStateAction<{
 			selectedAlternative: alternativasType;
 			currentExercise: number;
 			completedExercises: number;
 			exerciseStatus: string;
+			lastExercise: boolean;
 		}>
 	>;
-	exercise: {
-		selectedAlternative: alternativasType;
-		currentExercise: number;
-		completedExercises: number;
-		exerciseStatus: string;
-	};
+	exercise: exerciseType
 	shuffledAlternatives: alternativasType[];
 };
-
+export type exerciseType = {
+	selectedAlternative: alternativasType;
+	currentExercise: number;
+	completedExercises: number;
+	exerciseStatus: string;
+	lastExercise: boolean;
+};
 export const errorFetch: lessonType = {
 	id: ' ',
 	titulo: ' ',
@@ -102,3 +104,5 @@ export const fakeData = [
 		],
 	},
 ];
+
+export const nullAlternative = { id: 0, valor: '', correto: false };

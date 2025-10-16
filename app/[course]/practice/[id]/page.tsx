@@ -1,71 +1,99 @@
 'use client';
 import './page.css';
 import React, { useEffect, useMemo, useState } from 'react';
-import { alternativasType, errorFetch, lessonType, paramsType } from '@/types/types';
+import { alternativasType, errorFetch, lessonType, nullAlternative, paramsType } from '@/types/types';
 import { fetchData } from './lessonsData';
-import NavBar from './NavBar';
+import NavBar from './NavBar/NavBar';
 import shuffle from './shuffler';
-import LessonSection from './LessonsSection';
+import LessonSection from './LessonSection/section';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
 	const [loaded, setLoaded] = useState(false);
+	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
+
 	const [exercise, setExercise] = useState({
-		selectedAlternative: { id: 0, valor: '', correto: false } as alternativasType,
+		selectedAlternative: nullAlternative as alternativasType,
 		currentExercise: 1,
 		completedExercises: 0,
 		exerciseStatus: '',
+		lastExercise: false,
 	});
 	const shuffledAlternatives = useMemo(() => {
-		setExercise(exercise => ({
-			...exercise,
-			currentExercise:
-				loaded && exercise.currentExercise > lesson.data.exercicios.length ? 1 : exercise.currentExercise,
-		}));
-		setExercise(exercise => ({ ...exercise, completedExercises: exercise.currentExercise - 1 }));
-
-		//sempre o numero de exercicios completos vai ser o valor de exercicio atual menos 1
 		return shuffle(lesson.data?.exercicios[exercise.currentExercise - 1]?.alternativas || []) as alternativasType[];
-	}, [lesson.data, exercise.currentExercise, loaded]);
-
+	}, [lesson.data, exercise.currentExercise]);
 	useEffect(() => {
 		fetchData(params, setLesson, setLoaded);
-	}, [params]);
+	}, [params, loaded, lesson.data.exercicios.length, exercise.currentExercise]);
 
-	function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
-		const correctAnswer = alternatives.filter(alternative => alternative.correto);
-
+	useEffect(() => {
 		setExercise(exercise => ({
 			...exercise,
-			exerciseStatus: userAnswer.id === correctAnswer[0].id ? 'correct' : 'wrong',
+			//sempre o numero de exercicios completos vai ser o valor de exercicio atual menos 1
+			currentExercise:
+				loaded && exercise.currentExercise > lesson.data.exercicios.length
+					? lesson.data.exercicios.length
+					: exercise.currentExercise,
+			lastExercise: lesson.data.exercicios.length === exercise.currentExercise,
 		}));
+		setExercise(exercise => ({ ...exercise, completedExercises: exercise.currentExercise - 1 }));
+	}, [exercise.currentExercise, lesson.data.exercicios.length, loaded]);
+
+	function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
+		const correctAnswer = alternatives.filter(alternative => alternative.correto)[0];
+		const userGuessedRight = userAnswer.id === correctAnswer.id;
+		setExercise(exercise => ({
+			...exercise,
+			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
+		}));
+
+		if (userGuessedRight && !exercise.lastExercise) {
+			setGoingToNextExercise(true);
+			StartNextExercise();
+		}
+	}
+	async function StartNextExercise() {
+		setTimeout(() => {
+			setExercise(exercise => ({
+				...exercise,
+				currentExercise: exercise.currentExercise + 1,
+				exerciseStatus: '',
+				selectedAlternative: nullAlternative as alternativasType,
+			}));
+		}, 3000);
+
+	}
+	function mainAnimationHandler(e: React.AnimationEvent<HTMLElement>) {
+		console.log(e);
+		if (e.animationName === 'wrong') {
+			setExercise(exercise => ({
+				...exercise,
+				exerciseStatus: exercise.exerciseStatus === 'wrong' ? '' : exercise.exerciseStatus,
+			}));
+		}
+		if(e.animationName ==='hide'){
+			setGoingToNextExercise(false);
+		}
 	}
 
 	if (!lesson.data) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>;
 
 	const totalExercises = lesson.data.exercicios.length;
-	const lessonProgress = (exercise.completedExercises / totalExercises) * 100;
 
 	return (
 		loaded && (
 			<main
-				className={exercise.exerciseStatus}
-				onAnimationEnd={() =>
-					setExercise(exercise => ({
-						...exercise,
-						exerciseStatus: exercise.exerciseStatus === 'wrong' ? '' : exercise.exerciseStatus,
-					}))
-				}
+				className={exercise.exerciseStatus + `${goingToNextExercise ? ' hide' : ''}`}
+				onAnimationEnd={mainAnimationHandler}
 			>
 				<NavBar
 					data={lesson.data}
-					currentExercise={exercise.currentExercise}
+					goingToNextExercise={goingToNextExercise}
 					totalExercises={totalExercises}
-					lessonProgress={lessonProgress}
+					exercise={exercise}
 				/>
 				<LessonSection
 					lesson={lesson}
-					exerciseStatus={exercise.exerciseStatus}
 					setExercise={setExercise}
 					exercise={exercise}
 					shuffledAlternatives={shuffledAlternatives}
