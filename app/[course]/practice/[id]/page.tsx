@@ -6,6 +6,7 @@ import { fetchData } from './lessonsData';
 import NavBar from './NavBar/NavBar';
 import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
+import { runTenda } from './tendaFetch';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
@@ -24,24 +25,26 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	}, [lesson.data, exercise.currentExercise]);
 	useEffect(() => {
 		fetchData(params, setLesson, setLoaded);
-	}, [params, loaded, lesson.data.exercicios.length, exercise.currentExercise]);
+	}, [params, loaded, lesson.data?.exercicios.length, exercise.currentExercise]);
 
 	useEffect(() => {
 		setExercise(exercise => ({
 			...exercise,
 			//sempre o numero de exercicios completos vai ser o valor de exercicio atual menos 1
 			currentExercise:
-				loaded && exercise.currentExercise > lesson.data.exercicios.length
-					? lesson.data.exercicios.length
+				loaded && exercise.currentExercise > lesson.data?.exercicios.length
+					? lesson.data?.exercicios.length
 					: exercise.currentExercise,
-			lastExercise: lesson.data.exercicios.length === exercise.currentExercise,
+			lastExercise: lesson.data?.exercicios.length === exercise.currentExercise,
 		}));
 		setExercise(exercise => ({ ...exercise, completedExercises: exercise.currentExercise - 1 }));
-	}, [exercise.currentExercise, lesson.data.exercicios.length, loaded]);
+	}, [exercise.currentExercise, lesson.data?.exercicios.length, loaded]);
 
 	function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
 		const correctAnswer = alternatives.filter(alternative => alternative.correto)[0];
 		const userGuessedRight = userAnswer.id === correctAnswer.id;
+		console.log(runTenda("exiba(\"Hello world\")"))//~teste
+		
 		setExercise(exercise => ({
 			...exercise,
 			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
@@ -64,7 +67,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	}
 	function mainAnimationHandler(e: React.AnimationEvent<HTMLElement>) {
-		console.log(e);
+		
 		if (e.animationName === 'wrong') {
 			setExercise(exercise => ({
 				...exercise,

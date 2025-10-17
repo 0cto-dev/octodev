@@ -106,3 +106,10 @@ export const fakeData = [
 ];
 
 export const nullAlternative = { id: 0, valor: '', correto: false };
+
+export type tendaOutputType = {
+	type: string,
+	payload?: string|string[],
+	value_type?: string,
+	value?: string
+}
