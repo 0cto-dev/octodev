@@ -1,7 +1,7 @@
 import { LessonSectionType } from "@/types/types";
 import Option from "./section.option";
 
-export default function Options({ setExercise, exercise, shuffledAlternatives }: Omit<LessonSectionType, 'lesson'>) {
+export default function Options({ setExercise, exercise, shuffledAlternatives }: Omit<LessonSectionType, 'lesson'|'code'|'output'>) {
 	return (
 		<div className="options">
 			{shuffledAlternatives.map(option => {

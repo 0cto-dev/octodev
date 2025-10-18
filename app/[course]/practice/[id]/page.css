@@ -71,13 +71,12 @@
 	30% {
 		transform: scale(1);
 	}
-	50%{
-		transform:scale(0)
+	50% {
+		transform: scale(0);
 	}
 	90% {
 		transform: scale(0);
 	}
-
 }
 main {
 	display: flex;
@@ -185,6 +184,7 @@ main {
 	section {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		text-align: center;
 		flex-direction: column;
 		font-size: 1rem;
@@ -226,6 +226,32 @@ main {
 					box-shadow: 0 0 10px var(--primary);
 				}
 			}
+		}
+		pre {
+			text-align: start;
+			width: 85%;
+			padding: 20px;
+			height: 60%;
+			font-size:0.8rem;
+			background-color: var(--input);
+			border-radius: 15px;
+			box-shadow: 0 0 10px #000;
+			border: 1px solid var(--border);
+			overflow: scroll;
+			margin: 8px;
+			&.output {
+				background-color: color-mix(in srgb, var(--input) 40%, transparent);
+				min-height: 10%;
+				height: fit-content;
+				div.output{
+					
+				}
+				div.result{
+					font-size: 1rem;
+					color: var(--primary);
+				}
+			}
+		
 		}
 	}
 

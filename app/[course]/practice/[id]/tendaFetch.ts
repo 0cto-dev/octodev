@@ -16,7 +16,7 @@ export const runTenda = async (code:string) => {
       const outputs = output.map((linha:tendaOutputType)=>{
         return linha
       })
-
+      
       if (data.error) {
         return (`Erro: ${data.error}`);
       } else {

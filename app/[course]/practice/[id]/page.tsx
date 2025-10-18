@@ -7,6 +7,7 @@ import NavBar from './NavBar/NavBar';
 import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
 import { runTenda } from './tendaFetch';
+import { useCode } from '@/app/api/code-import/getCode';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
@@ -20,6 +21,12 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		exerciseStatus: '',
 		lastExercise: false,
 	});
+	const currentExerciseIndex = exercise.currentExercise - 1;
+	const currentExercise = lesson.data.exercicios[currentExerciseIndex];
+	const swrCode = useCode(lesson, currentExercise);
+
+	const [code, setCode] = useState('');
+	const [output, setOutput] = useState(['']);
 	const shuffledAlternatives = useMemo(() => {
 		return shuffle(lesson.data?.exercicios[exercise.currentExercise - 1]?.alternativas || []) as alternativasType[];
 	}, [lesson.data, exercise.currentExercise]);
@@ -38,13 +45,46 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			lastExercise: lesson.data?.exercicios.length === exercise.currentExercise,
 		}));
 		setExercise(exercise => ({ ...exercise, completedExercises: exercise.currentExercise - 1 }));
-	}, [exercise.currentExercise, lesson.data?.exercicios.length, loaded]);
+		if (lesson.data.exercicios[exercise.currentExercise - 1].tipo === 'codigo') {
+		}
+	}, [exercise.currentExercise, lesson.data?.exercicios.length, loaded, lesson]);
 
-	function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
-		const correctAnswer = alternatives.filter(alternative => alternative.correto)[0];
-		const userGuessedRight = userAnswer.id === correctAnswer.id;
-		console.log(runTenda("exiba(\"Hello world\")"))//~teste
-		
+	useEffect(() => {
+		if (currentExercise?.tipo === 'codigo' && swrCode && swrCode !== JSON.stringify(code)) {
+			setCode(JSON.parse(swrCode));
+		}
+		console.log(code);
+	}, [swrCode, currentExercise, code]);
+
+	useEffect(() => {
+		console.log(output);
+	}, [output]);
+	async function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
+		const typeOfExercise = lesson.data.exercicios[exercise.currentExercise - 1].tipo;
+		let userGuessedRight: boolean = false;
+
+		if (typeOfExercise === 'alternativas') {
+			const correctAnswer = alternatives.filter(alternative => alternative.correto)[0];
+			userGuessedRight = userAnswer.id === correctAnswer.id;
+		}
+		if (typeOfExercise === 'codigo') {
+			const response = await runTenda(code);
+			const output = response
+				.filter((output: { type: string; payload: string }) => output.type === 'output')
+				.map((output: { type: string; payload: string }) => {
+					return output.payload;
+				})
+				.join('');
+			const result = JSON.stringify(
+				response.filter((output: { type: string; payload: string }) => output.type === 'result')[0]
+			);
+
+			console.log(output.trim(),"18");
+			setOutput([output,result]);
+
+			// userGuessedRight = output.trim()==="18"// se o output da lição for APENAS 18
+		}
+
 		setExercise(exercise => ({
 			...exercise,
 			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
@@ -64,17 +104,15 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				selectedAlternative: nullAlternative as alternativasType,
 			}));
 		}, 3000);
-
 	}
 	function mainAnimationHandler(e: React.AnimationEvent<HTMLElement>) {
-		
 		if (e.animationName === 'wrong') {
 			setExercise(exercise => ({
 				...exercise,
 				exerciseStatus: exercise.exerciseStatus === 'wrong' ? '' : exercise.exerciseStatus,
 			}));
 		}
-		if(e.animationName ==='hide'){
+		if (e.animationName === 'hide') {
 			setGoingToNextExercise(false);
 		}
 	}
@@ -100,6 +138,8 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 					setExercise={setExercise}
 					exercise={exercise}
 					shuffledAlternatives={shuffledAlternatives}
+					code={code}
+					output={output}
 				/>
 				<footer>
 					<button onClick={() => submitAnswer(exercise.selectedAlternative, shuffledAlternatives)}>

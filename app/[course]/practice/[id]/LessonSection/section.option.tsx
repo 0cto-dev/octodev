@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 type OptionComponentType = {
 	option: alternativasType;
-} & Omit<LessonSectionType, 'lesson' | 'shuffledAlternatives'>;
+} & Omit<LessonSectionType, 'lesson' | 'shuffledAlternatives'|'code'|'output'>;
 
 export default function Option({ option, setExercise, exercise }: OptionComponentType) {
 	const isSelected = option.id === exercise.selectedAlternative?.id;
