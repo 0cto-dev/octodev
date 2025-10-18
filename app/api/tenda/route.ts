@@ -3,10 +3,10 @@ import { spawn } from "child_process";
 
 const PROMPT_TERMINATOR = "\x04";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<Response> {
   const { code }: { code: string } = await req.json();
 
-  return new Promise((resolve) => {
+  return new Promise<Response>((resolve) => { // 👈 tipagem explícita
     const proc = spawn("wasmer", ["modules/tenda.wasm"], {
       stdio: ["pipe", "pipe", "pipe"],
     });
@@ -22,20 +22,22 @@ export async function POST(req: NextRequest) {
       error += data.toString();
     });
 
-    proc.on("close", (code) => {
+    proc.on("close", (exitCode) => {
       resolve(
         NextResponse.json({
           output,
           error,
-          exitCode: code,
+          exitCode,
         })
       );
     });
 
     proc.stdin.write(code + PROMPT_TERMINATOR);
-    setTimeout(()=>{
-      proc.kill()
-    },2000)
+
+    setTimeout(() => {
+      proc.kill();
+    }, 2000);
+
     proc.stdin.end();
   });
 }
