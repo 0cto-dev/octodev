@@ -6,7 +6,7 @@ const PROMPT_TERMINATOR = "\x04";
 export async function POST(req: NextRequest): Promise<Response> {
   const { code }: { code: string } = await req.json();
 
-  return new Promise<Response>((resolve) => { // 👈 tipagem explícita
+  return new Promise<Response>((resolve) => { 
     const proc = spawn("wasmer", ["modules/tenda.wasm"], {
       stdio: ["pipe", "pipe", "pipe"],
     });

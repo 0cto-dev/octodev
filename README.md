@@ -67,11 +67,73 @@ Sinta-se à vontade para abrir uma **issue** ou enviar um **pull request** com s
 ---
 
 ## Teste e modifique na sua máquina
-    git clone https://github.com/0cto-dev/octodev.git
-    cd octodev
-    npm i
-    npm run dev
+```sh
+git clone https://github.com/0cto-dev/octodev.git
+cd octodev
+npm i
+npm run dev
+```
 
+## Crie a pasta data
+
+### Linux/MacOS
+```sh
+mkdir -p data/NOME_DO_CURSO/practice/
+touch data/NOME_DO_CURSO/practice/lessons.json
+```
+### Windows (powershell)
+```powershell
+New-Item -ItemType Directory -Path "data\NOME_DO_CURSO\practice" -Force
+New-Item -ItemType File -Path "data\NOME_DO_CURSO\practice\lessons.json" -Force
+```
+
+
+depois que as pastas e o arquivo forem criados podemos escrever as lições dentro desse arquivo
+
+**@/data/logica/practice/lessons.json**
+```json
+[
+	{
+		"id": "lesson1",
+		"titulo": "Olá Tenda",
+		"descricao": "Introdução à linguagem tenda",
+		"exercicios": [
+      //Exercicios podem ter tanto  o tipo "codigo" quanto o tipo "alternativas" (ambos sempre em minusculo)
+			{
+				"id": "ex001",
+				"tipo":"alternativas",
+				"pergunta": "Qual é a forma correta de escrever \"Hello World\" utilizando a Linguagem Tenda?",
+				"alternativas": [
+					{ "id":1,"valor": "mostrar(\"Hello World\")", "correto": false },
+					{ "id":2,"valor": "exiba(\"Hello World\")", "correto": true },
+					{ "id":3,"valor": "escreva(\"Hello World\")", "correto": false },
+					{ "id":4,"valor": "print(\"Hello World\")", "correto": false }
+				]
+			},
+			{
+				"id": "ex002",
+				"tipo":"codigo",
+				"pergunta": "Consegue corrigir este código?",
+				"codigo": "lesson1/ex002.tenda"
+			}
+			
+		]
+	}
+]
+```
+para o exercício do tipo `"codigo"` devemos passar o path do arquivo que contém o codigo usando a key: `"codigo":"PATH_DO_ARQUIVO"` e obrigatoriamente ele deve estar em `@/data/NOME_DO_CURSO/practice/codes/`
+
+exemplo:
+crie uma pasta dentro de practice: `codes/lesson1/ex002.FORMATO_DO_ARQUIVO ` o caminho pode ser do jeito que preferir, no octo estamos usando este formato: `lição_em_que_o_exercicio_se_encontra/id_do_exercicio.formato`, a seguir usarei a linguagem [Tenda](https://github.com/gabrielbrunop/tenda/) para exemplificar:
+
+**@/data/logica/practice/codes/lesson1/ex002.tenda**
+```tenda
+para cada i em 1 até 5 faça
+  exiba(i)
+fim
+```
+
+o exercício do tipo `"codigo"` ainda vai conter a resposta esperada, porém ainda estamos desenvolvendo isso e atualizarei assim que concluirmos essa parte
 ## Contato
 
 Caso queira saber mais sobre o projeto ou colaborar, entre em contato:  
