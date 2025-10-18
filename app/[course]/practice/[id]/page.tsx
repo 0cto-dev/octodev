@@ -16,7 +16,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExercise: 1,
+		currentExercise: 2,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -45,7 +45,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			lastExercise: lesson.data?.exercicios.length === exercise.currentExercise,
 		}));
 		setExercise(exercise => ({ ...exercise, completedExercises: exercise.currentExercise - 1 }));
-		if (lesson.data.exercicios[exercise.currentExercise - 1].tipo === 'codigo') {
+		if (lesson.data.exercicios[exercise.currentExercise - 1]?.tipo === 'codigo') {
 		}
 	}, [exercise.currentExercise, lesson.data?.exercicios.length, loaded, lesson]);
 
@@ -53,12 +53,11 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		if (currentExercise?.tipo === 'codigo' && swrCode && swrCode !== JSON.stringify(code)) {
 			setCode(JSON.parse(swrCode));
 		}
-		console.log(code);
 	}, [swrCode, currentExercise, code]);
 
-	useEffect(() => {
-		console.log(output);
-	}, [output]);
+	// useEffect(() => {
+	// 	console.log(output);
+	// }, [output]);
 	async function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
 		const typeOfExercise = lesson.data.exercicios[exercise.currentExercise - 1].tipo;
 		let userGuessedRight: boolean = false;
@@ -69,6 +68,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		}
 		if (typeOfExercise === 'codigo') {
 			const response = await runTenda(code);
+			console.log(response)
 			const output = response
 				.filter((output: { type: string; payload: string }) => output.type === 'output')
 				.map((output: { type: string; payload: string }) => {
@@ -79,7 +79,8 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				response.filter((output: { type: string; payload: string }) => output.type === 'result')[0]
 			);
 
-			console.log(output.trim(),"18");
+			console.log(output);
+			console.log(result);
 			setOutput([output,result]);
 
 			// userGuessedRight = output.trim()==="18"// se o output da lição for APENAS 18

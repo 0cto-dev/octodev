@@ -10,7 +10,7 @@ export const runTenda = async (code:string) => {
 
       const data = await res.json();
       let output = data.output.split('\n')
-      output.pop()
+      
       output = JSON.parse(`[${output.join(',')}]`)
 
       const outputs = output.map((linha:tendaOutputType)=>{

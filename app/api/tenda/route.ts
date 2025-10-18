@@ -1,43 +1,59 @@
-import { NextRequest, NextResponse } from "next/server";
-import { spawn } from "child_process";
+import { NextResponse } from 'next/server';
+import { WASI } from 'wasi';
+import fs from 'fs';
+import { join } from 'path';
+import os from 'os';
 
-const PROMPT_TERMINATOR = "\x04";
+// const PROMPT_TERMINATOR = '\x04';
 
-export async function POST(req: NextRequest): Promise<Response> {
+export async function POST(req: Request): Promise<Response> {
   const { code }: { code: string } = await req.json();
 
-  return new Promise<Response>((resolve) => { 
-    const proc = spawn("wasmer", ["modules/tenda.wasm"], {
-      stdio: ["pipe", "pipe", "pipe"],
+  return new Promise(async resolve => {
+    const wasmPath = join(process.cwd(), 'modules/tenda.wasm');
+    const wasmBuffer = fs.readFileSync(wasmPath);
+
+    // Criar um arquivo temporário para capturar stdout
+    const stdoutPath = join(os.tmpdir(), `wasi_stdout_${Date.now()}.txt`);
+    const stdoutFd = fs.openSync(stdoutPath, 'w+');
+
+    const wasi = new WASI({
+      args: ['tenda', code],
+      env: {},
+      version: 'preview1',
+      preopens: {
+        '/': process.cwd(),
+      },
+      stdout: stdoutFd,
     });
 
-    let output = "";
-    let error = "";
+    const importObject = { wasi_snapshot_preview1: wasi.wasiImport };
 
-    proc.stdout.on("data", (data) => {
-      output += data.toString();
-    });
+    try {
+      const { instance } = await WebAssembly.instantiate(wasmBuffer, importObject);
 
-    proc.stderr.on("data", (data) => {
-      error += data.toString();
-    });
+      wasi.start(instance);
 
-    proc.on("close", (exitCode) => {
+      fs.closeSync(stdoutFd); // fechar para garantir escrita completa
+
+      // Ler o conteúdo do arquivo temporário
+      const output = fs.readFileSync(stdoutPath, 'utf-8');
+
+      // Deletar o arquivo temporário depois
+      fs.unlinkSync(stdoutPath);
+
       resolve(
         NextResponse.json({
-          output,
-          error,
-          exitCode,
+          output: output.trim(),
         })
       );
-    });
-
-    proc.stdin.write(code + PROMPT_TERMINATOR);
-
-    setTimeout(() => {
-      proc.kill();
-    }, 2000);
-
-    proc.stdin.end();
+    } catch (error) {
+      console.error('Error executing WASI module:', error);
+      resolve(
+        NextResponse.json({
+          error: 'Failed to execute WASI module',
+        })
+      );
+    }
   });
 }

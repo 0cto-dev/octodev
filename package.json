@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@wasmer/sdk": "^0.9.0",
+    "@wasmer/wasi": "^1.2.2",
+    "@wasmer/wasmfs": "^0.12.0",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
