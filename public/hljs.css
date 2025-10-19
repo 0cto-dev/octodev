@@ -1,0 +1,103 @@
+/* Custom Highlight.js theme using your site's OKLCH colors */
+
+.hljs {
+  background: var(--border); /* oklch(0.16 0.03 285) */
+  color: var(--foreground); /* oklch(0.98 0.01 285) */
+  font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+}
+
+/* Keywords: primary color, bold */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-title,
+.hljs-section,
+.hljs-doctag,
+.hljs-type,
+.hljs-name,
+.hljs-strong {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* Built-ins, selectors, links: blue */
+.hljs-built_in,
+.hljs-selector-tag,
+.hljs-section,
+.hljs-link {
+  color: var(--blue);
+}
+
+/* Strings, meta, symbols, variables, template vars: accent (magenta) */
+.hljs-string,
+.hljs-meta,
+.hljs-name,
+.hljs-symbol, 
+.hljs-bullet,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: color-mix(in srgb, var(--foreground) 70%, var(--primary));
+}
+
+/* Comments, quotes, deletions: disabled-foreground */
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion {
+  color: var(--disabled-foreground);
+  font-style: italic;
+}
+
+/* Numbers and literals: primary lighter */
+.hljs-literal,
+.hljs-number {
+  color: var(--primary);
+}
+
+/* Titles, attributes, meta-keyword: green + italic */
+.hljs-title,
+.hljs-attr,
+.hljs-meta-keyword {
+  font-style: italic;
+  color: var(--green);
+}
+
+/* Operators: orange */
+.hljs-operator {
+  color: var(--orange);
+}
+
+/* Emphasis: italic */
+.hljs-emphasis {
+  font-style: italic;
+}
+
+/* Errors: error color */
+.hljs-error {
+  background-color: var(--error);
+  color: var(--foreground);
+  padding: 0 0.2em;
+  border-radius: 2px;
+}
+
+/* Additional subtle highlights */
+.hljs-function {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.hljs-params,.hljs-type,.hljs-subst {
+  color: var(--foreground);
+}
+
+.operator {
+  color: var(--orange) !important;
+}
+
+/* Selection inside code block */
+/* .hljs::selection {
+  background: var(--primary-gradient);
+  color: var(--foreground);
+} */
+

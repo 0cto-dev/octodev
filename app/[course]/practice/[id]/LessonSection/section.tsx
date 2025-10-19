@@ -1,6 +1,8 @@
 import { exercisesType, LessonSectionType } from '@/types/types';
 import Options from './section.options';
 import AnsiToHtml from 'ansi-to-html';
+import hljs from 'highlight.js';
+import { useEffect, useRef } from 'react';
 
 const ansiConvert = new AnsiToHtml({
 	colors: {
@@ -26,6 +28,7 @@ export default function LessonSection({
 	exercise,
 	shuffledAlternatives,
 	code,
+	setCode: _,
 	output,
 }: LessonSectionType) {
 	function RenderLessonExercise(exerciseObj: exercisesType) {
@@ -50,9 +53,8 @@ export default function LessonSection({
 				<>
 					{title}
 					<div className="codeSpace">
-						<pre className="code">
-							<code>{code}</code>
-						</pre>
+						<CodeBlock language={lesson.course}>{code}</CodeBlock>
+
 						{result && (
 							<pre className="output">
 								<code>
@@ -74,4 +76,22 @@ export default function LessonSection({
 		);
 	}
 	return <section>{RenderLessonExercise(lesson.data.exercicios[exercise.currentExercise - 1])}</section>;
+}
+
+function CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {
+	const codeRef = useRef<HTMLElement | null>(null);
+
+	useEffect(() => {
+		if (codeRef.current) {
+			delete codeRef.current.dataset.highlighted;
+			hljs.highlightElement(codeRef.current);
+		}
+	}, [children]); 
+	return (
+		<pre className="code">
+			<code className={language} ref={codeRef}>
+				{children}
+			</code>
+		</pre>
+	);
 }

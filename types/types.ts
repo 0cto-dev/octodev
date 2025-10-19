@@ -11,10 +11,10 @@ export type alternativasType = {
 };
 export type exercisesType = {
 	id: string;
-	tipo:string,
+	tipo: string;
 	pergunta: string;
 	alternativas?: alternativasType[];
-	codigo?:"string"
+	codigo?: 'string';
 };
 
 export type lessonType = {
@@ -42,10 +42,11 @@ export type LessonSectionType = {
 			lastExercise: boolean;
 		}>
 	>;
-	exercise: exerciseType
+	exercise: exerciseType;
 	shuffledAlternatives: alternativasType[];
-	code:string
-	output:string[]
+	code: string;
+	setCode:Dispatch<SetStateAction<string>>;
+	output: string[];
 };
 export type exerciseType = {
 	selectedAlternative: alternativasType;
@@ -61,7 +62,7 @@ export const errorFetch: lessonType = {
 	exercicios: [
 		{
 			id: 'carregando',
-			tipo:'carregando',
+			tipo: 'carregando',
 			pergunta: 'carregando',
 			alternativas: [
 				{
@@ -82,7 +83,7 @@ export const fakeData = [
 		exercicios: [
 			{
 				id: 'ex001',
-				tipo:'alternativas',
+				tipo: 'alternativas',
 				pergunta: 'Coloque a pergunta que quiser aqui',
 				alternativas: [
 					{ id: 1, valor: 'alternativa 1', correto: false },
@@ -100,7 +101,7 @@ export const fakeData = [
 		exercicios: [
 			{
 				id: 'ex001',
-				tipo:'alternativas',
+				tipo: 'alternativas',
 				pergunta: 'Qual é a forma correta de escrever "Hello World" utilizando a Linguagem Tenda?',
 				alternativas: [
 					{ id: 1, valor: 'mostrar("Hello World")', correto: false },
@@ -116,8 +117,8 @@ export const fakeData = [
 export const nullAlternative = { id: 0, valor: '', correto: false };
 
 export type tendaOutputType = {
-	type: string,
-	payload?: string|string[],
-	value_type?: string,
-	value?: string
-}
+	type: string;
+	payload?: string | string[];
+	value_type?: string;
+	value?: string;
+};

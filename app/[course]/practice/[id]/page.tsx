@@ -8,46 +8,50 @@ import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
 import { runTenda } from './tendaFetch';
 import { useCode } from '@/app/api/code-import/getCode';
+import '@/public/hljs.css';
+
+
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
 	const [loaded, setLoaded] = useState(false);
 	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
-
+	const exercicios = lesson.data?.exercicios
+	
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExercise: 1,
+		currentExercise: 3,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
 	});
+	const exercicioAtual = exercicios[exercise.currentExercise - 1]
 	const currentExerciseIndex = exercise.currentExercise - 1;
-	const currentExercise = lesson.data.exercicios[currentExerciseIndex];
+	const currentExercise = exercicios[currentExerciseIndex];
 	const swrCode = useCode(lesson, currentExercise);
 
 	const [code, setCode] = useState('');
 	const [output, setOutput] = useState(['']);
 	const shuffledAlternatives = useMemo(() => {
-		return shuffle(lesson.data?.exercicios[exercise.currentExercise - 1]?.alternativas || []) as alternativasType[];
-	}, [lesson.data, exercise.currentExercise]);
+		return shuffle(exercicioAtual?.alternativas || []) as alternativasType[];
+	}, [exercicioAtual]);
+
 	useEffect(() => {
 		fetchData(params, setLesson, setLoaded);
-	}, [params, loaded, lesson.data?.exercicios.length, exercise.currentExercise]);
+	}, [params, loaded, exercicios.length, exercise.currentExercise]);
 
 	useEffect(() => {
 		setExercise(exercise => ({
 			...exercise,
 			//sempre o numero de exercicios completos vai ser o valor de exercicio atual menos 1
 			currentExercise:
-				loaded && exercise.currentExercise > lesson.data?.exercicios.length
-					? lesson.data?.exercicios.length
+				loaded && exercise.currentExercise > exercicios.length
+					? exercicios.length
 					: exercise.currentExercise,
-			lastExercise: lesson.data?.exercicios.length === exercise.currentExercise,
+			lastExercise: exercicios.length === exercise.currentExercise,
 		}));
 		setExercise(exercise => ({ ...exercise, completedExercises: exercise.currentExercise - 1 }));
-		if (lesson.data.exercicios[exercise.currentExercise - 1]?.tipo === 'codigo') {
-		}
-	}, [exercise.currentExercise, lesson.data?.exercicios.length, loaded, lesson]);
+	}, [exercise.currentExercise, exercicios?.length, loaded, lesson]);
 
 	useEffect(() => {
 		if (currentExercise?.tipo === 'codigo' && swrCode && swrCode !== JSON.stringify(code)) {
@@ -55,11 +59,11 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		}
 	}, [swrCode, currentExercise, code]);
 
-	// useEffect(() => {
-	// 	console.log(output);
-	// }, [output]);
+	useEffect(() => {
+		console.log(code);
+	}, [code]);
 	async function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
-		const typeOfExercise = lesson.data.exercicios[exercise.currentExercise - 1].tipo;
+		const typeOfExercise = exercicioAtual.tipo;
 		let userGuessedRight: boolean = false;
 
 		if (typeOfExercise === 'alternativas') {
@@ -68,7 +72,6 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		}
 		if (typeOfExercise === 'codigo') {
 			const response = await runTenda(code);
-			console.log(response)
 			const output = response
 				.filter((output: { type: string; payload: string }) => output.type === 'output')
 				.map((output: { type: string; payload: string }) => {
@@ -80,9 +83,6 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			);
 			const error = response.filter((output: { type: string; payload: string }) => output.type ==='error')[0]?.payload[0]
 			
-
-			console.log(output);
-			console.log(JSON.stringify(error));
 			setOutput([output,result||'',error||'']);
 
 			// userGuessedRight = output.trim()==="18"// se o output da lição for APENAS 18
@@ -106,7 +106,8 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				exerciseStatus: '',
 				selectedAlternative: nullAlternative as alternativasType,
 			}));
-		}, 3000);
+		}, 2000);
+		// 1 segundo a menos do que o tempo de duração da animação hide do main 
 	}
 	function mainAnimationHandler(e: React.AnimationEvent<HTMLElement>) {
 		if (e.animationName === 'wrong') {
@@ -122,10 +123,11 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	if (!lesson.data) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>;
 
-	const totalExercises = lesson.data.exercicios.length;
+	const totalExercises = exercicios.length;
 
 	return (
 		loaded && (
+			
 			<main
 				className={exercise.exerciseStatus + `${goingToNextExercise ? ' hide' : ''}`}
 				onAnimationEnd={mainAnimationHandler}
@@ -142,6 +144,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 					exercise={exercise}
 					shuffledAlternatives={shuffledAlternatives}
 					code={code}
+					setCode={setCode}
 					output={output}
 				/>
 				<footer>
