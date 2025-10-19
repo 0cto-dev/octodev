@@ -1,5 +1,24 @@
 import { exercisesType, LessonSectionType } from '@/types/types';
 import Options from './section.options';
+import AnsiToHtml from 'ansi-to-html';
+
+const ansiConvert = new AnsiToHtml({
+	colors: {
+		5: '#00ff00',
+		1: '#e7000b',
+		231: '#00ff00',
+		115: '#00c4a3',
+		240: '#8d8e9b',
+		246: '#8d8e9b',
+		249: '#8d8e9b',
+	},
+});
+
+function TerminalOutput({ ansiString }: { ansiString: string }) {
+	const html = ansiConvert.toHtml(ansiString);
+
+	return <pre className="error" dangerouslySetInnerHTML={{ __html: html }} />;
+}
 
 export default function LessonSection({
 	lesson,
@@ -11,7 +30,7 @@ export default function LessonSection({
 }: LessonSectionType) {
 	function RenderLessonExercise(exerciseObj: exercisesType) {
 		const title = <h1>{exerciseObj?.pergunta}</h1>;
-		if (exerciseObj.tipo === 'alternativas') {
+		if (exerciseObj?.tipo === 'alternativas') {
 			return (
 				<>
 					{title}
@@ -23,21 +42,27 @@ export default function LessonSection({
 				</>
 			);
 		}
-		if (exerciseObj.tipo === 'codigo') {
+		if (exerciseObj?.tipo === 'codigo') {
 			const outputValue = output[0] && output[0];
-			const result = output[0] && JSON.parse(output[1]).value;
+			const result = output[1] && JSON.parse(output[1]).value;
+			const error = output[2] && output[2];
 			return (
 				<>
 					{title}
-					<pre>
-						<code>{code}</code>
-					</pre>
-					<pre className="output">
-						<code >
-							<div className="output">{outputValue}</div>
-							<div className="result">{result}</div>
-						</code>
-					</pre>
+					<div className="codeSpace">
+						<pre className="code">
+							<code>{code}</code>
+						</pre>
+						{result && (
+							<pre className="output">
+								<code>
+									<div className="output">{outputValue}</div>
+									<div className="result">{result}</div>
+								</code>
+							</pre>
+						)}
+						{error && <TerminalOutput ansiString={error} />}
+					</div>
 				</>
 			);
 		}

@@ -78,10 +78,18 @@
 		transform: scale(0);
 	}
 }
+body {
+	height: 100vh;
+	width: 100vw;
+	overflow: initial !important;
+}
 main {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	height: 90%;
+	width: 80%;
+
 	&.hide {
 		animation: hide 4s linear 1;
 	}
@@ -185,10 +193,11 @@ main {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		max-height: 65%;
 		text-align: center;
 		flex-direction: column;
 		font-size: 1rem;
-		padding: 50px;
+		/* padding: 50px; */
 		flex: 0 0 60%;
 
 		.options {
@@ -227,31 +236,62 @@ main {
 				}
 			}
 		}
-		pre {
-			text-align: start;
-			width: 85%;
-			padding: 20px;
-			height: 60%;
-			font-size:0.8rem;
-			background-color: var(--input);
-			border-radius: 15px;
-			box-shadow: 0 0 10px #000;
-			border: 1px solid var(--border);
-			overflow: scroll;
-			margin: 8px;
-			&.output {
-				background-color: color-mix(in srgb, var(--input) 40%, transparent);
-				min-height: 10%;
-				height: fit-content;
-				div.output{
-					
+		div.codeSpace {
+			display: flex;
+			width: 100%;
+			height: 100%;
+
+			pre {
+				display:flex;
+				text-align: start;
+				color: var(--foreground);
+				min-width: 20%;
+				width: fit-content;
+				font-size: 1rem;
+				padding-left: 10px;
+				background-color: var(--input);
+				border-radius: 15px;
+				box-shadow: 0 0 10px #000;
+				border: 1px solid var(--border);
+				overflow: scroll;
+				margin: 8px;
+				&.code {
+					padding: 20px;
+					width: 70%;
+					min-width: 50%;
 				}
-				div.result{
+				&.output {
+					background-color: color-mix(in srgb, var(--input) 40%, transparent);
+					width: 30%;
+					display: flex;
+
+
+					div.output {
+						padding: 10px;
+						box-sizing: border-box;
+						padding-left: 30px;
+						width: 100%;
+					}
+					div.result {
+						font-size: 1.1rem;
+						width: 100%;
+						color: var(--primary);
+						background-color: color-mix(in srgb, var(--primary) 8%, transparent);
+						padding: 10px;
+						border-radius: 5px;
+					}
+				}
+				&.error {
 					font-size: 1rem;
-					color: var(--primary);
+					display: block;
 				}
 			}
-		
+
+			code {
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
 		}
 	}
 

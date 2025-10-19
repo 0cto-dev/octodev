@@ -78,10 +78,12 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			const result = JSON.stringify(
 				response.filter((output: { type: string; payload: string }) => output.type === 'result')[0]
 			);
+			const error = response.filter((output: { type: string; payload: string }) => output.type ==='error')[0]?.payload[0]
+			
 
 			console.log(output);
-			console.log(result);
-			setOutput([output,result]);
+			console.log(JSON.stringify(error));
+			setOutput([output,result||'',error||'']);
 
 			// userGuessedRight = output.trim()==="18"// se o output da lição for APENAS 18
 		}

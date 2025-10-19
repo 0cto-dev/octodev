@@ -1,53 +1,80 @@
-
 :root {
-  --background: oklch(0.12 0.02 285);/* background color for body */
-  --foreground: oklch(0.98 0.01 285);/* text color */
-  --border: oklch(0.25 0.04 285);/* color for thin lines like border or hr tags */
-  --card: oklch(0.16 0.03 285);/* lighter color for background items */
-  --primary: oklch(0.65 0.25 285);/* main color for the app */
-  --secondary: oklch(0.22 0.04 285);/* idk */
-  --primary-gradient: linear-gradient(90deg, #00f, #a0f);
-  --accent: oklch(0.55 0.22 320);/* bright color for enphasis situations */
-  --disabled-foreground: oklch(0.65 0.02 285);/* darker color for disabled effect or darker texts */
-  --error: oklch(0.577 0.245 27.325);/* error color */
-  --input: oklch(0.25 0.04 285);/* inputs color */
-  --magenta: oklch(0.55 0.22 320);/* magenta */
-  --red: oklch(58.305% 0.23863 28.392 / 0.764);/* error color */
-  --blue: oklch(0.7 0.15 270);/* blue */
-  --green: oklch(0.7 0.2 180);/* green */
-  --orange: oklch(0.75 0.18 60);/* orange */
-  --pink: oklch(0.7 0.18 350);/* pink */
+	--background: oklch(0.12 0.02 285); /* background color for body */
+	--foreground: oklch(0.98 0.01 285); /* text color */
+	--border: oklch(0.25 0.04 285); /* color for thin lines like border or hr tags */
+	--card: oklch(0.16 0.03 285); /* lighter color for background items */
+	--primary: oklch(0.65 0.25 285); /* main color for the app */
+	--secondary: oklch(0.22 0.04 285); /* idk */
+	--primary-gradient: linear-gradient(90deg, #00f, #a0f);
+	--accent: oklch(0.55 0.22 320); /* bright color for enphasis situations */
+	--disabled-foreground: oklch(0.65 0.02 285); /* darker color for disabled effect or darker texts */
+	--error: oklch(0.577 0.245 27.325); /* error color */
+	--input: oklch(0.25 0.04 285); /* inputs color */
+	--magenta: oklch(0.55 0.22 320); /* magenta */
+	--red: oklch(58.305% 0.23863 28.392 / 0.764); /* error color */
+	--blue: oklch(0.7 0.15 270); /* blue */
+	--green: oklch(0.7 0.2 180); /* green */
+	--orange: oklch(0.75 0.18 60); /* orange */
+	--pink: oklch(0.7 0.18 350); /* pink */
 }
 
-body{
-    background: radial-gradient(circle, var(--background) 80%, #000 150%);
-    color:var(--foreground);
-    font-family: system-ui, sans-serif;
-    font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    line-height: 1.6;
+body {
+	background: radial-gradient(circle, var(--background) 80%, #000 150%);
+	color: var(--foreground);
+	font-family: system-ui, sans-serif;
+	font-size: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	line-height: 1.6;
+}
+
+body,
+html {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
 
 }
 
-body,html{
+* {
+	margin: 0;
+	  box-sizing: border-box;
 
-    width: 100%;
-    height: 100%;
+	padding: 0;
 }
 
-*{
-    margin: 0;
-    padding: 0;
+main {
+	width: 80%;
+	height: 80%;
+	padding: 20px;
+	background: var(--card);
+	border-radius: 15px;
+	border: 1px solid var(--border);
 }
 
-main{
-    width:80%;
-    min-height: 80%;
-    padding: 20px;
-    background: var(--card);
-    border-radius: 15px;
-    border: 1px solid var(--border);
+body > * {
+	::-webkit-scrollbar-thumb {
+		background: color-mix(in srgb, var(--primary) 50%, transparent);
+		margin: 6px;
+		border-radius: 5px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: var(--primary);
+	}
+
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+	::-webkit-scrollbar-corner {
+		background-color: transparent;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		/* background: var(--border);  */
+		border-radius: 50px;
+	}
 }
