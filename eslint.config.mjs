@@ -4,6 +4,11 @@ import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const withTM = require('next-transpile-modules')(['@monaco-editor/react', 'monaco-editor']);
+
+module.exports = withTM({
+  reactStrictMode: true,
+});
 
 const compat = new FlatCompat({
 	baseDirectory: __dirname,

@@ -44,8 +44,8 @@ export type LessonSectionType = {
 	>;
 	exercise: exerciseType;
 	shuffledAlternatives: alternativasType[];
-	code: string;
-	setCode:Dispatch<SetStateAction<string>>;
+	code: string[];
+	setCode:Dispatch<SetStateAction<string[]>>;
 	output: string[];
 };
 export type exerciseType = {

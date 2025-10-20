@@ -84,6 +84,7 @@
 body {
 	height: 100vh;
 	width: 100vw;
+	
 	overflow: hidden;
 }
 main {
@@ -192,7 +193,7 @@ main {
 		}
 	}
 
-	section {
+	&>section {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -243,13 +244,20 @@ main {
 			display: flex;
 			width: 100%;
 			height: 100%;
-
+			&>section {
+					margin: 10px;
+					border-radius: 15px;
+					overflow: hidden;
+					width: 100%;
+					min-width: 50%;
+					resize: horizontal;
+				}
 			pre {
 				display:flex;
 				text-align: start;
 				color: var(--foreground);
-				min-width: 20%;
-				width: fit-content;
+				min-width: 10%;
+				flex: 1;
 				font-size: .9rem;
 				padding-left: 10px;
 				background-color: var(--input);
@@ -258,14 +266,9 @@ main {
 				border: 1px solid var(--border);
 				overflow: scroll;
 				margin: 8px;
-				&.code {
-					padding: 20px;
-					width: 70%;
-					min-width: 50%;
-				}
+				
 				&.output {
 					background-color: color-mix(in srgb, var(--input) 40%, transparent);
-					width: 30%;
 					display: flex;
 
 
@@ -286,6 +289,7 @@ main {
 				}
 				&.error {
 					font-size: 1rem;
+					min-width: 45%;
 					display: block;
 				}
 			}

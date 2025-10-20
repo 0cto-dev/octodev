@@ -1,10 +1,13 @@
+'use client '
 import { exercisesType, LessonSectionType } from '@/types/types';
 import Options from './section.options';
 import AnsiToHtml from 'ansi-to-html';
-import hljs from 'highlight.js';
 import '@/public/tendaHighlighting';
+import dynamic from 'next/dynamic';
 
-import { useEffect, useRef } from 'react';
+const MonacoEditor = dynamic(() => import('@/components/MonacoEditor'), {
+	ssr: false,
+});
 
 const ansiConvert = new AnsiToHtml({
 	colors: {
@@ -30,7 +33,7 @@ export default function LessonSection({
 	exercise,
 	shuffledAlternatives,
 	code,
-	setCode: _,
+	setCode,
 	output,
 }: LessonSectionType) {
 	function RenderLessonExercise(exerciseObj: exercisesType) {
@@ -55,7 +58,12 @@ export default function LessonSection({
 				<>
 					{title}
 					<div className="codeSpace">
-						<CodeBlock language={lesson.course === 'logica' ? 'tenda' : lesson.course}>{code}</CodeBlock>
+							{code&&<MonacoEditor
+								value={code[0]}
+								language="javascript"
+								onChange={value => value !== undefined && setCode([value])}
+							/>}
+						{/* <CodeBlock language={lesson.course === 'logica' ? 'tenda' : lesson.course}>{code}</CodeBlock> */}
 						{/* o curso de logica é a unica exceção em que o nome do curso vai ser diferente do nome da linguagem */}
 
 						{result && (
@@ -81,20 +89,10 @@ export default function LessonSection({
 	return <section>{RenderLessonExercise(lesson.data.exercicios[exercise.currentExercise - 1])}</section>;
 }
 
-function CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {
-	const codeRef = useRef<HTMLElement | null>(null);
-
-	useEffect(() => {
-		if (codeRef.current) {
-			delete codeRef.current.dataset.highlighted;
-			hljs.highlightElement(codeRef.current);
-		}
-	}, [children]);
+function _CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {
 	return (
 		<pre className="code">
-			<code className={language} ref={codeRef}>
-				{children}
-			</code>
+			<code className={language}>{children}</code>
 		</pre>
 	);
 }

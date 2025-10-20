@@ -1,6 +1,6 @@
 import { tendaOutputType } from "@/types/types";
 
-export const runTenda = async (code:string) => {
+export const runTenda = async (code:string[]) => {
     try {
       const res = await fetch('/api/tenda', {
         method: 'POST',

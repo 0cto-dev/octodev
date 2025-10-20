@@ -30,7 +30,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const currentExercise = exercicios[currentExerciseIndex];
 	const swrCode = useCode(lesson, currentExercise);
 
-	const [code, setCode] = useState('');
+	const [code, setCode] = useState(['']);
 	const [output, setOutput] = useState(['']);
 	const shuffledAlternatives = useMemo(() => {
 		return shuffle(exercicioAtual?.alternativas || []) as alternativasType[];
@@ -57,7 +57,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		if (currentExercise?.tipo === 'codigo' && swrCode && swrCode !== JSON.stringify(code)) {
 			setCode(JSON.parse(swrCode));
 		}
-	}, [swrCode, currentExercise, code]);
+	}, [swrCode, currentExercise]);
 
 	useEffect(() => {
 		console.log(code);
@@ -88,7 +88,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			// userGuessedRight = output.trim()==="18"// se o output da lição for APENAS 18
 		}
 
-		setExercise(exercise => ({
+		typeOfExercise==="alternativas"&&setExercise(exercise => ({
 			...exercise,
 			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
 		}));
