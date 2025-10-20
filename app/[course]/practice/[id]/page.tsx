@@ -20,7 +20,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExercise: 3,
+		currentExercise: 1,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -148,7 +148,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 					output={output}
 				/>
 				<footer>
-					<button onClick={() => submitAnswer(exercise.selectedAlternative, shuffledAlternatives)}>
+					<button onClick={() => exercise.exerciseStatus!=='correct'&&submitAnswer(exercise.selectedAlternative, shuffledAlternatives)}>
 						Verificar
 					</button>
 				</footer>
