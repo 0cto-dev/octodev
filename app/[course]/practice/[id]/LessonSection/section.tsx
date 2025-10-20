@@ -2,6 +2,8 @@ import { exercisesType, LessonSectionType } from '@/types/types';
 import Options from './section.options';
 import AnsiToHtml from 'ansi-to-html';
 import hljs from 'highlight.js';
+import '@/public/tendaHighlighting';
+
 import { useEffect, useRef } from 'react';
 
 const ansiConvert = new AnsiToHtml({
@@ -53,7 +55,8 @@ export default function LessonSection({
 				<>
 					{title}
 					<div className="codeSpace">
-						<CodeBlock language={lesson.course}>{code}</CodeBlock>
+						<CodeBlock language={lesson.course === 'logica' ? 'tenda' : lesson.course}>{code}</CodeBlock>
+						{/* o curso de logica é a unica exceção em que o nome do curso vai ser diferente do nome da linguagem */}
 
 						{result && (
 							<pre className="output">
@@ -86,7 +89,7 @@ function CodeBlock({ language, children }: { language: string; children: React.R
 			delete codeRef.current.dataset.highlighted;
 			hljs.highlightElement(codeRef.current);
 		}
-	}, [children]); 
+	}, [children]);
 	return (
 		<pre className="code">
 			<code className={language} ref={codeRef}>
