@@ -1,8 +1,7 @@
-'use client '
+'use client ';
 import { exercisesType, LessonSectionType } from '@/types/types';
 import Options from './section.options';
 import AnsiToHtml from 'ansi-to-html';
-import '@/public/tendaHighlighting';
 import dynamic from 'next/dynamic';
 
 const MonacoEditor = dynamic(() => import('@/components/MonacoEditor'), {
@@ -54,16 +53,19 @@ export default function LessonSection({
 			const outputValue = output[0] && output[0];
 			const result = output[1] && JSON.parse(output[1]).value;
 			const error = output[2] && output[2];
+			
 			return (
 				<>
 					{title}
 					<div className="codeSpace">
-							{code&&<MonacoEditor
+						{code && (
+							<MonacoEditor
 								value={code[0]}
-								language="javascript"
+								language={lesson.course === 'logica' ? 'tenda' : lesson.course}
 								onChange={value => value !== undefined && setCode([value])}
-							/>}
-						{/* <CodeBlock language={lesson.course === 'logica' ? 'tenda' : lesson.course}>{code}</CodeBlock> */}
+								autocomplete={exerciseObj.autocompletar ? exerciseObj.autocompletar : false}
+							/>
+						)}
 						{/* o curso de logica é a unica exceção em que o nome do curso vai ser diferente do nome da linguagem */}
 
 						{result && (
@@ -87,12 +89,4 @@ export default function LessonSection({
 		);
 	}
 	return <section>{RenderLessonExercise(lesson.data.exercicios[exercise.currentExercise - 1])}</section>;
-}
-
-function _CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {
-	return (
-		<pre className="code">
-			<code className={language}>{children}</code>
-		</pre>
-	);
 }

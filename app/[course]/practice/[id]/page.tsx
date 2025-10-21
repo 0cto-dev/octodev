@@ -8,16 +8,13 @@ import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
 import { runTenda } from './tendaFetch';
 import { useCode } from '@/app/api/code-import/getCode';
-import '@/public/hljs.css';
-
-
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
 	const [loaded, setLoaded] = useState(false);
 	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
-	const exercicios = lesson.data?.exercicios
-	
+	const exercicios = lesson.data?.exercicios;
+
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
 		currentExercise: 1,
@@ -25,7 +22,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		exerciseStatus: '',
 		lastExercise: false,
 	});
-	const exercicioAtual = exercicios[exercise.currentExercise - 1]
+	const exercicioAtual = exercicios[exercise.currentExercise - 1];
 	const currentExerciseIndex = exercise.currentExercise - 1;
 	const currentExercise = exercicios[currentExerciseIndex];
 	const swrCode = useCode(lesson, currentExercise);
@@ -45,9 +42,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			...exercise,
 			//sempre o numero de exercicios completos vai ser o valor de exercicio atual menos 1
 			currentExercise:
-				loaded && exercise.currentExercise > exercicios.length
-					? exercicios.length
-					: exercise.currentExercise,
+				loaded && exercise.currentExercise > exercicios.length ? exercicios.length : exercise.currentExercise,
 			lastExercise: exercicios.length === exercise.currentExercise,
 		}));
 		setExercise(exercise => ({ ...exercise, completedExercises: exercise.currentExercise - 1 }));
@@ -59,9 +54,6 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		}
 	}, [swrCode, currentExercise]);
 
-	useEffect(() => {
-		console.log(code);
-	}, [code]);
 	async function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
 		const typeOfExercise = exercicioAtual.tipo;
 		let userGuessedRight: boolean = false;
@@ -72,26 +64,34 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		}
 		if (typeOfExercise === 'codigo') {
 			const response = await runTenda(code);
-			const output = response
-				.filter((output: { type: string; payload: string }) => output.type === 'output')
-				.map((output: { type: string; payload: string }) => {
-					return output.payload;
-				})
-				.join('');
-			const result = JSON.stringify(
-				response.filter((output: { type: string; payload: string }) => output.type === 'result')[0]
-			);
-			const error = response.filter((output: { type: string; payload: string }) => output.type ==='error')[0]?.payload[0]
-			
-			setOutput([output,result||'',error||'']);
+			try {
+				const output = response
+					.filter((output: { type: string; payload: string }) => output.type === 'output')
+					.map((output: { type: string; payload: string }) => {
+						return output.payload;
+					})
+					.join('');
+				const result = JSON.stringify(
+					response.filter((output: { type: string; payload: string }) => output.type === 'result')[0]
+				);
+				const error = response.filter((output: { type: string; payload: string }) => output.type === 'error')[0]
+					?.payload[0];
+
+				setOutput([output, result || '', error || '']);
+			} catch (error) {
+				const stdinError = (error as Error).name ==="TypeError"?"NÃO É PERMITIDO O USO DE COMANDOS DE ENTRADA(stdin)\nNO OCTODEV":''
+				console.log(stdinError)
+				setOutput(['', '', stdinError])
+			}
 
 			// userGuessedRight = output.trim()==="18"// se o output da lição for APENAS 18
 		}
 
-		typeOfExercise==="alternativas"&&setExercise(exercise => ({
-			...exercise,
-			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
-		}));
+		typeOfExercise === 'alternativas' &&
+			setExercise(exercise => ({
+				...exercise,
+				exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
+			}));
 
 		if (userGuessedRight && !exercise.lastExercise) {
 			setGoingToNextExercise(true);
@@ -107,7 +107,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				selectedAlternative: nullAlternative as alternativasType,
 			}));
 		}, 2000);
-		// 1 segundo a menos do que o tempo de duração da animação hide do main 
+		// 1 segundo a menos do que o tempo de duração da animação hide do main
 	}
 	function mainAnimationHandler(e: React.AnimationEvent<HTMLElement>) {
 		if (e.animationName === 'wrong') {
@@ -127,7 +127,6 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	return (
 		loaded && (
-			
 			<main
 				className={exercise.exerciseStatus + `${goingToNextExercise ? ' hide' : ''}`}
 				onAnimationEnd={mainAnimationHandler}
@@ -148,7 +147,12 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 					output={output}
 				/>
 				<footer>
-					<button onClick={() => exercise.exerciseStatus!=='correct'&&submitAnswer(exercise.selectedAlternative, shuffledAlternatives)}>
+					<button
+						onClick={() =>
+							exercise.exerciseStatus !== 'correct' &&
+							submitAnswer(exercise.selectedAlternative, shuffledAlternatives)
+						}
+					>
 						Verificar
 					</button>
 				</footer>

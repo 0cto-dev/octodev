@@ -1,3 +1,4 @@
+import { OnChange } from '@monaco-editor/react';
 import { Dispatch, SetStateAction } from 'react';
 
 export type paramsType = {
@@ -15,6 +16,7 @@ export type exercisesType = {
 	pergunta: string;
 	alternativas?: alternativasType[];
 	codigo?: 'string';
+	autocompletar?:boolean;
 };
 
 export type lessonType = {
@@ -121,4 +123,11 @@ export type tendaOutputType = {
 	payload?: string | string[];
 	value_type?: string;
 	value?: string;
+};
+export type MonacoEditorProps = {
+	value: string;
+	language: string;
+	onChange?: OnChange | undefined;
+	theme?: string;
+	autocomplete:boolean;
 };
