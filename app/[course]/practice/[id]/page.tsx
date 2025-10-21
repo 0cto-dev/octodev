@@ -57,6 +57,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	async function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
 		const typeOfExercise = exercicioAtual.tipo;
 		let userGuessedRight: boolean = false;
+		
 
 		if (typeOfExercise === 'alternativas') {
 			const correctAnswer = alternatives.filter(alternative => alternative.correto)[0];
@@ -64,25 +65,20 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		}
 		if (typeOfExercise === 'codigo') {
 			const response = await runTenda(code);
-			try {
-				const output = response
-					.filter((output: { type: string; payload: string }) => output.type === 'output')
-					.map((output: { type: string; payload: string }) => {
-						return output.payload;
-					})
-					.join('');
-				const result = JSON.stringify(
-					response.filter((output: { type: string; payload: string }) => output.type === 'result')[0]
-				);
-				const error = response.filter((output: { type: string; payload: string }) => output.type === 'error')[0]
-					?.payload[0];
 
-				setOutput([output, result || '', error || '']);
-			} catch (error) {
-				const stdinError = (error as Error).name ==="TypeError"?"NÃO É PERMITIDO O USO DE COMANDOS DE ENTRADA(stdin)\nNO OCTODEV":''
-				console.log(stdinError)
-				setOutput(['', '', stdinError])
-			}
+			const output = response
+				.filter((output: { type: string; payload: string }) => output.type === 'output')
+				.map((output: { type: string; payload: string }) => {
+					return output.payload;
+				})
+				.join('');
+			const result = JSON.stringify(
+				response.filter((output: { type: string; payload: string }) => output.type === 'result')[0]
+			);
+			const error = response.filter((output: { type: string; payload: string }) => output.type === 'error')[0]
+				?.payload[0];
+
+			setOutput([output, result || '', error || '']);
 
 			// userGuessedRight = output.trim()==="18"// se o output da lição for APENAS 18
 		}
