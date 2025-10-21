@@ -58,7 +58,7 @@ export default function LessonSection({
 				<>
 					{title}
 					<div className="codeSpace">
-						{code && (
+						{code[0] && (
 							<MonacoEditor
 								value={code[0]}
 								language={lesson.course === 'logica' ? 'tenda' : lesson.course}
