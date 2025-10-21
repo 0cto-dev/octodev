@@ -292,7 +292,9 @@ main {
 					font-size: 1rem;
 					min-width: 45%;
 					display: block;
-					overflow-x: visible;
+					overflow: visible;
+					padding: 10px;
+					text-wrap: initial;
 				}
 			}
 

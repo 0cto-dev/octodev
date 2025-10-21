@@ -6,7 +6,7 @@ import { fetchData } from './lessonsData';
 import NavBar from './NavBar/NavBar';
 import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
-import { runTenda } from './tendaFetch';
+import { runTenda } from '@/app/api/tenda/tendaFetch';
 import { useCode } from '@/app/api/code-import/getCode';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
@@ -17,7 +17,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExercise: 1,
+		currentExercise: 2,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -57,15 +57,18 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	async function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
 		const typeOfExercise = exercicioAtual.tipo;
 		let userGuessedRight: boolean = false;
-		
 
 		if (typeOfExercise === 'alternativas') {
 			const correctAnswer = alternatives.filter(alternative => alternative.correto)[0];
 			userGuessedRight = userAnswer.id === correctAnswer.id;
 		}
 		if (typeOfExercise === 'codigo') {
-			const response = await runTenda(code);
-
+			const response =
+				lesson.course === 'logica'
+					? await runTenda(code,setCode)
+					: lesson.course === 'python' &&
+					  [{type:"error",payload:["Ainda não implementamos a interpretação para a Linguagem python"]}];
+			// console.log(response)
 			const output = response
 				.filter((output: { type: string; payload: string }) => output.type === 'output')
 				.map((output: { type: string; payload: string }) => {
