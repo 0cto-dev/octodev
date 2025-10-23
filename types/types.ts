@@ -49,6 +49,7 @@ export type LessonSectionType = {
 	code: string[];
 	setCode:Dispatch<SetStateAction<string[]>>;
 	output: string[];
+	goingToNextExercise:boolean
 };
 export type exerciseType = {
 	selectedAlternative: alternativasType;

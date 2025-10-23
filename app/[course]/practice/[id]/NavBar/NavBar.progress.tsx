@@ -21,7 +21,7 @@ export default function ProgressBar({
                         linear-gradient(
                             90deg,
                             var(--primary), 
-                            color-mix(in srgb, var(--accent)70% ,var(--primary)) 
+                            color-mix(in srgb, var(--accent) 80% ,var(--primary)) 
                         ),
                         var(--input)
                         `,

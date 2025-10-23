@@ -2,7 +2,6 @@
 
 import Editor, { Monaco, OnChange } from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
-import { useEffect, useState } from 'react';
 import tendaTheme from '@/public/tendaTheme.json';
 import { MonacoEditorProps } from '@/types/types';
 import { tendaHighlighting } from '@/public/tendaHighlighting';
@@ -226,7 +225,7 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 								insertText: [
 									'seja ${1:nomeFunção}(${2:parâmetros}) = ',
 									'\tfaça',
-									'\t\tretorna ${3}',
+									'\t\tretorna $0',
 									'\tfim',
 								].join('\n'),
 								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,

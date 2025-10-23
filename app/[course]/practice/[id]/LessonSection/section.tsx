@@ -34,6 +34,7 @@ export default function LessonSection({
 	code,
 	setCode,
 	output,
+	goingToNextExercise,
 }: LessonSectionType) {
 	function RenderLessonExercise(exerciseObj: exercisesType) {
 		const title = <h1>{exerciseObj?.pergunta}</h1>;
@@ -52,20 +53,20 @@ export default function LessonSection({
 		if (exerciseObj?.tipo === 'codigo') {
 			const outputValue = output[0] && output[0];
 			const result = output[1] && JSON.parse(output[1]).value;
-			const error = output[2] && output[2];
-			
+			const error	= output[2] && output[2];
+			console.log(code);
+			console.log()
 			return (
 				<>
 					{title}
 					<div className="codeSpace">
-						{exerciseObj.id && (
-							<MonacoEditor
-								value={code[0]}
-								language={lesson.course === 'logica' ? 'tenda' : lesson.course}
-								onChange={value => value !== undefined && setCode([value])}
-								autocomplete={exerciseObj.autocompletar ? exerciseObj.autocompletar : false}
-							/>
-						)}
+						<MonacoEditor
+							value={goingToNextExercise?'':code[0]}
+							language={lesson.course === 'logica' ? 'tenda' : lesson.course}
+							onChange={value => value !== undefined && setCode([value])}
+							autocomplete={exerciseObj.autocompletar ? exerciseObj.autocompletar : false}
+						/>
+
 						{/* o curso de logica é a unica exceção em que o nome do curso vai ser diferente do nome da linguagem */}
 
 						{result && (
