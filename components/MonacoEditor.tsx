@@ -325,6 +325,7 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 			onChange={onChange}
 			theme="tendaTheme"
 			beforeMount={handleBeforeMount}
+			
 			options={{
 				fontSize: 16,
 				fontFamily: 'Fira Code iScript',

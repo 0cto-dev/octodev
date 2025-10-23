@@ -8,6 +8,7 @@ import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
 import { runTenda } from '@/app/api/tenda/tendaFetch';
 import { useCode } from '@/app/api/code-import/getCode';
+import verifyHardCode from '@/app/api/verifyHardCode';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
@@ -17,7 +18,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExercise: 1,
+		currentExercise: 4,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -49,11 +50,10 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	}, [exercise.currentExercise, exercicios?.length, loaded, lesson]);
 
 	useEffect(() => {
-		if (currentExercise?.tipo === 'codigo' && swrCode && swrCode !== JSON.stringify(code)) {
+		if (currentExercise?.codigo !== undefined && swrCode && swrCode !== JSON.stringify(code)) {
 			setCode(JSON.parse(swrCode));
 		}
 	}, [swrCode, currentExercise]);
-
 	async function submitAnswer(userAnswer: alternativasType, alternatives: alternativasType[]) {
 		const typeOfExercise = exercicioAtual.tipo;
 		let userGuessedRight: boolean = false;
@@ -65,9 +65,13 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		if (typeOfExercise === 'codigo') {
 			const response =
 				lesson.course === 'logica'
-					? await runTenda(code,setCode)
-					: lesson.course === 'python' &&
-					  [{type:"error",payload:["Ainda não implementamos a interpretação para a Linguagem python"]}];
+					? await runTenda(code, setCode)
+					: lesson.course === 'python' && [
+							{
+								type: 'error',
+								payload: ['Ainda não implementamos a interpretação para a Linguagem python'],
+							},
+					  ];
 			// console.log(response)
 			const output = response
 				.filter((output: { type: string; payload: string }) => output.type === 'output')
@@ -82,15 +86,17 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				?.payload[0];
 
 			setOutput([output, result || '', error || '']);
+			console.log(output === exercicioAtual.respostaCodigo);
+			const hardCoded = verifyHardCode(code[0], exercicioAtual.verificadorTrapaca || '');
 
-			// userGuessedRight = output.trim()==="18"// se o output da lição for APENAS 18
+			userGuessedRight = output === exercicioAtual.respostaCodigo && !hardCoded;
+			console.log(userGuessedRight);
 		}
 
-		typeOfExercise === 'alternativas' &&
-			setExercise(exercise => ({
-				...exercise,
-				exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
-			}));
+		setExercise(exercise => ({
+			...exercise,
+			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
+		}));
 
 		if (userGuessedRight && !exercise.lastExercise) {
 			setGoingToNextExercise(true);
@@ -160,4 +166,3 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		)
 	);
 }
-

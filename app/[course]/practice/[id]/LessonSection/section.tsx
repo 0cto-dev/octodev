@@ -42,6 +42,13 @@ export default function LessonSection({
 			return (
 				<>
 					{title}
+					{exerciseObj.codigo && (
+						<div className="codeSpace" style={{width:"50%",margin:'50px'}}>
+							<pre>
+								<code>{code}</code>
+							</pre>
+						</div>
+					)}
 					<Options
 						setExercise={setExercise}
 						exercise={exercise}
@@ -53,17 +60,21 @@ export default function LessonSection({
 		if (exerciseObj?.tipo === 'codigo') {
 			const outputValue = output[0] && output[0];
 			const result = output[1] && JSON.parse(output[1]).value;
-			const error	= output[2] && output[2];
-			console.log(code);
-			console.log()
+			const error = output[2] && output[2];
+			console.log(exercise.exerciseStatus);
 			return (
 				<>
 					{title}
 					<div className="codeSpace">
 						<MonacoEditor
-							value={goingToNextExercise?'':code[0]}
+							value={goingToNextExercise ? '' : code[0]}
 							language={lesson.course === 'logica' ? 'tenda' : lesson.course}
-							onChange={value => value !== undefined && setCode([value])}
+							onChange={value =>
+								value !== undefined &&
+								exercise.exerciseStatus !== 'correct' &&
+								console.log('teste') &&
+								setCode([value])
+							}
 							autocomplete={exerciseObj.autocompletar ? exerciseObj.autocompletar : false}
 						/>
 

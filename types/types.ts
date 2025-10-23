@@ -15,8 +15,10 @@ export type exercisesType = {
 	tipo: string;
 	pergunta: string;
 	alternativas?: alternativasType[];
-	codigo?: 'string';
+	codigo?: string;
 	autocompletar?:boolean;
+	respostaCodigo?:string;
+	verificadorTrapaca?:string;
 };
 
 export type lessonType = {
