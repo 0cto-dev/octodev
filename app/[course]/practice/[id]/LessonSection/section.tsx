@@ -73,10 +73,7 @@ export default function LessonSection({
 							value={goingToNextExercise ? '' : code[0]}
 							language={lesson.course === 'logica' ? 'tenda' : lesson.course}
 							onChange={value =>
-								value !== undefined &&
-								exercise.exerciseStatus !== 'correct' &&
-								console.log('teste') &&
-								setCode([value])
+								value !== undefined && exercise.exerciseStatus !== 'correct' && setCode([value])
 							}
 							autocomplete={exerciseObj.autocompletar ? exerciseObj.autocompletar : false}
 						/>

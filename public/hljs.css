@@ -1,7 +1,7 @@
 .hljs {
-	background: var(--border);
-	color: var(--foreground);
-	font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+  background: var(--border);
+  color: var(--foreground); 
+  font-family: 'Fira Code', Consolas, 'Courier New', monospace;
 }
 
 .hljs-keyword,
@@ -12,13 +12,15 @@
 .hljs-type,
 .hljs-name,
 .hljs-strong {
-	color: var(--primary);
-	font-weight: bold;
+  color: var(--primary);
+  font-weight: bold;
 }
+
 .hljs-literal {
-	color: var(--pink);
+  color: var(--pink);
 }
-.hljs-support{
+
+.hljs-support {
   color: var(--orange);
 }
 
@@ -26,7 +28,7 @@
 .hljs-selector-tag,
 .hljs-section,
 .hljs-link {
-	color: var(--blue);
+  color: var(--blue);
   font-weight: bold;
 }
 
@@ -39,57 +41,57 @@
 .hljs-variable,
 .hljs-template-tag,
 .hljs-template-variable {
-	color: color-mix(in srgb, var(--foreground) 20%, var(--blue));
+  color: color-mix(in srgb, var(--foreground) 20%, var(--blue));
 }
 
 .hljs-comment,
 .hljs-quote,
 .hljs-deletion {
-	color: var(--disabled-foreground);
-	font-style: italic;
+  color: var(--disabled-foreground);
+  font-style: italic;
 }
 
 .hljs-number {
-	color: var(--accent);
+  color: var(--green);
 }
 
 .hljs-title,
 .hljs-attr,
 .hljs-meta-keyword {
-	font-style: italic;
-	color: var(--green);
+  font-style: italic;
+  color: var(--green);
 }
 
 .hljs-operator {
-	color: var(--disabled-foreground);
+  color: var(--disabled-foreground);
 }
 
 .hljs-emphasis {
-	font-style: italic;
+  font-style: italic;
 }
 
 .hljs-error {
-	background-color: var(--error);
-	color: var(--foreground);
-	padding: 0 0.2em;
-	border-radius: 2px;
+  background-color: var(--error);
+  color: var(--foreground);
+  padding: 0 0.2em;
+  border-radius: 2px;
 }
 
 .hljs-function {
-	color: var(--primary);
-	font-weight: bold;
+  color: var(--primary);
+  font-weight: bold;
 }
 
 .hljs-params,
 .hljs-type,
 .hljs-subst {
-	color: var(--foreground);
+  color: var(--foreground);
 }
 
 .operator {
-	color: var(--orange) !important;
+  color: var(--orange) !important;
 }
 
 .hljs::selection {
-	background: color-mix(in srgb, var(--foreground) 20%, var(--border));
+  background: color-mix(in srgb, var(--foreground) 20%, var(--border));
 }

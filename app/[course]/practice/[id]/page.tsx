@@ -19,7 +19,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExercise: 4,
+		currentExercise: 1,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -73,7 +73,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 								payload: ['Ainda não implementamos a interpretação para a Linguagem python'],
 							},
 					  ];
-			// console.log(response)
+			
 			const output = response
 				.filter((output: { type: string; payload: string }) => output.type === 'output')
 				.map((output: { type: string; payload: string }) => {
@@ -87,11 +87,11 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				?.payload[0];
 
 			setOutput([output, result || '', error || '']);
-			console.log(output === exercicioAtual.respostaCodigo);
+
 			const hardCoded = verifyHardCode(code[0], exercicioAtual.verificadorTrapaca || '');
 
 			userGuessedRight = output === exercicioAtual.respostaCodigo && !hardCoded;
-			console.log(userGuessedRight);
+
 		}
 
 		setExercise(exercise => ({
