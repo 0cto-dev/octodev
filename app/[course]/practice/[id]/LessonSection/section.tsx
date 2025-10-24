@@ -3,6 +3,9 @@ import { exercisesType, LessonSectionType } from '@/types/types';
 import Options from './section.options';
 import AnsiToHtml from 'ansi-to-html';
 import dynamic from 'next/dynamic';
+import { useEffect, useRef } from 'react';
+import hljs from 'highlight.js';
+import '@/public/tendaHljs';
 
 const MonacoEditor = dynamic(() => import('@/components/MonacoEditor'), {
 	ssr: false,
@@ -43,10 +46,10 @@ export default function LessonSection({
 				<>
 					{title}
 					{exerciseObj.codigo && (
-						<div className="codeSpace" style={{width:"50%",margin:'50px'}}>
-							<pre>
-								<code>{code}</code>
-							</pre>
+						<div className="codeSpace" style={{ width: '50%', margin: '50px' }}>
+							<CodeBlock language={lesson.course === 'logica' ? 'tenda' : lesson.course}>
+								{code}
+							</CodeBlock>
 						</div>
 					)}
 					<Options
@@ -101,4 +104,22 @@ export default function LessonSection({
 		);
 	}
 	return <section>{RenderLessonExercise(lesson.data.exercicios[exercise.currentExercise - 1])}</section>;
+}
+
+function CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {
+	const codeRef = useRef<HTMLElement | null>(null);
+
+	useEffect(() => {
+		if (codeRef.current) {
+			delete codeRef.current.dataset.highlighted;
+			hljs.highlightElement(codeRef.current);
+		}
+	}, [children]);
+	return (
+		<pre className="code">
+			<code className={language} ref={codeRef}>
+				{children}
+			</code>
+		</pre>
+	);
 }

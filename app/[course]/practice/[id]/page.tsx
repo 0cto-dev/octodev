@@ -9,6 +9,7 @@ import LessonSection from './LessonSection/section';
 import { runTenda } from '@/app/api/tenda/tendaFetch';
 import { useCode } from '@/app/api/code-import/getCode';
 import verifyHardCode from '@/app/api/verifyHardCode';
+import "@/public/hljs.css"
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });

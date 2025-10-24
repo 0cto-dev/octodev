@@ -1,0 +1,95 @@
+.hljs {
+	background: var(--border);
+	color: var(--foreground);
+	font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-title,
+.hljs-section,
+.hljs-doctag,
+.hljs-type,
+.hljs-name,
+.hljs-strong {
+	color: var(--primary);
+	font-weight: bold;
+}
+.hljs-literal {
+	color: var(--pink);
+}
+.hljs-support{
+  color: var(--orange);
+}
+
+.hljs-built_in,
+.hljs-selector-tag,
+.hljs-section,
+.hljs-link {
+	color: var(--blue);
+  font-weight: bold;
+}
+
+.hljs-string,
+.hljs-meta,
+.hljs-name,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
+	color: color-mix(in srgb, var(--foreground) 20%, var(--blue));
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion {
+	color: var(--disabled-foreground);
+	font-style: italic;
+}
+
+.hljs-number {
+	color: var(--accent);
+}
+
+.hljs-title,
+.hljs-attr,
+.hljs-meta-keyword {
+	font-style: italic;
+	color: var(--green);
+}
+
+.hljs-operator {
+	color: var(--disabled-foreground);
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-error {
+	background-color: var(--error);
+	color: var(--foreground);
+	padding: 0 0.2em;
+	border-radius: 2px;
+}
+
+.hljs-function {
+	color: var(--primary);
+	font-weight: bold;
+}
+
+.hljs-params,
+.hljs-type,
+.hljs-subst {
+	color: var(--foreground);
+}
+
+.operator {
+	color: var(--orange) !important;
+}
+
+.hljs::selection {
+	background: color-mix(in srgb, var(--foreground) 20%, var(--border));
+}
