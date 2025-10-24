@@ -207,6 +207,7 @@ main {
 			justify-content: center;
 			flex-wrap: wrap;
 			gap: 30px;
+			position: relative;
 
 			button {
 				padding: 25px;
@@ -219,6 +220,9 @@ main {
 				text-wrap: nowrap;
 				min-width: 250px;
 				height: 80px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				&:hover {
 					background: var(--primary);
 				}
@@ -240,12 +244,13 @@ main {
 		div.codeSpace {
 			display: flex;
 			width: 100%;
-			height: 100%;
+			height: 60vh;
 			& > section {
 				margin: 10px;
 				border-radius: 15px;
 				overflow: hidden;
 				width: 100%;
+				height: 100%;
 				min-width: 50%;
 				resize: horizontal;
 			}
@@ -256,7 +261,7 @@ main {
 				min-width: 10%;
 				flex: 1;
 				font-size: 0.9rem;
-				padding-left: 10px;
+				padding: 10px;
 				background-color: var(--input);
 				border-radius: 15px;
 				box-shadow: 0 0 10px #000;
@@ -267,6 +272,7 @@ main {
 				&.output {
 					background-color: color-mix(in srgb, var(--input) 40%, transparent);
 					display: flex;
+					height: 60vh;
 
 					div.output {
 						padding: 10px;
@@ -276,7 +282,7 @@ main {
 					}
 					div.result {
 						font-size: 1.05rem;
-						width: 100%;
+						min-width: fit-content;
 						text-align: center;
 						color: var(--primary);
 						background-color: color-mix(in srgb, var(--primary) 8%, transparent);
@@ -288,6 +294,7 @@ main {
 					font-size: 1rem;
 					min-width: 45%;
 					display: block;
+					height: 60vh;
 					overflow: visible;
 					padding: 10px;
 					text-wrap: initial;
@@ -306,7 +313,7 @@ main {
 		display: flex;
 		justify-content: flex-end;
 		align-items: flex-end;
-		margin-top: 60px;
+		margin-top: 30px;
 
 		button {
 			padding: 15px;
@@ -330,5 +337,249 @@ div.wrong {
 	animation: 1s linear forwards fall;
 	button.wrong {
 		animation: 1s linear reverse rotate none;
+	}
+}
+
+@media (max-width: 915px) {
+	main {
+		padding: 10px;
+		nav {
+			align-items: center;
+		}
+
+		& > section {
+			.codeSpace {
+				
+				pre.output {
+					height: 95%;
+				}
+			}
+			.options {
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+
+		footer {
+			margin-top: 8px;
+		}
+	}
+}
+@media (max-height: 900px) {
+	main {
+		& > section {
+			height: 90%;
+			.codeSpace {
+				height: 100% !important;
+				section {
+					height: 90% !important;
+				}
+				pre.output {
+					height: 90% !important;
+				}
+			}
+		}
+	}
+}
+
+@media (max-height: 680px) {
+	body {
+		overflow: auto;
+	}
+	main {
+		width: 100%;
+		height: 100%;
+		border-radius: 0;
+		nav {
+			align-items: end;
+			.left {
+				margin: 0;
+				.description {
+					h1 {
+						font-size: 1.2rem !important;
+					}
+				}
+			}
+			.right {
+				font-size: 0.8rem;
+				justify-content: end;
+				width: 40%;
+				margin-right: 0;
+			}
+		}
+		& > section {
+			h1 {
+				font-size: 1.3rem;
+			}
+			justify-content: start;
+			padding-top: 0px;
+			height: 60%;
+			div.codeSpace {
+				width: 95% !important;
+				height: 90% !important;
+				flex-direction: column;
+				section {
+					margin: 0 !important;
+					height: 70% !important;
+					width: 100% !important;
+					resize: vertical;
+				}
+				pre.output {
+					margin: 0;
+					margin-top: 10px;
+				}
+				pre.error {
+					overflow: scroll !important;
+					height: 50% !important;
+				}
+			}
+			.options {
+				padding-top: 10vh;
+
+				div {
+					max-width: 50%;
+					button {
+						/* padding: 10px !important; */
+						min-width: 100%;
+						text-align: center;
+					}
+				}
+			}
+		}
+	}
+}
+@media (max-height: 500px) {
+	main {
+		& > section {
+			div.codeSpace {
+				& > section {
+					height: 40% !important;
+				}
+				pre.output {
+					height: 10vh !important;
+					code {
+						div.output {
+							font-size: 0.8rem;
+						}
+						div.result {
+							font-size: 0.8rem;
+							padding: 2px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (orientation: portrait) {
+	body {
+		& > main {
+			animation: none !important;
+			width: 100%;
+			height: 100%;
+			border-radius: 0;
+			justify-content: start;
+			nav {
+				align-items: center;
+				padding: 5px;
+				gap: 5px;
+				justify-content: center;
+				.left {
+					margin: 0;
+					flex-basis: 100%;
+					justify-content: space-evenly;
+					padding-right: 80px;
+					.exit {
+						width: 55px !important;
+						height: 55px !important ;
+					}
+					.description {
+						h1 {
+							font-size: 1.2rem !important;
+						}
+					}
+				}
+				.right {
+					font-size: 1rem;
+					justify-content: end;
+					justify-content: center;
+					/* width: 100%; */
+					margin-right: 0;
+				}
+			}
+			& > section {
+				height: 70% !important;
+				justify-content: space-evenly !important;
+				overflow-y: auto;
+				overflow-x: hidden;
+
+				h1 {
+					font-size: 1.1rem;
+				}
+				padding-top: 20px;
+				justify-content: start;
+				height: 60%;
+				div.codeSpace {
+					width: 95% !important;
+					height: 90% !important;
+					flex-direction: column;
+					&:has(pre.code){
+						margin: 20px !important;
+
+					}
+					section {
+						margin: 0 !important;
+						height: 70% !important;
+						width: 100% !important;
+						resize: vertical;
+					}
+					pre.output {
+						margin: 0;
+						margin-top: 10px;
+					}
+					pre.error {
+						overflow: scroll !important;
+						height: 50% !important;
+					}
+				}
+				.options {
+					padding-top: 10px;
+					width: 100%;
+					gap: 3vh !important;
+
+					div {
+						width: 100%;
+						max-width: 100%;
+						button {
+							/* padding: 10px !important; */
+							min-width: 100%;
+							height: 60px;
+							text-align: center;
+
+						&.selected{
+							transform: rotate(-1.5deg);
+						}
+						}
+					}
+				}
+			}
+			footer {
+				position: relative;
+				bottom: 0;
+				button {
+					width: 100%;
+					height: 70px;
+					transition: background .2s linear;
+				}
+			}
+			&.wrong {
+				footer {
+					button {
+						background: color-mix(in srgb, var(--red) 80%, var(--primary));
+					}
+				}
+			}
+		}
 	}
 }

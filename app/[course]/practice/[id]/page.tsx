@@ -9,7 +9,7 @@ import LessonSection from './LessonSection/section';
 import { runTenda } from '@/app/api/tenda/tendaFetch';
 import { useCode } from '@/app/api/code-import/getCode';
 import verifyHardCode from '@/app/api/verifyHardCode';
-import "@/public/hljs.css"
+import '@/public/hljs.css';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
@@ -73,7 +73,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 								payload: ['Ainda não implementamos a interpretação para a Linguagem python'],
 							},
 					  ];
-			
+
 			const output = response
 				.filter((output: { type: string; payload: string }) => output.type === 'output')
 				.map((output: { type: string; payload: string }) => {
@@ -91,9 +91,14 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			const hardCoded = verifyHardCode(code[0], exercicioAtual.verificadorTrapaca || '');
 
 			userGuessedRight = output === exercicioAtual.respostaCodigo && !hardCoded;
-
 		}
-
+		!userGuessedRight &&
+			setTimeout(() => {
+				setExercise(exercise => ({
+					...exercise,
+					exerciseStatus: exercise.exerciseStatus==="wrong"?'':exercise.exerciseStatus
+				}));
+			}, 500);
 		setExercise(exercise => ({
 			...exercise,
 			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',

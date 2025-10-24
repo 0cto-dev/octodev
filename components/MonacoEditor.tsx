@@ -319,7 +319,7 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 
 	return (
 		<Editor
-			height="500px"
+			height="100%"
 			language={language}
 			value={value}
 			onChange={onChange}
