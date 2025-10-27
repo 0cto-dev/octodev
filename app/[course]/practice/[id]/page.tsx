@@ -10,6 +10,7 @@ import { runTenda } from '@/app/api/tenda/tendaFetch';
 import { useCode } from '@/app/api/code-import/getCode';
 import verifyHardCode from '@/app/api/verifyHardCode';
 import '@/public/hljs.css';
+import fetchResultPiston from '@/app/api/pistonApi/route';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
@@ -19,7 +20,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExercise: 1,
+		currentExercise: 5,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -64,39 +65,52 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			userGuessedRight = userAnswer.id === correctAnswer.id;
 		}
 		if (typeOfExercise === 'codigo') {
-			const response =
-				lesson.course === 'logica'
-					? await runTenda(code, setCode)
-					: lesson.course === 'python' && [
-							{
-								type: 'error',
-								payload: ['Ainda não implementamos a interpretação para a Linguagem python'],
-							},
-					  ];
+			let response;
+			let output = '';
+			let result = '';
+			let error = '';
 
-			const output = response
-				.filter((output: { type: string; payload: string }) => output.type === 'output')
-				.map((output: { type: string; payload: string }) => {
-					return output.payload;
-				})
-				.join('');
-			const result = JSON.stringify(
-				response.filter((output: { type: string; payload: string }) => output.type === 'result')[0]
-			);
-			const error = response.filter((output: { type: string; payload: string }) => output.type === 'error')[0]
-				?.payload[0];
+			if (lesson.course === 'logica') {
+				response = await runTenda(code, setCode);
+				output = response
+					.filter((output: { type: string; payload: string }) => output.type === 'output')
+					.map((output: { type: string; payload: string }) => {
+						return output.payload;
+					})
+					.join('');
+				result = JSON.stringify(
+					response.filter((output: { type: string; payload: string }) => {
+						return output.type === 'result';
+					})[0]
+				);
+				error = response.filter((output: { type: string; payload: string }) => output.type === 'error')[0]
+					?.payload[0];
+			}
+
+			if (lesson.course === 'python') {
+				const fetchPythonResult = await fetchResultPiston(code[0]);
+				console.log(fetchPythonResult);
+
+				let preparedResult = fetchPythonResult.run.stdout.split('\n')
+				preparedResult.pop()
+				const finalResult = preparedResult.at(-1)||"Nada"
+				
+				output = fetchPythonResult.run.output
+				result = JSON.stringify({value: finalResult})
+				error = fetchPythonResult.run.stderr
+			}
 
 			setOutput([output, result || '', error || '']);
 
 			const hardCoded = verifyHardCode(code[0], exercicioAtual.verificadorTrapaca || '');
-
+			console.log(output===exercicioAtual.respostaCodigo)
 			userGuessedRight = output === exercicioAtual.respostaCodigo && !hardCoded;
 		}
 		!userGuessedRight &&
 			setTimeout(() => {
 				setExercise(exercise => ({
 					...exercise,
-					exerciseStatus: exercise.exerciseStatus==="wrong"?'':exercise.exerciseStatus
+					exerciseStatus: exercise.exerciseStatus === 'wrong' ? '' : exercise.exerciseStatus,
 				}));
 			}, 500);
 		setExercise(exercise => ({

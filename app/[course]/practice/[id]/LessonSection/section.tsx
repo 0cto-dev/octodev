@@ -64,7 +64,6 @@ export default function LessonSection({
 			const outputValue = output[0] && output[0];
 			const result = output[1] && JSON.parse(output[1]).value;
 			const error = output[2] && output[2];
-			console.log(exercise.exerciseStatus);
 			return (
 				<>
 					{title}

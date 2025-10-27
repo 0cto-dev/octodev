@@ -16,9 +16,9 @@ export type exercisesType = {
 	pergunta: string;
 	alternativas?: alternativasType[];
 	codigo?: string;
-	autocompletar?:boolean;
-	respostaCodigo?:string;
-	verificadorTrapaca?:string;
+	autocompletar?: boolean;
+	respostaCodigo?: string;
+	verificadorTrapaca?: string;
 };
 
 export type lessonType = {
@@ -49,9 +49,9 @@ export type LessonSectionType = {
 	exercise: exerciseType;
 	shuffledAlternatives: alternativasType[];
 	code: string[];
-	setCode:Dispatch<SetStateAction<string[]>>;
+	setCode: Dispatch<SetStateAction<string[]>>;
 	output: string[];
-	goingToNextExercise:boolean
+	goingToNextExercise: boolean;
 };
 export type exerciseType = {
 	selectedAlternative: alternativasType;
@@ -132,5 +132,11 @@ export type MonacoEditorProps = {
 	language: string;
 	onChange?: OnChange | undefined;
 	theme?: string;
-	autocomplete:boolean;
+	autocomplete: boolean;
+};
+
+export type fetchResultPistonType = {
+	language: string;
+	run: { code: number; output: string; signal: null; stderr: string; stdout: string };
+	version: string;
 };
