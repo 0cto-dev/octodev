@@ -10,7 +10,7 @@ import { runTenda } from '@/app/api/tenda/tendaFetch';
 import { useCode } from '@/app/api/code-import/getCode';
 import verifyHardCode from '@/app/api/verifyHardCode';
 import '@/public/hljs.css';
-import fetchResultPiston from '@/app/api/pistonApi/route';
+import fetchResultPiston from '@/app/api/pistonApi/pistonApi';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
@@ -20,7 +20,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExercise: 5,
+		currentExercise: 1,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
