@@ -28,7 +28,7 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 				// },
 			],
 		});
-		autocomplete &&
+		if (autocomplete) {
 			monaco.languages.registerCompletionItemProvider('tenda', {
 				provideCompletionItems: (model, position) => {
 					const word = model.getWordUntilPosition(position);
@@ -114,7 +114,11 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 							{
 								label: 'para cada',
 								kind: monaco.languages.CompletionItemKind.Snippet,
-								insertText: ['para cada ${1:índice} em ${2:mínimo} até ${3:máximo} faça','\t$0','fim'].join('\n'),
+								insertText: [
+									'para cada ${1:índice} em ${2:mínimo} até ${3:máximo} faça',
+									'\t$0',
+									'fim',
+								].join('\n'),
 								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
 								range,
 							},
@@ -148,7 +152,7 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 								insertText: 'enquanto ',
 								range,
 							},
-														{
+							{
 								label: 'enquanto',
 								kind: monaco.languages.CompletionItemKind.Snippet,
 								insertText: ['enquanto ${1:condição} faça', '\t$2', 'fim'].join('\n'),
@@ -309,6 +313,187 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 					};
 				},
 			});
+			monaco.languages.registerCompletionItemProvider('python', {
+				provideCompletionItems: (model, position) => {
+					const word = model.getWordUntilPosition(position);
+					const range = {
+						startLineNumber: position.lineNumber,
+						endLineNumber: position.lineNumber,
+						startColumn: word.startColumn,
+						endColumn: word.endColumn,
+					};
+
+					return {
+						suggestions: [
+							{
+								label: 'print',
+								kind: monaco.languages.CompletionItemKind.Function,
+								insertText: 'print(${1:valor})',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Imprime no console',
+								range,
+							},
+							{
+								label: 'input',
+								kind: monaco.languages.CompletionItemKind.Function,
+								insertText: 'input("${1:mensagem}")',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Lê uma entrada do usuário',
+								range,
+							},
+							{
+								label: 'def',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'def ${1:nome_funcao}(${2:args}):\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Definir uma função',
+								range,
+							},
+							{
+								label: 'if',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'if ${1:condicao}:\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Estrutura de condição',
+								range,
+							},
+							{
+								label: 'else',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'else:\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Condição alternativa',
+								range,
+							},
+							{
+								label: 'elif',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'elif ${1:condicao}:\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Outro tipo de condição',
+								range,
+							},
+							{
+								label: 'for',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'for ${1:item} in ${2:iterable}:\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Loop para iterar',
+								range,
+							},
+							{
+								label: 'while',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'while ${1:condicao}:\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Loop enquanto a condição for verdadeira',
+								range,
+							},
+							{
+								label: 'int',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'int(${1:valor})',
+								documentation: 'Inteiro',
+								range,
+							},
+							{
+								label: 'str',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'str(${1:valor})',
+								documentation: 'String',
+								range,
+							},
+							{
+								label: 'list',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'list(${1:iterable})',
+								documentation: 'Lista',
+								range,
+							},
+							{
+								label: 'dict',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'dict(${1:chave:valor})',
+								documentation: 'Dicionário',
+								range,
+							},
+							{
+								label: 'tuple',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'tuple(${1:valor})',
+								documentation: 'Tupla',
+								range,
+							},
+							{
+								label: 'and',
+								kind: monaco.languages.CompletionItemKind.Operator,
+								insertText: 'and',
+								range,
+							},
+							{
+								label: 'or',
+								kind: monaco.languages.CompletionItemKind.Operator,
+								insertText: 'or',
+								range,
+							},
+							{
+								label: 'not',
+								kind: monaco.languages.CompletionItemKind.Operator,
+								insertText: 'not',
+								range,
+							},
+							{
+								label: 'in',
+								kind: monaco.languages.CompletionItemKind.Operator,
+								insertText: 'in',
+								range,
+							},
+							{
+								label: 'try',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'try:\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Bloco para capturar exceções',
+								range,
+							},
+							{
+								label: 'except',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'except ${1:erro} as ${2:variavel}:\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Captura exceção',
+								range,
+							},
+							{
+								label: 'finally',
+								kind: monaco.languages.CompletionItemKind.Keyword,
+								insertText: 'finally:\n\t${0}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Bloco final de execução',
+								range,
+							},
+							// Funções avançadas (exemplo de funções com mais de uma linha)
+							{
+								label: 'lambda',
+								kind: monaco.languages.CompletionItemKind.Snippet,
+								insertText: 'lambda ${1:args}: ${2:expressao}',
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Função anônima',
+								range,
+							},
+							{
+								label: 'def',
+								kind: monaco.languages.CompletionItemKind.Snippet,
+								insertText: ['def ${1:nome_funcao}(${2:args}):', '\t${3:pass}', '\t${0}'].join('\n'),
+								insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+								documentation: 'Função com múltiplas linhas',
+								range,
+							},
+						],
+					};
+				},
+			});
+		}
 
 		monaco.editor.defineTheme('tendaTheme', {
 			base: 'vs-dark',
@@ -325,7 +510,6 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 			onChange={onChange}
 			theme="tendaTheme"
 			beforeMount={handleBeforeMount}
-			
 			options={{
 				fontSize: 16,
 				fontFamily: 'Fira Code iScript',
