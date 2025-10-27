@@ -79,7 +79,7 @@ export default function LessonSection({
 
 						{/* o curso de logica é a unica exceção em que o nome do curso vai ser diferente do nome da linguagem */}
 
-						{result && (
+						{result && !error && (
 							<pre className="output">
 								<code>
 									<div className="output">{outputValue}</div>
