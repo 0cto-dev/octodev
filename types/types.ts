@@ -140,3 +140,37 @@ export type fetchResultPistonType = {
 	run: { code: number; output: string; signal: null; stderr: string; stdout: string };
 	version: string;
 };
+export type submitAnswerType = {
+	userAnswer: alternativasType;
+	alternatives: alternativasType[];
+	exercicioAtual: exercisesType;
+	lesson: {
+		course: string;
+		id: string;
+		data: lessonType;
+	};
+	code: string[];
+	setCode: Dispatch<SetStateAction<string[]>>;
+	setOutput: Dispatch<SetStateAction<string[]>>;
+	output: string[];
+	exercise: {
+		selectedAlternative: alternativasType;
+		currentExercise: number;
+		completedExercises: number;
+		exerciseStatus: string;
+		lastExercise: boolean;
+	};
+	setExercise: Dispatch<
+		SetStateAction<{
+			selectedAlternative: alternativasType;
+			currentExercise: number;
+			completedExercises: number;
+			exerciseStatus: string;
+			lastExercise: boolean;
+		}>
+	>;
+	lives: number;
+	setLives: Dispatch<SetStateAction<number>>;
+	setGoingToNextExercise: (value: React.SetStateAction<boolean>) => void;
+	StartNextExercise: () => Promise<void>;
+};
