@@ -88,7 +88,9 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 					<button
 						onClick={() => {
 							exercise.exerciseStatus === '' &&
-								exercise.selectedAlternative.id !== 0 &&
+								(exercicioAtual.tipo === 'alternativas'
+									? exercise.selectedAlternative.id !== 0
+									: true) &&
 								submitAnswer({
 									userAnswer: exercise.selectedAlternative,
 									alternatives: shuffledAlternatives,
