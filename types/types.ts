@@ -172,5 +172,4 @@ export type submitAnswerType = {
 	lives: number;
 	setLives: Dispatch<SetStateAction<number>>;
 	setGoingToNextExercise: (value: React.SetStateAction<boolean>) => void;
-	StartNextExercise: () => Promise<void>;
 };

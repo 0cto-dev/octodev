@@ -3,23 +3,27 @@ import { runTenda } from '@/app/api/tenda/tendaFetch';
 import verifyHardCode from '@/app/api/verifyHardCode';
 import { alternativasType, exercisesType, lessonType, submitAnswerType } from '@/types/types';
 import { Dispatch, SetStateAction } from 'react';
+import StartNextExercise from './startNewExercise';
 
-export default async function submitAnswer({
-	userAnswer,
-	alternatives,
-	exercicioAtual,
-	lesson,
-	code,
-	setCode,
-	setOutput,
-	output,
-	exercise,
-	setExercise,
-	lives,
-	setLives,
-	setGoingToNextExercise,
-	StartNextExercise,
-}:submitAnswerType) {
+export default async function submitAnswer(
+	//& #region Área de região
+	{
+		userAnswer,
+		alternatives,
+		exercicioAtual,
+		lesson,
+		code,
+		setCode,
+		setOutput,
+		output,
+		exercise,
+		setExercise,
+		lives,
+		setLives,
+		setGoingToNextExercise,
+	}: //& #endregion
+	submitAnswerType
+) {
 	const typeOfExercise = exercicioAtual.tipo;
 	let userGuessedRight: boolean = false;
 
@@ -34,6 +38,7 @@ export default async function submitAnswer({
 		let error = '';
 
 		if (lesson.course === 'logica') {
+			// Tratamento para a linguagem tenda
 			response = await runTenda(code, setCode);
 			output = response
 				.filter((output: { type: string; payload: string }) => output.type === 'output')
@@ -50,8 +55,9 @@ export default async function submitAnswer({
 				?.payload[0];
 		}
 
-		if (lesson.course === 'python') {
-			const fetchPythonResult = await fetchResultPiston(code[0]);
+		if (lesson.course !== 'logica') {
+			// Tratamento para python e possiveis próximas linguagens utilizando a piston API
+			const fetchPythonResult = await fetchResultPiston(code[0],lesson.course);
 			console.log(fetchPythonResult);
 
 			let preparedResult = fetchPythonResult.run.stdout.split('\n');
@@ -69,6 +75,7 @@ export default async function submitAnswer({
 		console.log(output === exercicioAtual.respostaCodigo);
 		userGuessedRight = output === exercicioAtual.respostaCodigo && !hardCoded;
 	}
+
 	if (!userGuessedRight) {
 		exercise.exerciseStatus !== 'wrong' && lives > 0 && setLives(lives => lives - 1);
 		setTimeout(() => {
@@ -85,6 +92,6 @@ export default async function submitAnswer({
 
 	if (userGuessedRight && !exercise.lastExercise) {
 		setGoingToNextExercise(true);
-		StartNextExercise();
+		StartNextExercise(exercise, setExercise);
 	}
 }

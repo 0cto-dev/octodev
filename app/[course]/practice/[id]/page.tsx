@@ -9,6 +9,7 @@ import LessonSection from './LessonSection/section';
 import { useCode } from '@/app/api/code-import/getCode';
 import '@/public/hljs.css';
 import submitAnswer from '@/lib/submitAnswer';
+import mainAnimationHandler from '@/lib/ExerciseMainAnimationHandler';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lesson, setLesson] = useState({ course: '', id: '', data: errorFetch as lessonType });
@@ -55,28 +56,6 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			setCode(JSON.parse(swrCode));
 		}
 	}, [swrCode, currentExercise]);
-	async function StartNextExercise() {
-		setTimeout(() => {
-			setExercise(exercise => ({
-				...exercise,
-				currentExercise: exercise.currentExercise + 1,
-				exerciseStatus: '',
-				selectedAlternative: nullAlternative as alternativasType,
-			}));
-		}, 2000);
-		// 1 segundo a menos do que o tempo de duração da animação hide do main
-	}
-	function mainAnimationHandler(e: React.AnimationEvent<HTMLElement>) {
-		if (e.animationName === 'wrong') {
-			setExercise(exercise => ({
-				...exercise,
-				exerciseStatus: exercise.exerciseStatus === 'wrong' ? '' : exercise.exerciseStatus,
-			}));
-		}
-		if (e.animationName === 'hide') {
-			setGoingToNextExercise(false);
-		}
-	}
 
 	if (!lesson.data) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>;
 
@@ -86,7 +65,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		loaded && (
 			<main
 				className={exercise.exerciseStatus + `${goingToNextExercise ? ' hide' : ''}`}
-				onAnimationEnd={mainAnimationHandler}
+				onAnimationEnd={e => mainAnimationHandler(e, setExercise, setGoingToNextExercise)}
 			>
 				<NavBar
 					data={lesson.data}
@@ -107,26 +86,25 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				/>
 				<footer>
 					<button
-						onClick={() =>
+						onClick={() => {
 							exercise.exerciseStatus === '' &&
-							exercise.selectedAlternative.id !== 0 &&
-							submitAnswer({
-								userAnswer: exercise.selectedAlternative,
-								alternatives: shuffledAlternatives,
-								exercicioAtual,
-								lesson,
-								code,
-								setCode,
-								setOutput,
-								output,
-								exercise,
-								setExercise,
-								lives,
-								setLives,
-								setGoingToNextExercise,
-								StartNextExercise,
-							})
-						}
+								exercise.selectedAlternative.id !== 0 &&
+								submitAnswer({
+									userAnswer: exercise.selectedAlternative,
+									alternatives: shuffledAlternatives,
+									exercicioAtual,
+									lesson,
+									code,
+									setCode,
+									setOutput,
+									output,
+									exercise,
+									setExercise,
+									lives,
+									setLives,
+									setGoingToNextExercise,
+								});
+						}}
 					>
 						Verificar
 					</button>

@@ -1,11 +1,11 @@
 import { fetchResultPistonType } from "@/types/types";
 
-export default async function fetchResultPiston(code:string):Promise<fetchResultPistonType> {
+export default async function fetchResultPiston(code:string,language:string):Promise<fetchResultPistonType> {
 	const response = await fetch('https://emkc.org/api/v2/piston/execute', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
-			language: 'python',
+			language: language,
 			version: '3.10.0',
 			// codigo de exemplo:
 			//~     x = 5
