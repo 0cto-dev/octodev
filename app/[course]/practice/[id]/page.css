@@ -16,50 +16,52 @@
 	}
 }
 @keyframes fall {
-	0% {
-		transform: translateY(0);
-		opacity: 1;
-	}
-	10% {
-		transform: translateY(6px);
-		opacity: 1;
-	}
-	20% {
-		transform: translateY(24px);
-		opacity: 1;
-	}
-	30% {
-		transform: translateY(54px);
-		opacity: 1;
-	}
-	40% {
-		transform: translateY(96px);
-		opacity: 1;
-	}
-	50% {
-		transform: translateY(150px);
-		opacity: 1;
-	}
-	60% {
-		transform: translateY(216px);
-		opacity: 1;
-	}
-	70% {
-		transform: translateY(294px);
-		opacity: 0.66;
-	}
-	80% {
-		transform: translateY(384px);
-		opacity: 0.33;
-	}
-	90% {
-		transform: translateY(486px);
-		opacity: 0.15;
-	}
-	100% {
-		transform: translateY(600px);
-		opacity: 0;
-	}
+0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+}
+10% {
+    transform: translateX(10vw) translateY(6px);
+    opacity: 1;
+}
+20% {
+    transform: translateX(20vw) translateY(24px);
+    opacity: 1;
+}
+30% {
+    transform: translateX(30vw) translateY(54px);
+    opacity: 1;
+}
+40% {
+    transform: translateX(40vw) translateY(96px);
+    opacity: 1;
+}
+50% {
+    transform: translateX(50vw) translateY(150px);
+    opacity: 1;
+}
+60% {
+    transform: translateX(60vw) translateY(216px);
+    opacity: 1;
+}
+70% {
+    transform: translateX(70vw) translateY(294px);
+    opacity: 0.66;
+}
+80% {
+    transform: translateX(80vw) translateY(384px);
+    opacity: 0.33;
+}
+90% {
+    transform: translateX(90vw) translateY(486px);
+    opacity: 0.15;
+}
+100% {
+    transform: translateX(100vw) translateY(600px);
+    opacity: 0;
+}
+
+
 }
 
 @keyframes rotate {
@@ -81,6 +83,19 @@
 		transform: scale(1) rotate(0deg);
 	}
 }
+
+@keyframes next {
+	66.66% {
+		transform: translateX(-100vw);
+	}
+	66.661% {
+		transform: translateX(120vw);
+	}
+
+	100% {
+		transform: translateX(0);
+	}
+}
 body {
 	height: 100vh;
 	width: 100vw;
@@ -94,8 +109,8 @@ main {
 	height: 90%;
 	width: 80%;
 
-	&.hide {
-		animation: hide 3s linear 1;
+	&.next {
+		animation: next 1.5s linear 1;
 	}
 	&.wrong {
 		animation: wrong 0.8s linear 2 alternate;

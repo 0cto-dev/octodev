@@ -64,7 +64,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	return (
 		loaded && (
 			<main
-				className={exercise.exerciseStatus + `${goingToNextExercise ? ' hide' : ''}`}
+				className={exercise.exerciseStatus + `${goingToNextExercise ? ' next' : ''}`}
 				onAnimationEnd={e => mainAnimationHandler(e, setExercise, setGoingToNextExercise)}
 			>
 				<NavBar

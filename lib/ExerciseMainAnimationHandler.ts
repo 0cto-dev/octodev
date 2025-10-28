@@ -11,7 +11,7 @@ export default function mainAnimationHandler(
 			exerciseStatus: exercise.exerciseStatus === 'wrong' ? '' : exercise.exerciseStatus,
 		}));
 	}
-	if (e.animationName === 'hide') {
+	if (e.animationName === 'next') {
 		setGoingToNextExercise(false);
 	}
 }

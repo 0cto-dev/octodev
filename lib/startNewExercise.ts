@@ -26,6 +26,6 @@ export default async function StartNextExercise(
 			exerciseStatus: '',
 			selectedAlternative: nullAlternative as alternativasType,
 		}));
-	}, 2000);
+	}, 1000);
 	// 1 segundo a menos do que o tempo de duração da animação hide do main
 }

@@ -7,10 +7,6 @@ export default async function fetchResultPiston(code:string,language:string):Pro
 		body: JSON.stringify({
 			language: language,
 			version: '3.10.0',
-			// codigo de exemplo:
-			//~     x = 5
-			//~     y = 2
-            //~     print(x+y)
 			files: [{ name: 'main.py', content: code}],
 		}),
 	});
