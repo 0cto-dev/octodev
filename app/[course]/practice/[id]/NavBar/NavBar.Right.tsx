@@ -1,11 +1,11 @@
 import { GoHeartFill } from "react-icons/go";
 import { IoMdTime } from "react-icons/io";
 
-export default function Right({currentExercise,totalExercises}:{currentExercise:number,totalExercises:number}) {
+export default function Right({currentExercise,totalExercises,lives}:{currentExercise:number,totalExercises:number,lives:number}) {
 	return (
 		<div className="right">
 			<div className="lives">
-				<p>5</p>
+				<p>{lives}</p>
 				<GoHeartFill color="var(--red)" size={20} />
 			</div>
 			<div className="progress">

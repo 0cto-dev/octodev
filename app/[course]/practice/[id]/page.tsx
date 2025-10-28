@@ -32,6 +32,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	const [code, setCode] = useState(['']);
 	const [output, setOutput] = useState(['']);
+	const [lives, setLives] = useState(5);
 	const shuffledAlternatives = useMemo(() => {
 		return shuffle(exercicioAtual?.alternativas || []) as alternativasType[];
 	}, [exercicioAtual]);
@@ -91,28 +92,30 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				const fetchPythonResult = await fetchResultPiston(code[0]);
 				console.log(fetchPythonResult);
 
-				let preparedResult = fetchPythonResult.run.stdout.split('\n')
-				preparedResult.pop()
-				const finalResult = preparedResult.at(-1)||"Nada"
-				
-				output = fetchPythonResult.run.output
-				result = JSON.stringify({value: finalResult})
-				error = fetchPythonResult.run.stderr
+				let preparedResult = fetchPythonResult.run.stdout.split('\n');
+				preparedResult.pop();
+				const finalResult = preparedResult.at(-1) || 'Nada';
+
+				output = fetchPythonResult.run.output;
+				result = JSON.stringify({ value: finalResult });
+				error = fetchPythonResult.run.stderr;
 			}
 
 			setOutput([output, result || '', error || '']);
 
 			const hardCoded = verifyHardCode(code[0], exercicioAtual.verificadorTrapaca || '');
-			console.log(output===exercicioAtual.respostaCodigo)
+			console.log(output === exercicioAtual.respostaCodigo);
 			userGuessedRight = output === exercicioAtual.respostaCodigo && !hardCoded;
 		}
-		!userGuessedRight &&
+		if (!userGuessedRight) {
+			exercise.exerciseStatus!=="wrong"&&lives>0&&setLives((lives)=>lives-1)
 			setTimeout(() => {
 				setExercise(exercise => ({
 					...exercise,
 					exerciseStatus: exercise.exerciseStatus === 'wrong' ? '' : exercise.exerciseStatus,
 				}));
 			}, 500);
+		}
 		setExercise(exercise => ({
 			...exercise,
 			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
@@ -161,6 +164,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 					goingToNextExercise={goingToNextExercise}
 					totalExercises={totalExercises}
 					exercise={exercise}
+					lives={lives}
 				/>
 				<LessonSection
 					lesson={lesson}
@@ -175,7 +179,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				<footer>
 					<button
 						onClick={() =>
-							exercise.exerciseStatus !== 'correct' &&
+							exercise.exerciseStatus ==='' && exercise.selectedAlternative.id!==0 &&
 							submitAnswer(exercise.selectedAlternative, shuffledAlternatives)
 						}
 					>
