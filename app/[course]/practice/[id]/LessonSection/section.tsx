@@ -99,7 +99,7 @@ export default function LessonSection({
 			</>
 		);
 	}
-	return <section>{RenderLessonExercise(lesson.data.exercicios[exercise.currentExercise - 1])}</section>;
+	return <section>{RenderLessonExercise(lesson.data.exercicios[exercise.currentExerciseNum - 1])}</section>;
 }
 
 function CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {
