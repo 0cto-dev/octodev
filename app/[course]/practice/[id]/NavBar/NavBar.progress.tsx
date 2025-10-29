@@ -1,21 +1,26 @@
-import { exerciseType } from "@/types/types";
+import { exerciseType } from '@/types/types';
 
 export default function ProgressBar({
-    goingToNextExercise,
+	goingToNextExercise,
 	exercise,
-    totalExercises,
+	totalExercises,
 }: {
-    goingToNextExercise:boolean
+	goingToNextExercise: boolean;
 	exercise: exerciseType;
-    totalExercises:number
+	totalExercises: number;
 }) {
-    // Espera com que a animação do main termine para que a barra de progresso suba
-    const completedExercises = goingToNextExercise?exercise.completedExercises-1:exercise.completedExercises
-	const lessonProgress = (completedExercises / totalExercises) * 100;
+	// Espera com que a animação do main termine para que a barra de progresso suba
+	const completedExercises = goingToNextExercise
+		? exercise.exerciseStatus !== 'correct'
+			? exercise.completedExercises - 1
+			: exercise.completedExercises
+		: exercise.completedExercises;
 
+	const lessonProgress = (completedExercises / totalExercises) * 100;
 	return (
 		<div
 			className="progress-bar"
+			/* create am gradient effect on progress bar */
 			style={{
 				background: `
                         linear-gradient(

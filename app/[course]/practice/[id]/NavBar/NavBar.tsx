@@ -21,7 +21,6 @@ export default function NavBar({
 			<Left data={data} />
 			<Right currentExercise={exercise.currentExerciseNum} totalExercises={totalExercises} lives={lives}/>
             <ProgressBar exercise={exercise} totalExercises={totalExercises} goingToNextExercise={goingToNextExercise}/>
-			{/* create am gradient effect on progress bar */}
 		</nav>
 	);
 }
