@@ -40,7 +40,7 @@ export type LessonSectionType = {
 	setExercise: React.Dispatch<
 		SetStateAction<{
 			selectedAlternative: alternativasType;
-			currentExercise: number;
+			currentExerciseNum: number;
 			completedExercises: number;
 			exerciseStatus: string;
 			lastExercise: boolean;
@@ -55,7 +55,7 @@ export type LessonSectionType = {
 };
 export type exerciseType = {
 	selectedAlternative: alternativasType;
-	currentExercise: number;
+	currentExerciseNum: number;
 	completedExercises: number;
 	exerciseStatus: string;
 	lastExercise: boolean;
@@ -143,7 +143,7 @@ export type fetchResultPistonType = {
 export type submitAnswerType = {
 	userAnswer: alternativasType;
 	alternatives: alternativasType[];
-	exercicioAtual: exercisesType;
+	currentExercise: exercisesType;
 	lesson: {
 		course: string;
 		id: string;
@@ -155,7 +155,7 @@ export type submitAnswerType = {
 	output: string[];
 	exercise: {
 		selectedAlternative: alternativasType;
-		currentExercise: number;
+		currentExerciseNum: number;
 		completedExercises: number;
 		exerciseStatus: string;
 		lastExercise: boolean;
@@ -163,7 +163,7 @@ export type submitAnswerType = {
 	setExercise: Dispatch<
 		SetStateAction<{
 			selectedAlternative: alternativasType;
-			currentExercise: number;
+			currentExerciseNum: number;
 			completedExercises: number;
 			exerciseStatus: string;
 			lastExercise: boolean;

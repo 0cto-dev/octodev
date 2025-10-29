@@ -2,17 +2,10 @@ import { alternativasType, nullAlternative } from '@/types/types';
 import { Dispatch, SetStateAction } from 'react';
 
 export default async function StartNextExercise(
-	exercise: {
-		selectedAlternative: alternativasType;
-		currentExercise: number;
-		completedExercises: number;
-		exerciseStatus: string;
-		lastExercise: boolean;
-	},
 	setExercise: Dispatch<
 		SetStateAction<{
 			selectedAlternative: alternativasType;
-			currentExercise: number;
+			currentExerciseNum: number;
 			completedExercises: number;
 			exerciseStatus: string;
 			lastExercise: boolean;
@@ -22,7 +15,7 @@ export default async function StartNextExercise(
 	setTimeout(() => {
 		setExercise(exercise => ({
 			...exercise,
-			currentExercise: exercise.currentExercise + 1,
+			currentExerciseNum: exercise.currentExerciseNum + 1,
 			exerciseStatus: '',
 			selectedAlternative: nullAlternative as alternativasType,
 		}));

@@ -10,7 +10,7 @@ export default async function submitAnswer(
 	{
 		userAnswer,
 		alternatives,
-		exercicioAtual,
+		currentExercise,
 		lesson,
 		code,
 		setCode,
@@ -24,7 +24,7 @@ export default async function submitAnswer(
 	}: //& #endregion
 	submitAnswerType
 ) {
-	const typeOfExercise = exercicioAtual.tipo;
+	const typeOfExercise = currentExercise.tipo;
 	let userGuessedRight: boolean = false;
 
 	if (typeOfExercise === 'alternativas') {
@@ -71,9 +71,9 @@ export default async function submitAnswer(
 
 		setOutput([output, result || '', error || '']);
 
-		const hardCoded = verifyHardCode(code[0], exercicioAtual.verificadorTrapaca || '');
-		console.log(output === exercicioAtual.respostaCodigo);
-		userGuessedRight = output === exercicioAtual.respostaCodigo && !hardCoded;
+		const hardCoded = verifyHardCode(code[0], currentExercise.verificadorTrapaca || '');
+		console.log(output === currentExercise.respostaCodigo);
+		userGuessedRight = output === currentExercise.respostaCodigo && !hardCoded;
 	}
 
 	if (!userGuessedRight) {
@@ -85,13 +85,21 @@ export default async function submitAnswer(
 			}));
 		}, 500);
 	}
-	setExercise(exercise => ({
+	lives>0&&setExercise(exercise => ({
 		...exercise,
 		exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
 	}));
 
+	lives===1&&setExercise(exercise => ({
+		...exercise,
+		exerciseStatus: userGuessedRight ? 'correct' : 'lose',
+	}));
+
 	if (userGuessedRight && !exercise.lastExercise) {
 		setGoingToNextExercise(true);
-		StartNextExercise(exercise, setExercise);
+		StartNextExercise(setExercise);
+	}
+	if(userGuessedRight && exercise.lastExercise){
+		setExercise(exercise=>({...exercise,exerciseStatus:"finish"}))
 	}
 }
