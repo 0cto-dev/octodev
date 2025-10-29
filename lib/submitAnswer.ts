@@ -1,6 +1,6 @@
-import fetchResultPiston from '@/app/api/pistonApi/pistonApi';
-import { runTenda } from '@/app/api/tenda/tendaFetch';
-import verifyHardCode from '@/app/api/verifyHardCode';
+import fetchResultPiston from '@/lib/pistonApi/pistonApi';
+import { runTenda } from '@/lib/tenda/tendaFetch';
+import verifyHardCode from '@/lib/verifyHardCode';
 import { alternativasType, exercisesType, lessonType, submitAnswerType } from '@/types/types';
 import { Dispatch, SetStateAction } from 'react';
 import StartNextExercise from './startNewExercise';
