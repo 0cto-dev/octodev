@@ -8,18 +8,20 @@ export default function NavBar({
 	goingToNextExercise,
 	exercise,
 	totalExercises,
-	lives
+	lives,
+	seconds
 }: {
 	data: lessonType;
 	goingToNextExercise:boolean
 	exercise: exerciseType;
 	totalExercises: number;
-	lives:number
+	lives:number,
+	seconds:number
 }) {
 	return (
 		<nav>
 			<Left data={data} />
-			<Right currentExercise={exercise.currentExerciseNum} totalExercises={totalExercises} lives={lives}/>
+			<Right currentExercise={exercise.currentExerciseNum} totalExercises={totalExercises} lives={lives} seconds={seconds}/>
             <ProgressBar exercise={exercise} totalExercises={totalExercises} goingToNextExercise={goingToNextExercise}/>
 		</nav>
 	);

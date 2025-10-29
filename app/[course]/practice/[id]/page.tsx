@@ -1,6 +1,6 @@
 'use client';
 import './page.css';
-import React, { use, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { alternativasType, errorFetch, lessonType, nullAlternative, paramsType } from '@/types/types';
 import { fetchData } from './lessonsData';
 import NavBar from './NavBar/NavBar';
@@ -11,6 +11,7 @@ import '@/public/hljs.css';
 import submitAnswer from '@/lib/submitAnswer';
 import mainAnimationHandler from '@/lib/ExerciseMainAnimationHandler';
 import PopUp from '@/components/PopUp';
+import updateTimer from '@/lib/timer';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States
@@ -28,6 +29,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [output, setOutput] = useState(['']);
 	const [lives, setLives] = useState(5);
 	const [showPopup, setShowPopup] = useState(false);
+	const [seconds, setSeconds] = useState(300);
 	// #endregion
 	// #region alias Variables
 	const exercicios = lesson.data?.exercicios;
@@ -63,17 +65,23 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	useEffect(() => {
 		// Atualiza sempre que o exercício que está sendo carregado possui um código, seja ele do tipo "código" ou "alternativas"
 		if (currentExercise?.codigo !== undefined && swrCode && swrCode !== JSON.stringify(code)) {
-			console.log('TEste');
 			setCode(JSON.parse(swrCode));
 		}
 	}, [swrCode, currentExercise]);
 
 	useEffect(() => {
+		// Atualiza sempre que o popUp deverá aparecer(Ao usuario perder ou completar um desafio)
 		(exercise.exerciseStatus === 'finish' || exercise.exerciseStatus === 'lose') &&
 			setTimeout(() => {
 				setShowPopup(true);
-			}, 1000);
+			}, 1500);
 	}, [exercise.exerciseStatus]);
+
+	useEffect(() => {
+		// Atualiza a cada secundo para atualizar o timer caso o exercício não tenha sido finalizado
+		!(exercise.exerciseStatus === 'fisnish' || exercise.exerciseStatus === 'lose') && updateTimer(setSeconds);
+		!seconds&&setExercise((exercise)=>({...exercise,exerciseStatus:"lose"}))
+	}, [seconds]);
 
 	// #endregion
 
@@ -84,9 +92,8 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	return (
 		loaded && (
 			<>
-				{(exercise.exerciseStatus === 'lose' || exercise.exerciseStatus === 'finish') && showPopup && (
-					<PopUp type={exercise.exerciseStatus} course={lesson.course} lessonId={lesson.id} />
-				)}
+				<PopUp type={exercise.exerciseStatus} course={lesson.course} className={showPopup ? 'show' : ''} />
+
 				<main
 					className={exercise.exerciseStatus + `${goingToNextExercise ? ' next' : ''}`}
 					onAnimationEnd={e => mainAnimationHandler(e, setExercise, setGoingToNextExercise)}
@@ -97,6 +104,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 						totalExercises={totalExercises}
 						exercise={exercise}
 						lives={lives}
+						seconds={seconds}
 					/>
 					<LessonSection
 						lesson={lesson}

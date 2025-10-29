@@ -112,10 +112,13 @@ div.popUp {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%) scale(0);
 	border-radius: 20px;
 	box-shadow: 0 0 10px #000000dd;
-
+	&.show {
+		transform: translate(-50%, -50%) scale(1);
+		transition: transform 0.15s linear;
+	}
 	.texts {
 		h1 {
 			margin-bottom: 10px;
@@ -146,15 +149,15 @@ div.popUp {
 			outline: none;
 			font-size: 1.2rem;
 			padding: 15px;
-			transition: background-color .1s linear;
-			&:hover{
+			transition: background-color 0.1s linear;
+			&:hover {
 				background-color: color-mix(in srgb, var(--input) 95%, var(--foreground));
 			}
 			&.active {
 				background-color: var(--primary);
-				&:hover{
-				background-color: color-mix(in srgb, var(--primary) 80%, var(--background));
-			}
+				&:hover {
+					background-color: color-mix(in srgb, var(--primary) 70%, var(--background));
+				}
 			}
 		}
 	}
@@ -174,13 +177,11 @@ main {
 	}
 
 	&.lose {
-		
 		border: 1px solid var(--red);
 		animation: hide 2s linear 1 forwards;
 	}
-	
-	
-	&.finish{
+
+	&.finish {
 		animation: hide 2s linear 1 forwards;
 		border: 1px solid var(--green);
 	}

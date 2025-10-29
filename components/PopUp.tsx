@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
 
-export default function PopUp({ type, course, lessonId }: { type: string; course: string; lessonId: string }) {
+export default function PopUp({ type, course, className }: { type: string; course: string; className: string }) {
 	const [isMounted, setIsMounted] = useState(false);
 	const router = useRouter();
 
@@ -36,7 +36,7 @@ export default function PopUp({ type, course, lessonId }: { type: string; course
 
 	if (type === 'finish') {
 		title = 'Parabéns, você conseguiu!';
-		text = 'Deseja continuar fazendo as lições ou sair para assistir uma videoaula?';
+		text = 'Saia para continuar sua trilha de lições ou assista sua próxima aula!';
 		buttons = [
 			{
 				id: 1,
@@ -48,7 +48,7 @@ export default function PopUp({ type, course, lessonId }: { type: string; course
 	}
 
 	return (
-		<div className="popUp">
+		<div className={`popUp ${className}`}>
 			<div className="texts">
 				<h1>{title}</h1>
 				<p>{text}</p>
