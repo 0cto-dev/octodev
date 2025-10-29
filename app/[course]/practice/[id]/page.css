@@ -195,6 +195,9 @@ main {
 		}
 	}
 
+	div.popUp.show ~&{
+		visibility: hidden;
+	}
 	nav {
 		display: flex;
 		flex-direction: row;
