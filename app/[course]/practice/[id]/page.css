@@ -168,6 +168,9 @@ main {
 	justify-content: space-between;
 	height: 90%;
 	width: 80%;
+	background: var(--card);
+	border-radius: 15px;
+	border: 1px solid var(--border);
 
 	&.next {
 		animation: next 1.5s linear 1;
@@ -195,7 +198,7 @@ main {
 		}
 	}
 
-	div.popUp.show ~&{
+	div.popUp.show ~ & {
 		visibility: hidden;
 	}
 	nav {
@@ -404,6 +407,7 @@ main {
 		display: flex;
 		justify-content: flex-end;
 		align-items: flex-end;
+		margin: 20px;
 		margin-top: 30px;
 
 		button {

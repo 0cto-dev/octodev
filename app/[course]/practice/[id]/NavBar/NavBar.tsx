@@ -4,25 +4,38 @@ import Right from './NavBar.Right';
 import ProgressBar from './NavBar.progress';
 
 export default function NavBar({
-	data,
+	lesson,
 	goingToNextExercise,
 	exercise,
 	totalExercises,
 	lives,
-	seconds
+	seconds,
 }: {
-	data: lessonType;
-	goingToNextExercise:boolean
+	lesson: {
+		course: string;
+		id: string;
+		data: lessonType;
+	};
+	goingToNextExercise: boolean;
 	exercise: exerciseType;
 	totalExercises: number;
-	lives:number,
-	seconds:number
+	lives: number;
+	seconds: number;
 }) {
 	return (
 		<nav>
-			<Left data={data} />
-			<Right currentExercise={exercise.currentExerciseNum} totalExercises={totalExercises} lives={lives} seconds={seconds}/>
-            <ProgressBar exercise={exercise} totalExercises={totalExercises} goingToNextExercise={goingToNextExercise}/>
+			<Left lesson={lesson} />
+			<Right
+				currentExercise={exercise.currentExerciseNum}
+				totalExercises={totalExercises}
+				lives={lives}
+				seconds={seconds}
+			/>
+			<ProgressBar
+				exercise={exercise}
+				totalExercises={totalExercises}
+				goingToNextExercise={goingToNextExercise}
+			/>
 		</nav>
 	);
 }

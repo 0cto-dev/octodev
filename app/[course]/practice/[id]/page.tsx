@@ -99,7 +99,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 					onAnimationEnd={e => mainAnimationHandler(e, setExercise, setGoingToNextExercise)}
 				>
 					<NavBar
-						data={lesson.data}
+						lesson={lesson}
 						goingToNextExercise={goingToNextExercise}
 						totalExercises={totalExercises}
 						exercise={exercise}
