@@ -100,6 +100,6 @@ export default async function submitAnswer(
 		StartNextExercise(setExercise);
 	}
 	if(userGuessedRight && exercise.lastExercise){
-		setExercise(exercise=>({...exercise,exerciseStatus:"finish"}))
+		setExercise(exercise=>({...exercise,exerciseStatus:"finish",currentExerciseNum:0}))
 	}
 }

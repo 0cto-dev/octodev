@@ -1,5 +1,5 @@
 'use client ';
-import { exercisesType, LessonSectionType } from '@/types/types';
+import { errorFetch, exercisesType, LessonSectionType } from '@/types/types';
 import Options from './section.options';
 import AnsiToHtml from 'ansi-to-html';
 import dynamic from 'next/dynamic';
@@ -92,6 +92,7 @@ export default function LessonSection({
 				</>
 			);
 		}
+		console.log(exerciseObj)
 		return (
 			<>
 				{title}
@@ -99,7 +100,7 @@ export default function LessonSection({
 			</>
 		);
 	}
-	return <section>{RenderLessonExercise(lesson.data.exercicios[exercise.currentExerciseNum - 1])}</section>;
+	return <section>{RenderLessonExercise(lesson.data.exercicios[exercise.currentExerciseNum - 1]||errorFetch.exercicios[0])}</section>;
 }
 
 function CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {

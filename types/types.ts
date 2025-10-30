@@ -66,13 +66,13 @@ export const errorFetch: lessonType = {
 	descricao: '  ',
 	exercicios: [
 		{
-			id: 'carregando',
-			tipo: 'carregando',
-			pergunta: 'carregando',
+			id: '',
+			tipo: 'alternativas',
+			pergunta: '',
 			alternativas: [
 				{
 					id: 0,
-					valor: 'carregando',
+					valor: '',
 					correto: false,
 				},
 			],
