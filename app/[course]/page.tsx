@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import LessonsNode from '@/components/nodes/LessonsNode';
 import './page.css';
-import { ReactFlow, Background, type Node } from '@xyflow/react';
+import { ReactFlow, Background, type Node, SelectionMode, PanOnScrollMode } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { emptyNode, lessonType, paramsType } from '@/types/types';
 import { fetchData } from '@/lib/lessonsData';
@@ -16,6 +16,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const [lessons, setLessons] = useState({ course: '', id: '', data: [{}] as lessonType[] });
 	const [isLoading, setIsLoading] = useState({});
 	const [nodes, setNodes] = useState<Node[]>([]);
+  const panOnDrag = [1, 2];
 
 	// const INITIAL_NODES: Node[] = [
 	// {
@@ -44,8 +45,8 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 							id: lesson.id,
 							type: 'lessonsNode',
 							position: {
-								x: windowWidth / 2 + (Math.random() * 400 - 200),
-								y: 200 * i + 100,
+								x: windowWidth / 2 + (Math.random() * 200 - 100),
+								y: 150 * i + 100,
 							},
 							data: {
 								title: lesson.titulo,
@@ -69,9 +70,12 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 					maxZoom={1}
 					nodeTypes={NODE_TYPES}
 					nodes={nodes}
-					panOnScroll={false}
+					panOnScroll
 					selectionOnDrag
-					panOnDrag={false}
+					panOnDrag={panOnDrag}
+					selectionMode={SelectionMode.Partial}
+          panOnScrollMode={'vertical' as PanOnScrollMode}
+          
 				>
 					<Background size={2} gap={25} color="color-mix(in srgb, var(--primary) 50%, transparent)" />
 				</ReactFlow>

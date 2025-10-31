@@ -1,7 +1,6 @@
 main{
     width:100%;
     height: 100%;
-    overflow-x: hidden;
     .node{
         width: 75px;
         height: 75px;
