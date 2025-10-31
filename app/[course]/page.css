@@ -1,15 +1,32 @@
-main{
-    width:100%;
-    height: 100%;
-    .node{
-        width: 75px;
-        height: 75px;
-        border-radius: 37.5px;
-        background-color: var(--card);
-        border: 1px solid var(--primary) ;
+main {
+	width: 100%;
+	height: 100%;
+	.nodeContent {
         display: flex;
-        align-items: center;
         justify-content: center;
-        text-align: center;
-    }
+        align-items: center;
+        flex-direction: column;
+        color: var(--disabled-foreground);
+        gap: 10px;
+        p{
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+		.node {
+			width: 75px;
+			height: 75px;
+			border-radius: 20px;
+			background: var(--input);
+			border: 5px solid var(--primary);
+			outline: solid 6px var(--input);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			box-shadow: 8px 8px 5px 7px #00000055;
+		}
+	}
+}
+.react-flow__attribution {
+	display: none;
 }

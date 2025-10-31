@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Parâmetros inválidos' }, { status:200 })
   }
 
-  const filePath = path.join(process.cwd(), "data", course, "practice", "codes", codePath)
+  const filePath = path.join(process.cwd(), "data", course, "pratica", "codes", codePath)
 
   try {
     const code = await fs.readFile(filePath, 'utf-8')
