@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 export type paramsType = {
 	course: string;
-	id: string;
+	id?: string;
 };
 export type alternativasType = {
 	id: number;
@@ -173,3 +173,15 @@ export type submitAnswerType = {
 	setLives: Dispatch<SetStateAction<number>>;
 	setGoingToNextExercise: (value: React.SetStateAction<boolean>) => void;
 };
+
+export const emptyNode = [
+	{
+		id: '0',
+		type: 'lessonsNode',
+		position: {
+			x: -500,
+			y: -500,
+		},
+		data: {},
+	},
+];

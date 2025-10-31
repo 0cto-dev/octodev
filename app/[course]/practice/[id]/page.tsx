@@ -2,7 +2,6 @@
 import './page.css';
 import React, { useEffect, useMemo, useState } from 'react';
 import { alternativasType, errorFetch, lessonType, nullAlternative, paramsType } from '@/types/types';
-import { fetchData } from './lessonsData';
 import NavBar from './NavBar/NavBar';
 import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
@@ -12,6 +11,7 @@ import submitAnswer from '@/lib/submitAnswer';
 import mainAnimationHandler from '@/lib/ExerciseMainAnimationHandler';
 import PopUp from '@/components/PopUp';
 import updateTimer from '@/lib/timer';
+import { fetchData } from '@/lib/lessonsData';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States
@@ -20,7 +20,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExerciseNum: 4,
+		currentExerciseNum: 1,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,

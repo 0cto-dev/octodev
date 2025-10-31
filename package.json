@@ -13,6 +13,7 @@
     "@wasmer/sdk": "^0.9.0",
     "@wasmer/wasi": "^1.2.2",
     "@wasmer/wasmfs": "^0.12.0",
+    "@xyflow/react": "^12.9.2",
     "ansi-to-html": "^0.7.2",
     "highlight.js": "^11.11.1",
     "next": "15.5.4",
@@ -20,6 +21,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
+    "reactflow": "^11.11.4",
     "swr": "^2.3.6"
   },
   "devDependencies": {
