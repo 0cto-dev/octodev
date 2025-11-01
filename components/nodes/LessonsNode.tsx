@@ -2,6 +2,8 @@
 import { FaCode } from 'react-icons/fa6';
 import { IoRocket } from 'react-icons/io5';
 import { FaTrophy } from 'react-icons/fa';
+import { FaPlay } from "react-icons/fa";
+
 
 import { Handle, NodeProps, Position } from '@xyflow/react';
 
@@ -14,6 +16,8 @@ export default function LessonsNode(props: NodeProps) {
 						<IoRocket size={30} />
 					) : props.data.position === 'last' ? (
 						<FaTrophy size={25} />
+					): props.data.position === 'current' ? (
+						<FaPlay size={23} />
 					) : (
 						<FaCode size={25} />
 					)}

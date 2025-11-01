@@ -12,10 +12,10 @@ export default function roundedEdge({
 }: any) {
 	const [path] = getSmoothStepPath({
 		sourceX,
-		sourceY,
+		sourceY: sourceY+13,
 		sourcePosition,
 		targetX,
-		targetY: targetY+20,
+		targetY: targetY+18,
 		targetPosition,
 		borderRadius:20,
 	});

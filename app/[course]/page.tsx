@@ -23,6 +23,8 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const [nodes, setNodes] = useState<Node[]>([]);
 	const [edges, setEdges] = useState<Edge[]>([]);
 	const panOnDrag = [1, 2];
+	const nodeSize = 40;
+	const lastMadeLesson = 2;
 
 	useEffect(() => {
 		// Ao carregar os dados necessários, é chamado essa função
@@ -40,8 +42,8 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		if (!(windowWidth && windowHeight)) return;
 
 		// Caso seja disposivo movel, cada pulo é 20% da tela, caso seja computador é 10%
-		const jumpBetweenPositions = windowWidth>windowHeight?windowWidth/10:windowWidth/5
-		let position = (windowWidth / 2)-40;
+		const jumpBetweenPositions = (windowWidth / nodeSize) * 4;
+		let position = windowWidth / 2 - nodeSize;
 
 		const INITIAL_NODES: Node[] = lessons.data.map((lesson, i) => {
 			const lessonObj = {
@@ -49,14 +51,19 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 				type: 'lessonsNode',
 				position: {
 					x: position,
-					y: windowHeight * 0.25 * i + windowHeight * 0.1,
+					y: 200 * i + windowHeight * 0.1,
 				},
 				data: {
 					title: lesson.titulo,
 					description: lesson.descricao,
 					exercicios: lesson.exercicios,
 					id: lesson.id,
-					position: i === 0 ? 'first' : i + 1 === lessons.data.length ? 'last' : '',
+					position:
+						i === 0 ? 'first'
+						: i + 1 === lessons.data.length	? 'last'
+						: i === lastMadeLesson ? 'current'
+						: i > lastMadeLesson ? 'disabled'
+						: '',
 				},
 			};
 
@@ -75,12 +82,11 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			}
 			position += random;
 
-			
-			if (position < jumpBetweenPositions) {
-				position += jumpBetweenPositions*2
+			if (position < nodeSize) {
+				position += jumpBetweenPositions * 2;
 			}
-			if (position > windowWidth - jumpBetweenPositions*1.1) {
-				position -= jumpBetweenPositions *2
+			if (position > windowWidth - nodeSize) {
+				position -= jumpBetweenPositions * 2;
 			}
 			return lessonObj;
 		});
@@ -116,7 +122,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 					maxZoom={1}
 					translateExtent={[
 						[0, 0],
-						[windowWidth, windowHeight * 0.25 * nodes.length + windowHeight * 0.1],
+						[windowWidth, 200 * nodes.length + windowHeight * 0.1],
 					]}
 					nodeTypes={NODE_TYPES}
 					nodes={nodes}
