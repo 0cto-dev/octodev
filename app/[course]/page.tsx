@@ -38,6 +38,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		setNodes(emptyNodes);
 
 		if (!(windowWidth && windowHeight)) return;
+
 		let position = windowWidth / 2;
 
 		const INITIAL_NODES: Node[] = lessons.data.map((lesson, i) => {
@@ -56,8 +57,10 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 					position: i === 0 ? 'first' : i + 1 === lessons.data.length ? 'last' : '',
 				},
 			};
+
 			let random: number = 0;
-			for (let i = 0; i < 2; i++) {
+
+			for (let _ = 0; _ < 2; _++) {
 				random = (windowWidth / 10) * (Math.floor(Math.random() * 3) - 1);
 				if (random !== 0) break;
 			}
@@ -66,6 +69,11 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			if (position < windowWidth / 4) {
 				position += windowWidth / 5;
 				console.log('aconteceu: ' + lesson.id);
+			}
+			if (position > windowWidth - (windowWidth/4)){
+				position -= windowWidth / 5;
+				console.log('aconteceu2: ' + lesson.id);
+
 			}
 			return lessonObj;
 		});
