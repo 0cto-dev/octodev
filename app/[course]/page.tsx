@@ -39,7 +39,9 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 
 		if (!(windowWidth && windowHeight)) return;
 
-		let position = windowWidth / 2;
+		// Caso seja disposivo movel, cada pulo é 20% da tela, caso seja computador é 10%
+		const jumpBetweenPositions = windowWidth>windowHeight?windowWidth/10:windowWidth/5
+		let position = (windowWidth / 2)-40;
 
 		const INITIAL_NODES: Node[] = lessons.data.map((lesson, i) => {
 			const lessonObj = {
@@ -68,16 +70,17 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 				// 1: vai retornar um valor positivo, fazendo o próximo node ser à direita do anterior
 				// ele vai resortear o valor até o numero randomico ser != 0 ou ele ter sorteado 2 vezes
 				// Isso faz com que diminua as ocorrencias de não mudar de linha
-				random = (windowWidth / 10) * (Math.floor(Math.random() * 3) - 1);
+				random = jumpBetweenPositions * (Math.floor(Math.random() * 3) - 1);
 				if (random !== 0) break;
 			}
 			position += random;
 
-			if (position < windowWidth / 4) {
-				position += windowWidth / 5;
+			
+			if (position < jumpBetweenPositions) {
+				position += jumpBetweenPositions*2
 			}
-			if (position > windowWidth - windowWidth / 4) {
-				position -= windowWidth / 5;
+			if (position > windowWidth - jumpBetweenPositions*1.1) {
+				position -= jumpBetweenPositions *2
 			}
 			return lessonObj;
 		});

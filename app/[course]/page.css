@@ -4,16 +4,25 @@ main {
 	.nodeContent {
 		color: var(--disabled-foreground);
 
-		&.first{
-			div.nodeHtml{
-				.node{
+		&.first {
+			div.nodeHtml {
+				.node {
 					background-color: var(--primary);
 					color: var(--foreground);
 				}
 			}
 		}
-		&.last{
-
+		&.last {
+			div.nodeHtml {
+				.node {
+					border: 5px solid var(--orange);
+					box-shadow: 0px 0px 100px 10px var(--orange);
+				}
+				p{
+					left: 50%;
+					transform: translateX(-50%);
+				}
+			}
 		}
 		div.nodeHtml {
 			display: flex;
@@ -28,7 +37,7 @@ main {
 				font-weight: 600;
 				text-wrap: nowrap;
 				top: 120%;
-				left:70%;
+				left: 70%;
 			}
 			.node {
 				width: 75px;
