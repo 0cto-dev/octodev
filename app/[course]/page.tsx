@@ -30,11 +30,11 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		const height = window.innerHeight;
 		setWindowWidth(width);
 		setWindowHeight(height);
-		console.log(height);
 		fetchData(params, setLessons, setIsLoading);
 	}, []);
 
 	useEffect(() => {
+		// Ao carregar as lições do lessons.json é chamada essa função
 		setNodes(emptyNodes);
 
 		if (!(windowWidth && windowHeight)) return;
@@ -61,6 +61,13 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			let random: number = 0;
 
 			for (let _ = 0; _ < 2; _++) {
+				// (Math.floor(Math.random() * 3) - 1) pode ser tanto -1,0,1, e isso é multiplicado por 1/10 do tamanho horizontal da pagina
+				// ou seja:
+				// -1: vai retornar um valor negativo, fazendo o próximo node ser à esquerda do anterior
+				// 0: vai retornar 0, fazendo o próximo node ser na mesma linha do anterior
+				// 1: vai retornar um valor positivo, fazendo o próximo node ser à direita do anterior
+				// ele vai resortear o valor até o numero randomico ser != 0 ou ele ter sorteado 2 vezes
+				// Isso faz com que diminua as ocorrencias de não mudar de linha
 				random = (windowWidth / 10) * (Math.floor(Math.random() * 3) - 1);
 				if (random !== 0) break;
 			}
@@ -68,12 +75,9 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 
 			if (position < windowWidth / 4) {
 				position += windowWidth / 5;
-				console.log('aconteceu: ' + lesson.id);
 			}
-			if (position > windowWidth - (windowWidth/4)){
+			if (position > windowWidth - windowWidth / 4) {
 				position -= windowWidth / 5;
-				console.log('aconteceu2: ' + lesson.id);
-
 			}
 			return lessonObj;
 		});
