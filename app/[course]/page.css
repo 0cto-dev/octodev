@@ -25,6 +25,9 @@ main {
 			text-align: center;
 			box-shadow: 8px 8px 5px 7px #00000055;
 		}
+		.handlers{
+			visibility: hidden;
+		}
 	}
 }
 .react-flow__attribution {

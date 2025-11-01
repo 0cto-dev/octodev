@@ -174,7 +174,7 @@ export type submitAnswerType = {
 	setGoingToNextExercise: (value: React.SetStateAction<boolean>) => void;
 };
 
-export const emptyNode = [
+export const emptyNodes = [
 	{
 		id: '0',
 		type: 'lessonsNode',
@@ -183,5 +183,13 @@ export const emptyNode = [
 			y: -500,
 		},
 		data: {},
+	},
+];
+export const emptyEdges = [
+	{
+		id: '0',
+		type: 'straight',
+		source: '-1',
+		target: '0',
 	},
 ];
