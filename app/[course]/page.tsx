@@ -24,7 +24,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const [edges, setEdges] = useState<Edge[]>([]);
 	const panOnDrag = [1, 2];
 	const nodeSize = 40;
-	const lastMadeLesson = 2;
+	const lastMadeLesson = 0;
 
 	useEffect(() => {
 		// Ao carregar os dados necessários, é chamado essa função
@@ -37,6 +37,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 
 	useEffect(() => {
 		// Ao carregar as lições do lessons.json é chamada essa função
+		// Ela é responsável por criar os nodes de lições e definir a sua posição horizontal
 		setNodes(emptyNodes);
 
 		if (!(windowWidth && windowHeight)) return;
@@ -46,6 +47,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		let position = windowWidth / 2 - nodeSize;
 
 		const INITIAL_NODES: Node[] = lessons.data.map((lesson, i) => {
+			console.log(200 * i + windowHeight * 0.1)
 			const lessonObj = {
 				id: lesson.id,
 				type: 'lessonsNode',
@@ -58,12 +60,17 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 					description: lesson.descricao,
 					exercicios: lesson.exercicios,
 					id: lesson.id,
+					icon:lesson.icone,
 					position:
-						i === 0 ? 'first'
-						: i + 1 === lessons.data.length	? 'last'
-						: i === lastMadeLesson ? 'current'
-						: i > lastMadeLesson ? 'disabled'
-						: '',
+						i === 0
+							? 'first'
+							: i + 1 === lessons.data.length
+							? 'last'
+							: i === lastMadeLesson
+							? 'current'
+							: i > lastMadeLesson
+							? 'disabled'
+							: '',
 				},
 			};
 
@@ -136,7 +143,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 					elementsSelectable={false}
 				>
 					<Background
-						size={3}
+						size={4}
 						gap={30}
 						color="color-mix(in srgb, var(--disabled-foreground) 20%, transparent)"
 					/>

@@ -1,9 +1,10 @@
 main {
 	width: 100%;
 	height: 100%;
+	cursor: default;
 	.nodeContent {
 		color: var(--disabled-foreground);
-
+		cursor:pointer;
 		&.first {
 			div.nodeHtml {
 				.node {
@@ -91,4 +92,7 @@ main {
 }
 .react-flow__attribution {
 	display: none;
+}
+div.react-flow__pane.selection {
+	cursor: default;
 }

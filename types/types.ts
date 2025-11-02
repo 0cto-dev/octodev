@@ -26,6 +26,7 @@ export type lessonType = {
 	id: string;
 	titulo: string;
 	descricao: string;
+	icone?:string;
 	exercicios: exercisesType[];
 };
 
