@@ -11,7 +11,6 @@ import { HiVariable } from 'react-icons/hi';
 import { IconType } from 'react-icons';
 // #endregion
 import { Handle, NodeProps, Position } from '@xyflow/react';
-import { useState } from 'react';
 
 const iconMap: { [key: string]: { name: IconType; size: number } } = {
 	DataTypes: { name: TbNumbers, size: 35 },
@@ -21,15 +20,13 @@ const iconMap: { [key: string]: { name: IconType; size: number } } = {
 };
 
 export default function LessonsNode(props: NodeProps) {
-	// const Test = 'Function';
 	const { name: IconComponent, size } = iconMap[props.data.icon as string] || { name: FaCode, size: 30 };
-	const [isLessonMenuOpen, setIsLessonMenuOpen] = useState(false);
-	function handleClick(e:any) {
-		if((e.target as HTMLElement).classList.contains('nodeContent')) return;
-		setIsLessonMenuOpen(setIsLessonMenuOpen=>!setIsLessonMenuOpen);
-	}
 	return (
-		<div className={`nodeContent ${props.data.position} ${isLessonMenuOpen ? 'open' : ''}`} onClick={handleClick}>
+		<div
+			className={`nodeContent ${props.data.position} ${
+				props.data.isLessonMenuOpen === props.data.id ? 'open' : ''
+			}`}
+		>
 			<div className="nodeHtml">
 				<div className="node">
 					{props.data.position === 'first' ? (
@@ -45,9 +42,17 @@ export default function LessonsNode(props: NodeProps) {
 				<p>{props.id.replace('licao', 'Lição ')}</p>
 			</div>
 
+			<Handlers />
+		</div>
+	);
+}
+
+function Handlers() {
+	return (
+		<>
 			<Handle type="target" position={Position.Top} id="target" className="handlers" />
 
 			<Handle type="source" position={Position.Bottom} id="source" className="handlers" />
-		</div>
+		</>
 	);
 }
