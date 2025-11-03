@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import LessonsNode from '@/components/nodes/LessonsNode';
 import './page.css';
-import { ReactFlow, Background, type Node, SelectionMode, PanOnScrollMode,  Edge } from '@xyflow/react';
+import { ReactFlow, Background, type Node, SelectionMode, PanOnScrollMode, Edge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { emptyNodes, lessonType, paramsType } from '@/types/types';
 import { fetchData } from '@/lib/lessonsData';
@@ -31,18 +31,18 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const nodeSize = 40;
 	const lastMadeLesson = 3;
 
+	// #region Effects
 	useEffect(() => {
 		// Ao carregar os dados necessários, é chamado essa função
-		const width = window.innerWidth;
-		const height = window.innerHeight;
-		setWindowWidth(width);
-		setWindowHeight(height);
+		setWindowWidth(window.innerWidth);
+		setWindowHeight(window.innerHeight);
 		fetchData(params, setLessons, setIsLoaded);
 	}, []);
 
 	useEffect(() => {
 		// Ao carregar as lições do lessons.json é chamada essa função
 		// Ela é responsável por criar os nodes de lições e definir a sua posição horizontal
+
 		setNodes(emptyNodes);
 
 		if (!(windowWidth && windowHeight)) return;
@@ -61,14 +61,38 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			nodeSize,
 			setNodes,
 		});
-	}, [lessons]);
+	}, [lessons, lessonIdMenuOpen]);
 
 	useEffect(() => {
 		// Ao carregar os nodes cria um array sem o último node e cria edges ligando com o id da proxima lição
 		loadEdges({ lessons, nodes, setEdges });
 	}, [nodes]);
+	useEffect(() => {
+		// Sempre que clicar em um node de lição esse useEffect será chamado e mudará o z-index de todos os elementos deixando o elemento
+		// que foi clicado na frente, impedindo de que outros elementos fiquem na frente do popUp
+		setNodes(INITIAL_NODES =>
+			INITIAL_NODES.map(node => ({
+				...node,
+				style: {
+					...node.style,
+					zIndex: lessonIdMenuOpen === node.id ? 100 : 1,
+				},
+			}))
+		);
+	}, [lessonIdMenuOpen, setNodes]);
+	// #endregion
 
-	function handleOnClick() {}
+	function handleOnClick(e: React.MouseEvent<Element>) {
+		const clickedAriaLabel = (e.target as HTMLElement).closest('.nodeContent')?.ariaLabel;
+
+		if (clickedAriaLabel === undefined || clickedAriaLabel === null) {
+			setLessonIdMenuOpen('');
+			return null;
+		}
+		setLessonIdMenuOpen(lessonIdMenuOpen=>lessonIdMenuOpen===clickedAriaLabel?'':clickedAriaLabel);
+
+		console.log(clickedAriaLabel);
+	}
 
 	if (!windowWidth || !windowHeight || !isLoaded || nodes[0]?.id === '0' || edges[0]?.id === '0') return null;
 

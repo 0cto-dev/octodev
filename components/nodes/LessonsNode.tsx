@@ -21,24 +21,25 @@ const iconMap: { [key: string]: { name: IconType; size: number } } = {
 
 export default function LessonsNode(props: NodeProps) {
 	const { name: IconComponent, size } = iconMap[props.data.icon as string] || { name: FaCode, size: 30 };
+	const position = props.data.position as { index: number; class: string };
 	return (
 		<div
-			className={`nodeContent ${props.data.position} ${
-				props.data.isLessonMenuOpen === props.data.id ? 'open' : ''
-			}`}
+			className={`nodeContent ${position.class} ${(props.data.lessonIdMenuOpen as string) === props.data.id?'open':''}`}
+			aria-label={(props.data.id as string).toString()}
 		>
 			<div className="nodeHtml">
 				<div className="node">
-					{props.data.position === 'first' ? (
+					{position.class === 'first' ? (
 						<IoRocket size={30} />
-					) : props.data.position === 'last' ? (
+					) : position.class === 'last' ? (
 						<FaTrophy size={28} />
-					) : props.data.position === 'current' ? (
+					) : position.class === 'current' ? (
 						<FaPlay size={25} />
 					) : (
 						<IconComponent size={size} />
 					)}
 				</div>
+
 				<p>{props.id.replace('licao', 'Lição ')}</p>
 			</div>
 

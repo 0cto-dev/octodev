@@ -19,6 +19,7 @@ type loadNodesType = {
 	lessonIdMenuOpen: string;
 	setNodes: Dispatch<SetStateAction<Node[]>>;
 };
+let xPositions: number[] = [];
 
 export default function loadNodes({
 	lessons,
@@ -32,11 +33,13 @@ export default function loadNodes({
 	setNodes,
 }: loadNodesType) {
 	const INITIAL_NODES: Node[] = lessons.data.map((lesson, i) => {
+		i === 0 && !xPositions[0] && xPositions.push(position);
+
 		const lessonObj = {
 			id: lesson.id,
 			type: 'lessonsNode',
 			position: {
-				x: position,
+				x: xPositions[i] || position,
 				y: 200 * i + windowHeight * 0.1,
 			},
 			data: {
@@ -46,19 +49,21 @@ export default function loadNodes({
 				id: lesson.id,
 				icon: lesson.icone,
 				lessonIdMenuOpen,
-				position:
-					i === 0
-						? 'first'
-						: i + 1 === lessons.data.length
-						? 'last'
-						: i === lastMadeLesson
-						? 'current'
-						: i > lastMadeLesson
-						? 'disabled'
-						: '',
+				position: {
+					index: i,
+					class:
+						i === 0
+							? 'first'
+							: i + 1 === lessons.data.length
+							? 'last'
+							: i === lastMadeLesson
+							? 'current'
+							: i > lastMadeLesson
+							? 'disabled'
+							: '',
+				},
 			},
 		};
-
 		let random: number = 0;
 
 		for (let _ = 0; _ < 2; _++) {
@@ -80,8 +85,13 @@ export default function loadNodes({
 		if (position > windowWidth - nodeSize) {
 			position -= jumpBetweenPositions * 2;
 		}
+		
+		!xPositions[i+1] && xPositions.push(position);
+		console.log(xPositions);
+		console.log(position);
 		return lessonObj;
 	});
 
+	console.log(INITIAL_NODES);
 	setNodes(INITIAL_NODES);
 }

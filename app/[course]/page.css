@@ -58,7 +58,7 @@ main {
 				}
 			}
 		}
-		/* &.open{
+		&.open{
 			z-index: 99;
 
 		}
@@ -70,7 +70,7 @@ main {
 			height: 20vh;
 			background-color: red;
 			transform: translate(-50%,20px);
-		} */
+		}
 		div.nodeHtml {
 			display: flex;
 			position: relative;
