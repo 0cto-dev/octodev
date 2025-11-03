@@ -1,31 +1,35 @@
 'use client';
+// #region ICONES
 import { FaCode } from 'react-icons/fa6';
 import { IoRocket } from 'react-icons/io5';
 import { FaTrophy } from 'react-icons/fa';
 import { FaPlay } from 'react-icons/fa';
-import { TbNumbers } from "react-icons/tb";
-import { PiMathOperationsBold } from "react-icons/pi";
-import { BiSolidCommentError } from "react-icons/bi";
-import { HiVariable } from "react-icons/hi";
-import { FaGlobeAmericas } from "react-icons/fa";
-
-
-
-const iconMap:any = {
-	DataTypes:{name: TbNumbers,size:35},
-	Operators:{name: PiMathOperationsBold,size:32},
-	Error:{name: BiSolidCommentError,size:30},
-	Function:{name: HiVariable,size:30},
-};
-
+import { TbNumbers } from 'react-icons/tb';
+import { PiMathOperationsBold } from 'react-icons/pi';
+import { BiSolidCommentError } from 'react-icons/bi';
+import { HiVariable } from 'react-icons/hi';
+import { IconType } from 'react-icons';
+// #endregion
 import { Handle, NodeProps, Position } from '@xyflow/react';
+import { useState } from 'react';
+
+const iconMap: { [key: string]: { name: IconType; size: number } } = {
+	DataTypes: { name: TbNumbers, size: 35 },
+	Operators: { name: PiMathOperationsBold, size: 32 },
+	Error: { name: BiSolidCommentError, size: 30 },
+	Function: { name: HiVariable, size: 30 },
+};
 
 export default function LessonsNode(props: NodeProps) {
 	// const Test = 'Function';
-	const { name: IconComponent, size } = iconMap[props.data.icon as string] || {name: FaCode, size: 30};
-	function handleClick() {}
+	const { name: IconComponent, size } = iconMap[props.data.icon as string] || { name: FaCode, size: 30 };
+	const [isLessonMenuOpen, setIsLessonMenuOpen] = useState(false);
+	function handleClick(e:any) {
+		if((e.target as HTMLElement).classList.contains('nodeContent')) return;
+		setIsLessonMenuOpen(setIsLessonMenuOpen=>!setIsLessonMenuOpen);
+	}
 	return (
-		<div className={`nodeContent ${props.data.position}`} onClick={handleClick}>
+		<div className={`nodeContent ${props.data.position} ${isLessonMenuOpen ? 'open' : ''}`} onClick={handleClick}>
 			<div className="nodeHtml">
 				<div className="node">
 					{props.data.position === 'first' ? (

@@ -16,15 +16,18 @@ const EDGE_TYPES = {
 };
 
 export default function Home({ params }: { params: Promise<{ course: paramsType['course'] }> }) {
+	// #region States
 	const [windowWidth, setWindowWidth] = useState<number | null>(null);
 	const [windowHeight, setWindowHeight] = useState<number | null>(null);
 	const [lessons, setLessons] = useState({ course: '', id: '', data: [] as lessonType[] });
 	const [isLoading, setIsLoading] = useState(false);
 	const [nodes, setNodes] = useState<Node[]>([]);
 	const [edges, setEdges] = useState<Edge[]>([]);
+	// #endregion
+	
 	const panOnDrag = [1, 2];
 	const nodeSize = 40;
-	const lastMadeLesson = 0;
+	const lastMadeLesson = 3;
 
 	useEffect(() => {
 		// Ao carregar os dados necessários, é chamado essa função
@@ -47,7 +50,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		let position = windowWidth / 2 - nodeSize;
 
 		const INITIAL_NODES: Node[] = lessons.data.map((lesson, i) => {
-			console.log(200 * i + windowHeight * 0.1)
+			console.log(200 * i + windowHeight * 0.1);
 			const lessonObj = {
 				id: lesson.id,
 				type: 'lessonsNode',
@@ -60,7 +63,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 					description: lesson.descricao,
 					exercicios: lesson.exercicios,
 					id: lesson.id,
-					icon:lesson.icone,
+					icon: lesson.icone,
 					position:
 						i === 0
 							? 'first'
