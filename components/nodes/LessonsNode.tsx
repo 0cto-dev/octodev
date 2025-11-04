@@ -24,7 +24,7 @@ export default function LessonsNode(props: NodeProps) {
 	const position = props.data.position as { index: number; class: string };
 	return (
 		<div
-			className={`nodeContent ${position.class} ${
+			className={`nodeContent ${position.class} ${props.data.whichSideOpenPopUp} ${
 				(props.data.lessonIdMenuOpen as string) === props.data.id && position.class !== 'disabled' ? 'open' : ''
 			}`}
 			aria-label={(props.data.id as string).toString()}

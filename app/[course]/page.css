@@ -5,6 +5,10 @@ main {
 	.nodeContent {
 		color: var(--disabled-foreground);
 		position: relative;
+		@media (orientation: portrait) {
+			position: static;
+		}
+
 		pointer-events: visible;
 		cursor: pointer;
 		z-index: 1;
@@ -57,7 +61,7 @@ main {
 					border-radius: 5px;
 				}
 			}
-			&.left {
+			&.current.leftTitle {
 				div.nodeHtml {
 					p {
 						left: 0;
@@ -65,7 +69,7 @@ main {
 					}
 				}
 			}
-			&.right {
+			&.current.rightTitle {
 				div.nodeHtml {
 					p {
 						left: 130%;
@@ -125,6 +129,10 @@ main {
 				text-align: center;
 				box-shadow: 8px 8px 5px 7px #00000055;
 			}
+
+			@media (orientation: portrait) {
+				position: static;
+			}
 		}
 		.handlers {
 			visibility: hidden;
@@ -139,7 +147,6 @@ div.react-flow__pane.selection {
 }
 div.popUp {
 	content: '';
-
 	position: absolute;
 	display: flex;
 	flex-direction: column;
@@ -156,7 +163,6 @@ div.popUp {
 
 	gap: 20px;
 	@media (orientation: portrait) {
-		left: 50%;
 		width: 90vw;
 	}
 	.texts {
@@ -178,5 +184,18 @@ div.popUp {
 		border: 1px solid var(--border);
 		font-weight: bold;
 		border-radius: 5px;
+	}
+}
+
+.nodeContent.left {
+	div.popUp {
+		transform: translate(-78%, 47px);
+		width: 70vw;
+	}
+}
+.nodeContent.right {
+	div.popUp {
+		transform: translate(-22%, 47px);
+		width: 70vw;
 	}
 }

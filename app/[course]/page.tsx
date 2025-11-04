@@ -103,7 +103,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 				maxZoom={1}
 				translateExtent={[
 					[0, 0],
-					[windowWidth, 200 * nodes.length + windowHeight * 0.1],
+					[windowWidth, 200 * nodes.length + windowHeight * 0.1+300],
 				]}
 				nodeTypes={NODE_TYPES}
 				nodes={nodes}

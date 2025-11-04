@@ -22,6 +22,14 @@ type loadNodesType = {
 let xPositions: number[] = [];
 let positionOfCurrentLessonNode = 0;
 
+
+// : i + 1 === lessons.data.length && positionOfLastLessonNode-nodeSize/2 === xPositions[0]
+// ? 'last '
+// : i + 1 === lessons.data.length && positionOfLastLessonNode > windowWidth / 2
+// ? 'last left'
+// : i + 1 === lessons.data.length && positionOfLastLessonNode < windowWidth / 2
+// ? 'last right'
+
 export default function loadNodes({
 	lessons,
 	position,
@@ -35,7 +43,14 @@ export default function loadNodes({
 }: loadNodesType) {
 	const INITIAL_NODES: Node[] = lessons.data.map((lesson, i) => {
 		i === 0 && !xPositions[0] && xPositions.push(position);
-		if(!positionOfCurrentLessonNode&&i === lastMadeLesson) positionOfCurrentLessonNode = position+nodeSize/2
+		if (!positionOfCurrentLessonNode && i === lastMadeLesson) positionOfCurrentLessonNode = position + nodeSize / 2;
+
+		
+
+		// if (!positionOfLastLessonNode && i + 1 === lessons.data.length){
+		// 	positionOfLastLessonNode = position + nodeSize / 2;
+		// 	console.log( positionOfLastLessonNode-nodeSize/2, xPositions[0])
+		// }
 		const lessonObj = {
 			id: lesson.id,
 			type: 'lessonsNode',
@@ -50,6 +65,7 @@ export default function loadNodes({
 				id: lesson.id,
 				icon: lesson.icone,
 				lessonIdMenuOpen,
+				whichSideOpenPopUp: xPositions[i]===xPositions[0]?'':xPositions[i]+nodeSize/2 > windowWidth/2?'left':'right',
 				position: {
 					index: i,
 					class:
@@ -57,10 +73,10 @@ export default function loadNodes({
 							? 'first'
 							: i + 1 === lessons.data.length
 							? 'last'
-							: i === lastMadeLesson&&positionOfCurrentLessonNode>windowWidth/2
-							? 'current left'
-							: i === lastMadeLesson&&positionOfCurrentLessonNode<=windowWidth/2
-							? 'current right'
+							: i === lastMadeLesson && positionOfCurrentLessonNode > windowWidth / 2
+							? 'current leftTitle'
+							: i === lastMadeLesson && positionOfCurrentLessonNode <= windowWidth / 2
+							? 'current rightTitle'
 							: i > lastMadeLesson
 							? 'disabled'
 							: '',
@@ -68,7 +84,7 @@ export default function loadNodes({
 			},
 		};
 		let random: number = 0;
-		
+
 		for (let _ = 0; _ < 2; _++) {
 			// (Math.floor(Math.random() * 3) - 1) pode ser tanto -1,0,1, e isso é multiplicado por 1/10 do tamanho horizontal da pagina
 			// ou seja:
@@ -85,11 +101,11 @@ export default function loadNodes({
 		if (position < nodeSize) {
 			position += jumpBetweenPositions * 2;
 		}
-		if (position > windowWidth - nodeSize-70) {
+		if (position > windowWidth - nodeSize - 70) {
 			position -= jumpBetweenPositions * 2;
 		}
-		
-		!xPositions[i+1] && xPositions.push(position);
+
+		!xPositions[i + 1] && xPositions.push(position);
 
 		return lessonObj;
 	});
