@@ -24,7 +24,9 @@ export default function LessonsNode(props: NodeProps) {
 	const position = props.data.position as { index: number; class: string };
 	return (
 		<div
-			className={`nodeContent ${position.class} ${(props.data.lessonIdMenuOpen as string) === props.data.id?'open':''}`}
+			className={`nodeContent ${position.class} ${
+				(props.data.lessonIdMenuOpen as string) === props.data.id && position.class !== 'disabled' ? 'open' : ''
+			}`}
 			aria-label={(props.data.id as string).toString()}
 		>
 			<div className="nodeHtml">
@@ -42,7 +44,15 @@ export default function LessonsNode(props: NodeProps) {
 
 				<p>{props.id.replace('licao', 'Lição ')}</p>
 			</div>
-
+			{(props.data.lessonIdMenuOpen as string) === props.data.id && position.class !== 'disabled' && (
+				<div className="popUp">
+					<div className="texts">
+						<h1>{props.data.title as string}</h1>
+						<p>{props.data.description as string}</p>
+					</div>
+					<button>Começar</button>
+				</div>
+			)}
 			<Handlers />
 		</div>
 	);

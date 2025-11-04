@@ -5,7 +5,8 @@ main {
 	.nodeContent {
 		color: var(--disabled-foreground);
 		position: relative;
-		cursor:pointer;
+		pointer-events: visible;
+		cursor: pointer;
 		z-index: 1;
 		&.first {
 			div.nodeHtml {
@@ -28,6 +29,7 @@ main {
 			}
 		}
 		&.disabled {
+			cursor: default;
 			div.nodeHtml {
 				.node {
 					border: 5px solid color-mix(in srgb, var(--foreground) 40%, var(--input));
@@ -43,34 +45,58 @@ main {
 					background-color: color-mix(in srgb, var(--primary) 40%, var(--input));
 					color: var(--foreground);
 					transform: scale(1.1);
-
-
 				}
-				p{
+				p {
 					color: var(--foreground);
 					background: color-mix(in srgb, var(--primary) 30%, transparent);
-					padding-left: .7rem;
-					padding-right: .7rem;
+					padding-left: 0.7rem;
+					padding-right: 0.7rem;
+					position: absolute;
 					top: 50%;
-					left: 130%;
-					transform: translate(0,-50%) scale(1.1);
+					transform: translate(0%, -50%) scale(1.1);
 					border-radius: 5px;
 				}
 			}
+			&.left {
+				div.nodeHtml {
+					p {
+						left: 0;
+						transform: translate(-130%, -50%) scale(1.1);
+					}
+				}
+			}
+			&.right {
+				div.nodeHtml {
+					p {
+						left: 130%;
+					}
+				}
+			}
 		}
-		&.open{
-			z-index: 99;
 
-		}
-		&.open::after{
+		&.open::before {
+			content: '';
 			position: absolute;
-			content:'';
-			width: 30vw;
 			left: 50%;
-			height: 20vh;
-			background-color: red;
-			transform: translate(-50%,20px);
+			top: 100%;
+			transform: translate(-50%, 13px);
+			z-index: 2;
+			border-left: 50px solid transparent;
+			border-right: 50px solid transparent;
+			border-bottom: 40px solid var(--card);
 		}
+		&.open::after {
+			content: '';
+			position: absolute;
+			left: 50%;
+			top: 100%;
+			transform: translate(-50%, 10px);
+			z-index: 1;
+			border-left: 50px solid transparent;
+			border-right: 50px solid transparent;
+			border-bottom: 40px solid var(--border);
+		}
+
 		div.nodeHtml {
 			display: flex;
 			position: relative;
@@ -110,4 +136,47 @@ main {
 }
 div.react-flow__pane.selection {
 	cursor: default;
+}
+div.popUp {
+	content: '';
+
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	width: 30vw;
+	left: 50%;
+	transform: translate(-50%, 50px);
+	border: 2px solid var(--border);
+	background-color: var(--card);
+	color: var(--foreground);
+	padding: 10px;
+	padding-top: 20px;
+	text-align: center;
+	border-radius: 15px;
+
+	gap: 20px;
+	@media (orientation: portrait) {
+		left: 50%;
+		width: 90vw;
+	}
+	.texts {
+		h1 {
+			font-size: 1.5rem;
+		}
+		p {
+			font-size: 1.2rem;
+		}
+	}
+	button {
+		width: 100%;
+		height: 40px;
+		background-color: var(--primary);
+		outline: none;
+		border: none;
+		color: var(--foreground);
+		font-size: 1.3rem;
+		border: 1px solid var(--border);
+		font-weight: bold;
+		border-radius: 5px;
+	}
 }
