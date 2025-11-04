@@ -97,7 +97,7 @@ export default async function submitAnswer(
 
 	if (userGuessedRight && !exercise.lastExercise) {
 		setGoingToNextExercise(true);
-		StartNextExercise(setExercise);
+		StartNextExercise(setExercise,setCode);
 	}
 	if(userGuessedRight && exercise.lastExercise){
 		setExercise(exercise=>({...exercise,exerciseStatus:"finish",currentExerciseNum:0}))

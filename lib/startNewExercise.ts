@@ -10,9 +10,11 @@ export default async function StartNextExercise(
 			exerciseStatus: string;
 			lastExercise: boolean;
 		}>
-	>
+	>,
+	setCode: Dispatch<SetStateAction<string[]>>
 ) {
 	setTimeout(() => {
+		setCode([''])
 		setExercise(exercise => ({
 			...exercise,
 			currentExerciseNum: exercise.currentExerciseNum + 1,
