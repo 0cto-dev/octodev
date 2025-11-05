@@ -1,6 +1,6 @@
-import fetchResultPiston from '@/lib/pistonApi/pistonApi';
-import { runTenda } from '@/lib/tenda/tendaFetch';
-import verifyHardCode from '@/lib/verifyHardCode';
+import fetchResultPiston from '@/lib/(exercícios)/pistonApi/pistonApi';
+import { runTenda } from '@/lib/(exercícios)/tenda/tendaFetch';
+import verifyHardCode from '@/lib/(exercícios)/verifyHardCode';
 import { alternativasType, exercisesType, lessonType, submitAnswerType } from '@/types/types';
 import { Dispatch, SetStateAction } from 'react';
 import StartNextExercise from './startNewExercise';
@@ -72,8 +72,8 @@ export default async function submitAnswer(
 		setOutput([output, result || '', error || '']);
 
 		const hardCoded = verifyHardCode(code[0], currentExercise.verificadorTrapaca || '');
-		console.log(output === currentExercise.respostaCodigo);
-		userGuessedRight = output === currentExercise.respostaCodigo && !hardCoded;
+		console.log(currentExercise.respostaCodigo?output === currentExercise.respostaCodigo:true);
+		userGuessedRight = (currentExercise.respostaCodigo?output === currentExercise.respostaCodigo:true) && !hardCoded;
 	}
 
 	if (!userGuessedRight) {
@@ -100,6 +100,6 @@ export default async function submitAnswer(
 		StartNextExercise(setExercise,setCode);
 	}
 	if(userGuessedRight && exercise.lastExercise){
-		setExercise(exercise=>({...exercise,exerciseStatus:"finish",currentExerciseNum:0}))
+		setExercise(exercise=>({...exercise,exerciseStatus:"finish"}))
 	}
 }

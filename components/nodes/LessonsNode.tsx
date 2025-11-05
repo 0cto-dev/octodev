@@ -1,7 +1,7 @@
 'use client';
 // #region ICONES
 import { FaCode } from 'react-icons/fa6';
-import { IoRocket } from 'react-icons/io5';
+import { IoHeartSharp, IoRocket } from 'react-icons/io5';
 import { FaTrophy } from 'react-icons/fa';
 import { FaPlay } from 'react-icons/fa';
 import { TbNumbers } from 'react-icons/tb';
@@ -11,6 +11,7 @@ import { HiVariable } from 'react-icons/hi';
 import { IconType } from 'react-icons';
 // #endregion
 import { Handle, NodeProps, Position } from '@xyflow/react';
+import { exercisesType } from '@/types/types';
 
 const iconMap: { [key: string]: { name: IconType; size: number } } = {
 	DataTypes: { name: TbNumbers, size: 35 },
@@ -25,7 +26,10 @@ export default function LessonsNode(props: NodeProps) {
 	return (
 		<div
 			className={`nodeContent ${position.class} ${props.data.whichSideOpenPopUp} ${
-				(props.data.lessonIdMenuOpen as string) === props.data.id && position.class !== 'disabled' ? 'open' : ''
+				(props.data.lessonIdMenuOpen as string) === props.data.id &&
+				position.index < (props.data.lastMadeLesson as number) + 1
+					? 'open'
+					: ''
 			}`}
 			aria-label={(props.data.id as string).toString()}
 		>
@@ -44,15 +48,24 @@ export default function LessonsNode(props: NodeProps) {
 
 				<p>{props.id.replace('licao', 'Lição ')}</p>
 			</div>
-			{(props.data.lessonIdMenuOpen as string) === props.data.id && position.class !== 'disabled' && (
-				<div className="popUp">
-					<div className="texts">
-						<h1>{props.data.title as string}</h1>
-						<p>{props.data.description as string}</p>
+			{(props.data.lessonIdMenuOpen as string) === props.data.id &&
+				position.index < (props.data.lastMadeLesson as number) + 1 && (
+					<div className="popUp">
+						<div className="texts">
+							<header>
+								<div className="hearts">
+									{Array.from({ length: 5 }).map((_,i) => (
+										<IoHeartSharp size={18} color="var(--red)" key={i}/>
+									))}
+								</div>
+								<p>{(props.data.exercises as exercisesType[]).length} exercícios</p>
+							</header>
+							<h1>{props.data.title as string}</h1>
+							<p>{props.data.description as string}</p>
+						</div>
+						<button>Começar</button>
 					</div>
-					<button>Começar</button>
-				</div>
-			)}
+				)}
 			<Handlers />
 		</div>
 	);

@@ -5,7 +5,7 @@ import './page.css';
 import { ReactFlow, Background, type Node, SelectionMode, PanOnScrollMode, Edge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { emptyNodes, lessonType, paramsType } from '@/types/types';
-import { fetchData } from '@/lib/lessonsData';
+import { fetchData } from '@/lib/(exercícios)/lessonsData';
 import roundedEdge from '@/components/edges/LessonsEdge';
 import loadNodes from './page.loadNodes';
 import loadEdges from './page.loadEdges';
@@ -36,6 +36,10 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		// Ao carregar os dados necessários, é chamado essa função
 		setWindowWidth(window.innerWidth);
 		setWindowHeight(window.innerHeight);
+		window.addEventListener("resize",()=>{
+			setWindowWidth(window.innerWidth);
+			setWindowHeight(window.innerHeight);	
+		})
 		fetchData(params, setLessons, setIsLoaded);
 	}, []);
 
@@ -67,6 +71,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		// Ao carregar os nodes cria um array sem o último node e cria edges ligando com o id da proxima lição
 		loadEdges({ lessons, nodes, setEdges });
 	}, [nodes]);
+	
 	useEffect(() => {
 		// Sempre que clicar em um node de lição esse useEffect será chamado e mudará o z-index de todos os elementos deixando o elemento
 		// que foi clicado na frente, impedindo de que outros elementos fiquem na frente do popUp

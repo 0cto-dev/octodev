@@ -22,14 +22,6 @@ type loadNodesType = {
 let xPositions: number[] = [];
 let positionOfCurrentLessonNode = 0;
 
-
-// : i + 1 === lessons.data.length && positionOfLastLessonNode-nodeSize/2 === xPositions[0]
-// ? 'last '
-// : i + 1 === lessons.data.length && positionOfLastLessonNode > windowWidth / 2
-// ? 'last left'
-// : i + 1 === lessons.data.length && positionOfLastLessonNode < windowWidth / 2
-// ? 'last right'
-
 export default function loadNodes({
 	lessons,
 	position,
@@ -45,12 +37,8 @@ export default function loadNodes({
 		i === 0 && !xPositions[0] && xPositions.push(position);
 		if (!positionOfCurrentLessonNode && i === lastMadeLesson) positionOfCurrentLessonNode = position + nodeSize / 2;
 
-		
-
-		// if (!positionOfLastLessonNode && i + 1 === lessons.data.length){
-		// 	positionOfLastLessonNode = position + nodeSize / 2;
-		// 	console.log( positionOfLastLessonNode-nodeSize/2, xPositions[0])
-		// }
+		console.log(xPositions[i])
+		console.log(windowWidth)
 		const lessonObj = {
 			id: lesson.id,
 			type: 'lessonsNode',
@@ -61,11 +49,12 @@ export default function loadNodes({
 			data: {
 				title: lesson.titulo,
 				description: lesson.descricao,
-				exercicios: lesson.exercicios,
+				exercises: lesson.exercicios,
 				id: lesson.id,
 				icon: lesson.icone,
 				lessonIdMenuOpen,
-				whichSideOpenPopUp: xPositions[i]===xPositions[0]?'':xPositions[i]+nodeSize/2 > windowWidth/2?'left':'right',
+				whichSideOpenPopUp: windowWidth-xPositions[i]<210?'left':xPositions[i]<130?'right':'',
+				lastMadeLesson,
 				position: {
 					index: i,
 					class:

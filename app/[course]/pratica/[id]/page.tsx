@@ -7,11 +7,11 @@ import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
 import { useCode } from '@/app/api/code-import/getCode';
 import '@/public/hljs.css';
-import submitAnswer from '@/lib/submitAnswer';
-import mainAnimationHandler from '@/lib/ExerciseMainAnimationHandler';
+import submitAnswer from '@/lib/(exercícios)/submitAnswer';
+import mainAnimationHandler from '@/lib/(exercícios)/ExerciseMainAnimationHandler';
 import PopUp from '@/components/PopUp';
-import updateTimer from '@/lib/timer';
-import { fetchData } from '@/lib/lessonsData';
+import updateTimer from '@/lib/(exercícios)/timer';
+import { fetchData } from '@/lib/(exercícios)/lessonsData';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States
@@ -20,7 +20,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExerciseNum: 1,
+		currentExerciseNum: 2,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
