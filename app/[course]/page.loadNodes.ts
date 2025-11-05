@@ -47,6 +47,7 @@ export default function loadNodes({
 				y: 200 * i + windowHeight * 0.1,
 			},
 			data: {
+				course:lessons.course,
 				title: lesson.titulo,
 				description: lesson.descricao,
 				exercises: lesson.exercicios,

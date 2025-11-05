@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
-
+import './popUp.css'
 export default function PopUp({ type, course, className }: { type: string; course: string; className: string }) {
 	const [isMounted, setIsMounted] = useState(false);
 	const router = useRouter();

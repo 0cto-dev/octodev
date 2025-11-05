@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import LessonsNode from '@/components/nodes/LessonsNode';
-import './page.css';
+import './page.trilha.css';
 import { ReactFlow, Background, type Node, SelectionMode, PanOnScrollMode, Edge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { emptyNodes, lessonType, paramsType } from '@/types/types';
@@ -102,7 +102,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	if (!windowWidth || !windowHeight || !isLoaded || nodes[0]?.id === '0' || edges[0]?.id === '0') return null;
 
 	return (
-		<main onClick={handleOnClick}>
+		<main onClick={handleOnClick} key='trilha'>
 			<ReactFlow
 				minZoom={1}
 				maxZoom={1}

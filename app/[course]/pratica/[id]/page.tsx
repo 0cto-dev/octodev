@@ -1,5 +1,5 @@
 'use client';
-import './page.css';
+import './page.exercicios.css';
 import React, { useEffect, useMemo, useState } from 'react';
 import { alternativasType, errorFetch, lessonType, nullAlternative, paramsType } from '@/types/types';
 import NavBar from './NavBar/NavBar';
@@ -9,9 +9,9 @@ import { useCode } from '@/app/api/code-import/getCode';
 import '@/public/hljs.css';
 import submitAnswer from '@/app/[course]/pratica/[id]/lib/submitAnswer';
 import mainAnimationHandler from '@/app/[course]/pratica/[id]/lib/ExerciseMainAnimationHandler';
-import PopUp from '@/components/PopUp';
 import updateTimer from '@/app/[course]/pratica/[id]/lib/timer';
 import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
+import PopUp from '@/components/popUp/PopUp';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States
@@ -20,7 +20,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExerciseNum: 2,
+		currentExerciseNum: 1,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -95,6 +95,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				<PopUp type={exercise.exerciseStatus} course={lesson.course} className={showPopup ? 'show' : ''} />
 
 				<main
+					key='exercicios'
 					className={exercise.exerciseStatus + `${goingToNextExercise ? ' next' : ''}`}
 					onAnimationEnd={e => mainAnimationHandler(e, setExercise, setGoingToNextExercise)}
 				>

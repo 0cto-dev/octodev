@@ -12,6 +12,7 @@ import { IconType } from 'react-icons';
 // #endregion
 import { Handle, NodeProps, Position } from '@xyflow/react';
 import { exercisesType } from '@/types/types';
+import { useRouter } from 'next/navigation';
 
 const iconMap: { [key: string]: { name: IconType; size: number } } = {
 	DataTypes: { name: TbNumbers, size: 35 },
@@ -23,6 +24,10 @@ const iconMap: { [key: string]: { name: IconType; size: number } } = {
 export default function LessonsNode(props: NodeProps) {
 	const { name: IconComponent, size } = iconMap[props.data.icon as string] || { name: FaCode, size: 30 };
 	const position = props.data.position as { index: number; class: string };
+	const router = useRouter();
+	function handlePush() {
+		window.location.href = `/${props.data.course}/pratica/${props.id}`;
+	}
 	return (
 		<div
 			className={`nodeContent ${position.class} ${props.data.whichSideOpenPopUp} ${
@@ -54,8 +59,8 @@ export default function LessonsNode(props: NodeProps) {
 						<div className="texts">
 							<header>
 								<div className="hearts">
-									{Array.from({ length: 5 }).map((_,i) => (
-										<IoHeartSharp size={18} color="var(--red)" key={i}/>
+									{Array.from({ length: 5 }).map((_, i) => (
+										<IoHeartSharp size={18} color="var(--red)" key={i} />
 									))}
 								</div>
 								<p>{(props.data.exercises as exercisesType[]).length} exercícios</p>
@@ -63,7 +68,7 @@ export default function LessonsNode(props: NodeProps) {
 							<h1>{props.data.title as string}</h1>
 							<p>{props.data.description as string}</p>
 						</div>
-						<button>Começar</button>
+						<button onClick={handlePush}>Começar</button>
 					</div>
 				)}
 			<Handlers />

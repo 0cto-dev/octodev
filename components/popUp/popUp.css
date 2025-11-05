@@ -1,0 +1,63 @@
+div.popUp {
+	background: var(--card);
+	border: 1px solid var(--border);
+	min-width: 300px;
+	max-width: 500px;
+	font-size: 0.8rem;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	gap: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	border-radius: 20px;
+	box-shadow: 0 0 10px #000000dd;
+	&.show {
+		transform: translate(-50%, -50%) scale(1);
+		transition: transform 0.15s linear;
+	}
+	.texts {
+		h1 {
+			margin-bottom: 10px;
+		}
+		p {
+			font-size: 1.1rem;
+		}
+		margin: 20px;
+		margin-bottom: 0;
+	}
+	.buttons {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		gap: 10px;
+		margin: 15px;
+		margin-top: 0;
+		flex-wrap: nowrap;
+
+		button {
+			background: var(--input);
+			border: 1px solid var(--border);
+			flex-grow: 1;
+			text-wrap: nowrap;
+			color: var(--foreground);
+			cursor: pointer;
+			border-radius: 5px;
+			outline: none;
+			font-size: 1.2rem;
+			padding: 15px;
+			transition: background-color 0.1s linear;
+			&:hover {
+				background-color: color-mix(in srgb, var(--input) 95%, var(--foreground));
+			}
+			&.active {
+				background-color: var(--primary);
+				&:hover {
+					background-color: color-mix(in srgb, var(--primary) 70%, var(--background));
+				}
+			}
+		}
+	}
+}
