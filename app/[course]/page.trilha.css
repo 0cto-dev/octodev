@@ -2,11 +2,26 @@ main {
 	width: 100%;
 	height: 100%;
 	cursor: default;
-	.nodeContent {
+	.nodeContent.practice {
 		color: var(--disabled-foreground);
 		position: relative;
 		@media (orientation: portrait) {
-			position: static;
+			div.popUp {
+				width: 320px;
+				max-width: 73vw;
+			}
+			&.left {
+				div.popUp {
+					transform: translate(-78%, 47px);
+					width: 300px;
+				}
+			}
+			&.right {
+				div.popUp {
+					transform: translate(-22%, 47px);
+					width: 300px;
+				}
+			}
 		}
 
 		pointer-events: visible;
@@ -134,10 +149,49 @@ main {
 				position: static;
 			}
 		}
-		.handlers {
-			visibility: hidden;
+	}
+	.nodeContent.teoric {
+		background-color: var(--card);
+		border: 1px solid var(--border);
+		max-width: 45vw;
+		height: 300px;
+		border-radius: 20px;
+		box-shadow: 8px 8px 20px 20px #00000077;
+		text-align: center;
+		transform: scale(0.8);
+		padding: 20px;
+		padding-top: 10px;
+		font-size: 1.1rem;
+		.texts {
+			display: flex;
+			flex-direction: column;
+			gap: 40px;
+			div {
+				h1 {
+					text-align: center;
+					padding-bottom: 10px;
+				}
+			}
+			p {
+				font-size: 1.3rem;
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+		}
+
+		@media (orientation: portrait) {
+			& {
+				transform: scale(1);
+				text-align: start;
+				font-size: 1rem;
+
+				max-width: 95vw;
+			}
 		}
 	}
+}
+.handlers {
+	visibility: hidden;
 }
 .react-flow__attribution {
 	display: none;
@@ -166,16 +220,16 @@ div.popUp {
 	@media (orientation: portrait) {
 		width: 90vw;
 	}
-	header{
+	header {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		padding-bottom: 15px;
-		div.hearts{
+		div.hearts {
 			height: 100%;
 			display: flex;
 		}
-		p{
+		p {
 			flex-grow: 1;
 			text-align: end;
 			padding-right: 15px;
@@ -204,27 +258,6 @@ div.popUp {
 		border-radius: 10px;
 		&:hover {
 			background-color: color-mix(in srgb, var(--primary) 70%, var(--background));
-		}
-	}
-}
-
-@media (orientation: portrait) {
-	.nodeContent {
-		div.popUp {
-			width: 320px;
-			max-width: 73vw;
-		}
-		&.left {
-			div.popUp {
-				transform: translate(-78%, 47px);
-				width: 300px;
-			}
-		}
-		&.right {
-			div.popUp {
-				transform: translate(-22%, 47px);
-				width: 300px;
-			}
 		}
 	}
 }

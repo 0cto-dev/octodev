@@ -9,9 +9,11 @@ import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
 import roundedEdge from '@/components/edges/LessonsEdge';
 import loadNodes from './page.loadNodes';
 import loadEdges from './page.loadEdges';
+import TeoricsNode from '@/components/nodes/TeoricsNode';
 
 const NODE_TYPES = {
 	lessonsNode: LessonsNode,
+	teoricNode: TeoricsNode,
 };
 const EDGE_TYPES = {
 	roundedEdge: roundedEdge,
@@ -26,6 +28,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const [nodes, setNodes] = useState<Node[]>([]);
 	const [edges, setEdges] = useState<Edge[]>([]);
 	const [lessonIdMenuOpen, setLessonIdMenuOpen] = useState('');
+	const [lessonType, setLessonType] = useState<'pratica'|'teorica'>('teorica');
 	// #endregion
 
 	const nodeSize = 40;
@@ -64,8 +67,9 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			jumpBetweenPositions,
 			nodeSize,
 			setNodes,
+			lessonType
 		});
-	}, [lessons, lessonIdMenuOpen]);
+	}, [lessons, lessonIdMenuOpen,lessonType]);
 
 	useEffect(() => {
 		// Ao carregar os nodes cria um array sem o último node e cria edges ligando com o id da proxima lição
