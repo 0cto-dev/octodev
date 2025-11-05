@@ -5,7 +5,7 @@ import './page.css';
 import { ReactFlow, Background, type Node, SelectionMode, PanOnScrollMode, Edge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { emptyNodes, lessonType, paramsType } from '@/types/types';
-import { fetchData } from '@/lib/(exercícios)/lessonsData';
+import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
 import roundedEdge from '@/components/edges/LessonsEdge';
 import loadNodes from './page.loadNodes';
 import loadEdges from './page.loadEdges';

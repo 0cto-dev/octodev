@@ -1,12 +1,12 @@
-import fetchResultPiston from '@/lib/(exercícios)/pistonApi/pistonApi';
-import { runTenda } from '@/lib/(exercícios)/tenda/tendaFetch';
-import verifyHardCode from '@/lib/(exercícios)/verifyHardCode';
+import fetchResultPiston from '@/app/[course]/pratica/[id]/lib/pistonApi/pistonApi';
+import { runTenda } from '@/app/[course]/pratica/[id]/lib/tenda/tendaFetch';
+import verifyHardCode from '@/app/[course]/pratica/[id]/lib/verifyHardCode';
 import { alternativasType, exercisesType, lessonType, submitAnswerType } from '@/types/types';
 import { Dispatch, SetStateAction } from 'react';
 import StartNextExercise from './startNewExercise';
 
 export default async function submitAnswer(
-	//& #region Área de região
+	// #region Área de região
 	{
 		userAnswer,
 		alternatives,
@@ -21,7 +21,7 @@ export default async function submitAnswer(
 		lives,
 		setLives,
 		setGoingToNextExercise,
-	}: //& #endregion
+	}: // #endregion
 	submitAnswerType
 ) {
 	const typeOfExercise = currentExercise.tipo;
@@ -57,7 +57,7 @@ export default async function submitAnswer(
 
 		if (lesson.course !== 'logica') {
 			// Tratamento para python e possiveis próximas linguagens utilizando a piston API
-			const fetchPythonResult = await fetchResultPiston(code[0],lesson.course);
+			const fetchPythonResult = await fetchResultPiston(code[0], lesson.course);
 			console.log(fetchPythonResult);
 
 			let preparedResult = fetchPythonResult.run.stdout.split('\n');
@@ -72,8 +72,9 @@ export default async function submitAnswer(
 		setOutput([output, result || '', error || '']);
 
 		const hardCoded = verifyHardCode(code[0], currentExercise.verificadorTrapaca || '');
-		console.log(currentExercise.respostaCodigo?output === currentExercise.respostaCodigo:true);
-		userGuessedRight = (currentExercise.respostaCodigo?output === currentExercise.respostaCodigo:true) && !hardCoded;
+		console.log(currentExercise.respostaCodigo ? output === currentExercise.respostaCodigo : true);
+		userGuessedRight =
+			(currentExercise.respostaCodigo ? output === currentExercise.respostaCodigo : true) && !hardCoded;
 	}
 
 	if (!userGuessedRight) {
@@ -85,21 +86,23 @@ export default async function submitAnswer(
 			}));
 		}, 500);
 	}
-	lives>0&&setExercise(exercise => ({
-		...exercise,
-		exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
-	}));
+	lives > 0 &&
+		setExercise(exercise => ({
+			...exercise,
+			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
+		}));
 
-	lives===1&&setExercise(exercise => ({
-		...exercise,
-		exerciseStatus: userGuessedRight ? 'correct' : 'lose',
-	}));
+	lives === 1 &&
+		setExercise(exercise => ({
+			...exercise,
+			exerciseStatus: userGuessedRight ? 'correct' : 'lose',
+		}));
 
 	if (userGuessedRight && !exercise.lastExercise) {
 		setGoingToNextExercise(true);
-		StartNextExercise(setExercise,setCode);
+		StartNextExercise(setExercise, setCode);
 	}
-	if(userGuessedRight && exercise.lastExercise){
-		setExercise(exercise=>({...exercise,exerciseStatus:"finish"}))
+	if (userGuessedRight && exercise.lastExercise) {
+		setExercise(exercise => ({ ...exercise, exerciseStatus: 'finish' }));
 	}
 }

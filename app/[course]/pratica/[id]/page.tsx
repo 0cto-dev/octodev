@@ -7,11 +7,11 @@ import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
 import { useCode } from '@/app/api/code-import/getCode';
 import '@/public/hljs.css';
-import submitAnswer from '@/lib/(exercícios)/submitAnswer';
-import mainAnimationHandler from '@/lib/(exercícios)/ExerciseMainAnimationHandler';
+import submitAnswer from '@/app/[course]/pratica/[id]/lib/submitAnswer';
+import mainAnimationHandler from '@/app/[course]/pratica/[id]/lib/ExerciseMainAnimationHandler';
 import PopUp from '@/components/PopUp';
-import updateTimer from '@/lib/(exercícios)/timer';
-import { fetchData } from '@/lib/(exercícios)/lessonsData';
+import updateTimer from '@/app/[course]/pratica/[id]/lib/timer';
+import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States

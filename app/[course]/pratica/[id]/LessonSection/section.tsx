@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
 import hljs from 'highlight.js';
 import '@/public/tendaHljs';
 
-const MonacoEditor = dynamic(() => import('@/components/MonacoEditor'), {
+const MonacoEditor = dynamic(() => import('@/components/exercícios/MonacoEditor'), {
 	ssr: false,
 });
 
