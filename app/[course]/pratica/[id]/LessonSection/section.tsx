@@ -105,19 +105,19 @@ export default function LessonSection({
 	);
 }
 
-function CodeBlock({ language, children }: { language: string; children: React.ReactNode }) {
+function CodeBlock({ language, children }: { language: string; children: string[] }) {
 	const codeRef = useRef<HTMLElement | null>(null);
 
 	useEffect(() => {
 		if (codeRef.current) {
-			delete codeRef.current.dataset.highlighted;
+				delete codeRef.current.dataset.highlighted;
 			hljs.highlightElement(codeRef.current);
 		}
 	}, [children]);
 	return (
 		<pre className="code">
 			<code className={language} ref={codeRef}>
-				{children}
+				{children[0]}
 			</code>
 		</pre>
 	);
