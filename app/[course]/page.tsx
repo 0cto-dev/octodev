@@ -136,6 +136,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 					edgeTypes={EDGE_TYPES}
 					panOnScroll
 					selectionOnDrag
+					nodesDraggable={false}
 					panOnDrag={[1, 2]}
 					selectionMode={SelectionMode.Partial}
 					panOnScrollMode={'vertical' as PanOnScrollMode}
