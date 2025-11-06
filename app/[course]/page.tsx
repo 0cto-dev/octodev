@@ -73,7 +73,6 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			windowHeight,
 			windowWidth,
 			lessonIdMenuOpen,
-			lastMadeLesson,
 			jumpBetweenPositions,
 			nodeSize,
 			setNodes,

@@ -104,5 +104,14 @@ export default async function submitAnswer(
 	}
 	if (userGuessedRight && exercise.lastExercise) {
 		setExercise(exercise => ({ ...exercise, exerciseStatus: 'finish' }));
+		saveProgress(lesson.id)
 	}
+}
+
+function saveProgress(id:string){
+	if (typeof window !== 'undefined'){
+		const progress = sessionStorage.getItem("progress")
+		!progress||+progress<+id.replace('licao','')&&sessionStorage.setItem('progress',id.replace('licao',''))
+	}
+
 }
