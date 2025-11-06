@@ -18,7 +18,7 @@ type loadNodesType = {
 
 	lessonIdMenuOpen: string;
 	setNodes: Dispatch<SetStateAction<Node[]>>;
-	lessonType: 'teorica' | 'pratica';
+	nodesType: 'teorica' | 'pratica';
 };
 let xPositions: number[] = [];
 let positionOfCurrentLessonNode = 0;
@@ -33,11 +33,11 @@ export default function loadNodes({
 	jumpBetweenPositions,
 	nodeSize,
 	setNodes,
-	lessonType,
+	nodesType,
 }: loadNodesType) {
 	const isPortrait = windowWidth < windowHeight;
 	const INITIAL_NODES: Node[] =
-		lessonType === 'pratica'
+		nodesType === 'pratica'
 			? lessons.data.map((lesson, i) => {
 					i === 0 && !xPositions[0] && xPositions.push(position);
 					if (!positionOfCurrentLessonNode && i === lastMadeLesson)

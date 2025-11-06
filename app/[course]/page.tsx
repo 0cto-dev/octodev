@@ -1,8 +1,16 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import LessonsNode from '@/components/nodes/LessonsNode';
 import './page.trilha.css';
-import { ReactFlow, Background, type Node, SelectionMode, PanOnScrollMode, Edge } from '@xyflow/react';
+import {
+	ReactFlow,
+	Background,
+	type Node,
+	SelectionMode,
+	PanOnScrollMode,
+	Edge,
+	ReactFlowProvider,
+} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { emptyNodes, lessonType, paramsType } from '@/types/types';
 import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
@@ -10,6 +18,8 @@ import roundedEdge from '@/components/edges/LessonsEdge';
 import loadNodes from './page.loadNodes';
 import loadEdges from './page.loadEdges';
 import TeoricsNode from '@/components/nodes/TeoricsNode';
+import { useReactFlow } from '@xyflow/react';
+import Tab from './page.Tab';
 
 const NODE_TYPES = {
 	lessonsNode: LessonsNode,
@@ -28,7 +38,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const [nodes, setNodes] = useState<Node[]>([]);
 	const [edges, setEdges] = useState<Edge[]>([]);
 	const [lessonIdMenuOpen, setLessonIdMenuOpen] = useState('');
-	const [lessonType, setLessonType] = useState<'pratica' | 'teorica'>('teorica');
+	const [nodesType, setNodesType] = useState<'pratica' | 'teorica'>('pratica');
 	// #endregion
 
 	const nodeSize = 40;
@@ -67,9 +77,9 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			jumpBetweenPositions,
 			nodeSize,
 			setNodes,
-			lessonType,
+			nodesType,
 		});
-	}, [lessons, lessonIdMenuOpen, lessonType]);
+	}, [lessons, lessonIdMenuOpen, nodesType]);
 
 	useEffect(() => {
 		// Ao carregar os nodes cria um array sem o último node e cria edges ligando com o id da proxima lição
@@ -108,49 +118,36 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	return (
 		<main onClick={handleOnClick} key="trilha">
 			<div className="blur"></div>
-			<aside>
-				<ul>
-					<li className="buttons">
-						<button
-							className={lessonType === 'pratica' ? 'active' : ''}
-							onClick={() => setLessonType('pratica')}
-						>
-							Prática
-						</button>
-					</li>
-					<li className="buttons">
-						<button
-							className={lessonType === 'teorica' ? 'active' : ''}
-							onClick={() => setLessonType('teorica')}
-						>
-							Teórica
-						</button>
-					</li>
-				</ul>
-			</aside>
-			<ReactFlow
-				minZoom={1}
-				maxZoom={1}
-				translateExtent={[
-					[0, 0],
-					[
-						windowWidth,
-						lessonType === 'pratica' ? 200 * nodes.length + windowHeight * 0.1 + 300 : windowHeight,
-					],
-				]}
-				nodeTypes={NODE_TYPES}
-				nodes={nodes}
-				edges={edges}
-				edgeTypes={EDGE_TYPES}
-				panOnScroll
-				selectionOnDrag
-				panOnDrag={[1, 2]}
-				selectionMode={SelectionMode.Partial}
-				panOnScrollMode={'vertical' as PanOnScrollMode}
-				elementsSelectable={false}
-			>
-				<Background size={4} gap={30} color="color-mix(in srgb, var(--disabled-foreground) 20%, transparent)" />
-			</ReactFlow>
+			<ReactFlowProvider>
+				<Tab  nodesType={nodesType} setNodesType={setNodesType} />
+				<ReactFlow
+					minZoom={1}
+					maxZoom={1}
+					translateExtent={[
+						[0, 0],
+						[
+							windowWidth,
+							nodesType === 'pratica' ? 200 * nodes.length + windowHeight * 0.1 + 300 : windowHeight,
+						],
+					]}
+					nodeTypes={NODE_TYPES}
+					nodes={nodes}
+					edges={edges}
+					edgeTypes={EDGE_TYPES}
+					panOnScroll
+					selectionOnDrag
+					panOnDrag={[1, 2]}
+					selectionMode={SelectionMode.Partial}
+					panOnScrollMode={'vertical' as PanOnScrollMode}
+					elementsSelectable={false}
+				>
+					<Background
+						size={4}
+						gap={30}
+						color="color-mix(in srgb, var(--disabled-foreground) 20%, transparent)"
+					/>
+				</ReactFlow>
+			</ReactFlowProvider>
 		</main>
 	);
 }
