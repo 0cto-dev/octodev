@@ -61,6 +61,7 @@ export default function loadNodes({
 							whichSideOpenPopUp:
 								windowWidth - xPositions[i] < 210 ? 'left' : xPositions[i] < 130 ? 'right' : '',
 							lastMadeLesson,
+							disabled: i > lastMadeLesson,
 							position: {
 								index: i,
 								class:
@@ -72,8 +73,6 @@ export default function loadNodes({
 										? 'current leftTitle'
 										: i === lastMadeLesson && positionOfCurrentLessonNode <= windowWidth / 2
 										? 'current rightTitle'
-										: i > lastMadeLesson
-										? 'disabled'
 										: '',
 							},
 						},

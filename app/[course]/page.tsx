@@ -42,7 +42,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	// #endregion
 
 	const nodeSize = 40;
-	const lastMadeLesson = 3;
+	const lastMadeLesson = 0;
 
 	// #region Effects
 	useEffect(() => {
