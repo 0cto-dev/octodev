@@ -257,8 +257,9 @@ main {
 			left: 50%;
 			transform: translate(-50%, 0);
 			width: 90vw;
-			box-shadow: inset 3px 3px 10px 3px #000000aa, 5px 5px 15px color-mix(in srgb, var(--primary) 15%, transparent),
-				-5px -5px 15px -5px color-mix(in srgb, var(--foreground) 15%, transparent);
+			box-shadow: inset 3px 3px 10px 3px #000000aa,
+			 5px 5px 15px color-mix(in srgb, var(--primary) 15%, transparent),
+				-3px -3px 8px 0px color-mix(in srgb, var(--foreground) 15%, transparent);
 			padding: 10px;
 			ul {
 				flex-direction: row;
