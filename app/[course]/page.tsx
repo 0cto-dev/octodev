@@ -114,7 +114,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	}
 
 	if (!windowWidth || !windowHeight || !isLoaded || nodes[0]?.id === '0' || edges[0]?.id === '0') return null;
-
+	console.log(windowHeight * 0.1 + 300)
 	return (
 		<main onClick={handleOnClick} key="trilha">
 			<div className="blur"></div>

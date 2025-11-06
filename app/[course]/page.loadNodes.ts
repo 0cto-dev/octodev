@@ -43,8 +43,6 @@ export default function loadNodes({
 					if (!positionOfCurrentLessonNode && i === lastMadeLesson)
 						positionOfCurrentLessonNode = position + nodeSize / 2;
 
-					console.log(xPositions[i]);
-					console.log(windowWidth);
 					const lessonObj = {
 						id: lesson.id,
 						type: 'lessonsNode',
@@ -95,9 +93,12 @@ export default function loadNodes({
 					}
 					position += random;
 
-					if (position < nodeSize) {
+					if (position < (isPortrait?0:220)) {
+						console.log(position,":  ",lesson.id)
+						console.log(position+jumpBetweenPositions,":  ",lesson.id)
 						position += jumpBetweenPositions * 2;
 					}
+					console.log("          - ",position,":  ",lesson.id)
 					if (position > windowWidth - nodeSize - 70) {
 						position -= jumpBetweenPositions * 2;
 					}
