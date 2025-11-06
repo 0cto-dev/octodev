@@ -28,7 +28,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const [nodes, setNodes] = useState<Node[]>([]);
 	const [edges, setEdges] = useState<Edge[]>([]);
 	const [lessonIdMenuOpen, setLessonIdMenuOpen] = useState('');
-	const [lessonType, setLessonType] = useState<'pratica'|'teorica'>('teorica');
+	const [lessonType, setLessonType] = useState<'pratica' | 'teorica'>('teorica');
 	// #endregion
 
 	const nodeSize = 40;
@@ -39,10 +39,10 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		// Ao carregar os dados necessários, é chamado essa função
 		setWindowWidth(window.innerWidth);
 		setWindowHeight(window.innerHeight);
-		window.addEventListener("resize",()=>{
+		window.addEventListener('resize', () => {
 			setWindowWidth(window.innerWidth);
-			setWindowHeight(window.innerHeight);	
-		})
+			setWindowHeight(window.innerHeight);
+		});
 		fetchData(params, setLessons, setIsLoaded);
 	}, []);
 
@@ -67,15 +67,15 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			jumpBetweenPositions,
 			nodeSize,
 			setNodes,
-			lessonType
+			lessonType,
 		});
-	}, [lessons, lessonIdMenuOpen,lessonType]);
+	}, [lessons, lessonIdMenuOpen, lessonType]);
 
 	useEffect(() => {
 		// Ao carregar os nodes cria um array sem o último node e cria edges ligando com o id da proxima lição
 		loadEdges({ lessons, nodes, setEdges });
 	}, [nodes]);
-	
+
 	useEffect(() => {
 		// Sempre que clicar em um node de lição esse useEffect será chamado e mudará o z-index de todos os elementos deixando o elemento
 		// que foi clicado na frente, impedindo de que outros elementos fiquem na frente do popUp
@@ -98,7 +98,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			setLessonIdMenuOpen('');
 			return null;
 		}
-		setLessonIdMenuOpen(lessonIdMenuOpen=>lessonIdMenuOpen===clickedAriaLabel?'':clickedAriaLabel);
+		setLessonIdMenuOpen(lessonIdMenuOpen => (lessonIdMenuOpen === clickedAriaLabel ? '' : clickedAriaLabel));
 
 		console.log(clickedAriaLabel);
 	}
@@ -106,13 +106,37 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	if (!windowWidth || !windowHeight || !isLoaded || nodes[0]?.id === '0' || edges[0]?.id === '0') return null;
 
 	return (
-		<main onClick={handleOnClick} key='trilha'>
+		<main onClick={handleOnClick} key="trilha">
+			<div className="blur"></div>
+			<aside>
+				<ul>
+					<li className="buttons">
+						<button
+							className={lessonType === 'pratica' ? 'active' : ''}
+							onClick={() => setLessonType('pratica')}
+						>
+							Prática
+						</button>
+					</li>
+					<li className="buttons">
+						<button
+							className={lessonType === 'teorica' ? 'active' : ''}
+							onClick={() => setLessonType('teorica')}
+						>
+							Teórica
+						</button>
+					</li>
+				</ul>
+			</aside>
 			<ReactFlow
 				minZoom={1}
 				maxZoom={1}
 				translateExtent={[
 					[0, 0],
-					[windowWidth, 200 * nodes.length + windowHeight * 0.1+300],
+					[
+						windowWidth,
+						lessonType === 'pratica' ? 200 * nodes.length + windowHeight * 0.1 + 300 : windowHeight,
+					],
 				]}
 				nodeTypes={NODE_TYPES}
 				nodes={nodes}

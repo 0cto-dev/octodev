@@ -189,6 +189,89 @@ main {
 			}
 		}
 	}
+	aside {
+		position: absolute;
+		top: 50%;
+		left: 20px;
+		transform: translateY(-50%);
+		z-index: 101;
+		background-color: color-mix(in srgb, var(--background) 100%, var(--primary));
+		padding: 20px;
+		border-radius: 15px;
+		box-shadow: inset 3px 3px 10px 3px #000000aa, 5px 5px 15px color-mix(in srgb, var(--primary) 15%, transparent);
+		width: 180px;
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			li {
+				list-style: none;
+				display: flex;
+				flex: 1 1 auto;
+
+				button {
+					font-weight: 500;
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+						Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+					background: var(--card);
+					border: none;
+					color: white;
+					height: 40px;
+					padding: 5px;
+					border-radius: 5px;
+					font-size: 1.2rem;
+					flex: 1 1 auto;
+					text-align: start;
+					cursor: pointer;
+					padding-left: 20px;
+					box-shadow: inset 8px 8px 20px -6px color-mix(in srgb, var(--primary) 40%, transparent),
+						-1px -1px 4px color-mix(in srgb, var(--foreground) 15%, transparent), 4px 4px 4px 3px #000000aa;
+					transition: transform 0.1s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+					&:hover,
+					&.active {
+						background-color: var(--primary);
+						box-shadow: inset 8px 8px 10px 0px color-mix(in srgb, var(--foreground) 25%, transparent),
+							inset -8px -8px 10px 0px color-mix(in srgb, #000 50%, transparent),
+							4px 4px 4px 3px #000000aa;
+					}
+					&:hover {
+						transform: scale(1.05);
+					}
+				}
+			}
+		}
+	}
+	@media (orientation: portrait) {
+		div.blur {
+			position: absolute;
+			width: 100%;
+			height: 160px;
+			transform: translateY(-50%);
+			backdrop-filter: blur(2px);
+			top: 0;
+			z-index: 99;
+		}
+		aside {
+			top: 20px;
+			left: 50%;
+			transform: translate(-50%, 0);
+			width: 90vw;
+			box-shadow: inset 3px 3px 10px 3px #000000aa, 5px 5px 15px color-mix(in srgb, var(--primary) 15%, transparent),
+				-5px -5px 15px -5px color-mix(in srgb, var(--foreground) 15%, transparent);
+			padding: 10px;
+			ul {
+				flex-direction: row;
+				justify-content: space-evenly;
+	
+				li {
+					button {
+						height: 50px;
+					}
+				}
+			}
+		}
+	}
 }
 .handlers {
 	visibility: hidden;

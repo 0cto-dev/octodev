@@ -35,6 +35,7 @@ export default function loadNodes({
 	setNodes,
 	lessonType,
 }: loadNodesType) {
+	const isPortrait = windowWidth < windowHeight;
 	const INITIAL_NODES: Node[] =
 		lessonType === 'pratica'
 			? lessons.data.map((lesson, i) => {
@@ -49,7 +50,7 @@ export default function loadNodes({
 						type: 'lessonsNode',
 						position: {
 							x: xPositions[i] || position,
-							y: 200 * i + windowHeight * 0.1,
+							y: 200 * i + (isPortrait?windowHeight * 0.2:windowHeight * 0.1),
 						},
 						data: {
 							course: lessons.course,
@@ -111,8 +112,8 @@ export default function loadNodes({
 						type: 'teoricNode',
 						position: {
 							// centralizando no responsivamente em portrait e landscape
-							x: windowWidth / 2 - (windowWidth < windowHeight ? (windowWidth * 0.95) / 2 :  (windowWidth * 0.45)/2),
-							y: windowHeight / 2 - 150 - windowHeight * 0.2,
+							x: windowWidth / 2 - (isPortrait ? (windowWidth * 0.95) / 2 :  (windowWidth * 0.45)/2),
+							y: windowHeight / 2 - 150,
 						},
 						data: {
 							course: lessons.course,
