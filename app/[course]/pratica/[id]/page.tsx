@@ -29,7 +29,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [output, setOutput] = useState(['']);
 	const [lives, setLives] = useState(5);
 	const [showPopup, setShowPopup] = useState(false);
-	const [seconds, setSeconds] = useState(300);
+	const [seconds, setSeconds] = useState(999999);
 	// #endregion
 	// #region alias Variables
 	const exercicios = lesson.data?.exercicios;
@@ -45,6 +45,22 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	}, [currentExercise]);
 	// #endregion
 	// #region Effects
+	useEffect(() => {
+		// Atualiza assim que o fetchdata retorna o valor de lesson (apenas uma vez durante toda a lição)
+		exercicios[0]?.id &&
+			// Deixa o timer dinâmico, com base na quantidade e tipo de lição:
+			//		30 segundos para cada lição do tipo alternativas e 4 minutos para cada lição do tipo código
+			setSeconds(
+				exercicios.reduce((acc, cur) => {
+					let increaseValue = 0;
+
+					if (cur.tipo === 'alternativas') increaseValue = 30;
+					if (cur.tipo === 'codigo') increaseValue = 240;
+					console.log(increaseValue);
+					return acc + increaseValue;
+				}, 0)
+			);
+	}, [exercicios[0].id]);
 	useEffect(() => {
 		// Atualiza sempre que um novo exercício é carregado!
 		fetchData(params, setLesson, setLoaded);
@@ -79,8 +95,10 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	useEffect(() => {
 		// Atualiza a cada secundo para atualizar o timer caso o exercício não tenha sido finalizado
-		!(exercise.exerciseStatus === 'fisnish' || exercise.exerciseStatus === 'lose') && updateTimer(setSeconds);
-		!seconds&&setExercise((exercise)=>({...exercise,exerciseStatus:"lose"}))
+		if (seconds !== 999999) {
+			!(exercise.exerciseStatus === 'fisnish' || exercise.exerciseStatus === 'lose') && updateTimer(setSeconds);
+			!seconds && setExercise(exercise => ({ ...exercise, exerciseStatus: 'lose' }));
+		}
 	}, [seconds]);
 
 	// #endregion
@@ -95,7 +113,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 				<PopUp type={exercise.exerciseStatus} course={lesson.course} className={showPopup ? 'show' : ''} />
 
 				<main
-					key='exercicios'
+					key="exercicios"
 					className={exercise.exerciseStatus + `${goingToNextExercise ? ' next' : ''}`}
 					onAnimationEnd={e => mainAnimationHandler(e, setExercise, setGoingToNextExercise)}
 				>

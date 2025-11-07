@@ -12,7 +12,7 @@ export type alternativasType = {
 };
 export type exercisesType = {
 	id: string;
-	tipo: string;
+	tipo: 'alternativas'|'codigo';
 	pergunta: string;
 	alternativas?: alternativasType[];
 	codigo?: string;
