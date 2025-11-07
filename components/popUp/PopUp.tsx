@@ -23,7 +23,7 @@ export default function PopUp({ type, course, className }: { type: string; cours
 				id: 1,
 				textContent: 'Sair',
 				active: false,
-				onclick: ()=>{router.push(`/${course}`)},
+				onclick: ()=>{handlePush(`/${course}`)},
 			},
 			{
 				id: 2,
@@ -42,9 +42,13 @@ export default function PopUp({ type, course, className }: { type: string; cours
 				id: 1,
 				textContent: 'Sair',
 				active: false,
-				onclick: ()=>{router.push(`/${course}`)},
+				onclick: ()=>{handlePush(`/${course}`)},
 			},
 		];
+	}
+
+	function handlePush(link:string) {
+		window.location.href = `${link}`;
 	}
 
 	return (

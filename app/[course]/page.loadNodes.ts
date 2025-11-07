@@ -34,8 +34,8 @@ export default function loadNodes({
 	nodesType,
 }: loadNodesType) {
 	const isPortrait = windowWidth < windowHeight;
-	let lastMadeLesson = (sessionStorage.getItem('progress')||0) as number;
-
+	let lastMadeLesson = (localStorage.getItem(`${lessons.course}Progress`)||0) as number;
+	console.log(`${lessons.course}Progress: `+localStorage.getItem(`${lessons.course}Progress`))
 	const INITIAL_NODES: Node[] =
 		nodesType === 'pratica'
 			? lessons.data.map((lesson, i) => {
@@ -95,7 +95,7 @@ export default function loadNodes({
 					if (position < (isPortrait?0:220)) {
 						position += jumpBetweenPositions * 2;
 					}
-					
+
 					if (position > windowWidth - nodeSize - 70) {
 						position -= jumpBetweenPositions * 2;
 					}

@@ -104,14 +104,17 @@ export default async function submitAnswer(
 	}
 	if (userGuessedRight && exercise.lastExercise) {
 		setExercise(exercise => ({ ...exercise, exerciseStatus: 'finish' }));
-		saveProgress(lesson.id)
+		saveProgress(lesson.course,lesson.id);
 	}
 }
 
-function saveProgress(id:string){
-	if (typeof window !== 'undefined'){
-		const progress = sessionStorage.getItem("progress")
-		!progress||+progress<+id.replace('licao','')&&sessionStorage.setItem('progress',id.replace('licao',''))
-	}
+function saveProgress(course:string,id: string) {
+	
+	if (typeof window !== 'undefined') {
+		const progress = localStorage.getItem(`${course}Progress`);
 
+		if (!progress || +progress < +id.replace('licao', '')) {
+			localStorage.setItem(`${course}Progress`, id.replace('licao', ''));
+		}
+	}
 }
