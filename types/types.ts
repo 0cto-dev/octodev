@@ -12,7 +12,7 @@ export type alternativasType = {
 };
 export type exercisesType = {
 	id: string;
-	tipo: 'alternativas'|'codigo';
+	tipo: 'alternativas' | 'codigo';
 	pergunta: string;
 	alternativas?: alternativasType[];
 	codigo?: string;
@@ -26,7 +26,7 @@ export type lessonType = {
 	id: string;
 	titulo: string;
 	descricao: string;
-	icone?:string;
+	icone?: string;
 	exercicios: exercisesType[];
 };
 
@@ -81,7 +81,7 @@ export const errorFetch: lessonType = {
 	],
 };
 
-export const fakeData = [
+export const fakeData: lessonType[] = [
 	{
 		id: 'lessonExemplo',
 		titulo: 'Este vai ser o título da sua lição',

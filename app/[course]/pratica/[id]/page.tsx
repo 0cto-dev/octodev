@@ -1,7 +1,7 @@
 'use client';
 import './page.exercicios.css';
 import React, { useEffect, useMemo, useState } from 'react';
-import { alternativasType, errorFetch, lessonType, nullAlternative, paramsType } from '@/types/types';
+import { alternativasType, errorFetch, fakeData, lessonType, nullAlternative, paramsType } from '@/types/types';
 import NavBar from './NavBar/NavBar';
 import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
@@ -32,7 +32,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [seconds, setSeconds] = useState(999999);
 	// #endregion
 	// #region alias Variables
-	const exercicios = lesson.data?.exercicios;
+	const exercicios = lesson.data?.exercicios||errorFetch.exercicios;
 	const currentExerciseIndex = exercise.currentExerciseNum - 1;
 	const currentExercise = exercicios[currentExerciseIndex];
 	// #endregion
@@ -56,7 +56,6 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 					if (cur.tipo === 'alternativas') increaseValue = 30;
 					if (cur.tipo === 'codigo') increaseValue = 240;
-					console.log(increaseValue);
 					return acc + increaseValue;
 				}, 0)
 			);
