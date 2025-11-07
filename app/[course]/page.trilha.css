@@ -255,6 +255,23 @@ main {
 			}
 		}
 	}
+	.goToTop{
+		border-radius: 20px;
+		background: var(--background);
+		color: var(--foreground);
+		border: 2px solid var(--border);
+		z-index: 1;
+		padding: 10px;
+		
+		position: absolute;
+		bottom: 20px;
+		right: 20px;
+
+		display: flex;
+		align-items: center;
+		text-align: center;
+		justify-content: center;
+	}
 	@media (orientation: portrait) {
 		div.blur {
 			position: absolute;

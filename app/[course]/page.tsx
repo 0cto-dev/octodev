@@ -20,6 +20,7 @@ import loadEdges from './page.loadEdges';
 import TeoricsNode from '@/components/nodes/TeoricsNode';
 import { useReactFlow } from '@xyflow/react';
 import Tab from './page.Tab';
+import { FaArrowUp } from 'react-icons/fa';
 
 const NODE_TYPES = {
 	lessonsNode: LessonsNode,
@@ -118,6 +119,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			<div className="blur"></div>
 			<ReactFlowProvider>
 				<Tab  nodesType={nodesType} setNodesType={setNodesType} />
+				<GoToTopButton  />
 				<ReactFlow
 					minZoom={1}
 					maxZoom={1}
@@ -149,4 +151,12 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			</ReactFlowProvider>
 		</main>
 	);
+}
+function GoToTopButton(){
+
+	return(
+		<button className='goToTop'>
+			<FaArrowUp size={15}/>
+		</button>
+	)
 }

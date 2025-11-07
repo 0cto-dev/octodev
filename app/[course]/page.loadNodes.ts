@@ -1,6 +1,7 @@
 import { lessonType } from '@/types/types';
 import { Node } from '@xyflow/react';
 import { Dispatch, SetStateAction } from 'react';
+import { useIsMobile } from '../../lib/isMobile';
 
 type loadNodesType = {
 	lessons: {
@@ -33,7 +34,7 @@ export default function loadNodes({
 	setNodes,
 	nodesType,
 }: loadNodesType) {
-	const isPortrait = windowWidth < windowHeight;
+	const isMobile = useIsMobile();
 	let lastMadeLesson = (localStorage.getItem(`${lessons.course}Progress`)||0) as number;
 	console.log(`${lessons.course}Progress: `+localStorage.getItem(`${lessons.course}Progress`))
 	const INITIAL_NODES: Node[] =
@@ -48,7 +49,7 @@ export default function loadNodes({
 						type: 'lessonsNode',
 						position: {
 							x: xPositions[i] || position,
-							y: 200 * i + (isPortrait?windowHeight * 0.2:windowHeight * 0.1),
+							y: 200 * i + (isMobile?windowHeight * 0.2:windowHeight * 0.1),
 						},
 						data: {
 							course: lessons.course,
@@ -92,7 +93,7 @@ export default function loadNodes({
 					}
 					position += random;
 
-					if (position < (isPortrait?0:220)) {
+					if (position < (isMobile?0:220)) {
 						position += jumpBetweenPositions * 2;
 					}
 
@@ -110,7 +111,7 @@ export default function loadNodes({
 						type: 'teoricNode',
 						position: {
 							// centralizando no responsivamente em portrait e landscape
-							x: windowWidth / 2 - (isPortrait ? (windowWidth * 0.95) / 2 :  (windowWidth * 0.45)/2),
+							x: windowWidth / 2 - (isMobile ? (windowWidth * 0.95) / 2 :  (windowWidth * 0.45)/2),
 							y: windowHeight / 2 - 150,
 						},
 						data: {

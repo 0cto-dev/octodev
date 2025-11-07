@@ -12,6 +12,7 @@ import mainAnimationHandler from '@/app/[course]/pratica/[id]/lib/ExerciseMainAn
 import updateTimer from '@/app/[course]/pratica/[id]/lib/timer';
 import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
 import PopUp from '@/components/popUp/PopUp';
+import { useIsMobile } from '@/lib/isMobile';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States
@@ -32,7 +33,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [seconds, setSeconds] = useState(999999);
 	// #endregion
 	// #region alias Variables
-	const exercicios = lesson.data?.exercicios||errorFetch.exercicios;
+	const exercicios = lesson.data?.exercicios || errorFetch.exercicios;
 	const currentExerciseIndex = exercise.currentExerciseNum - 1;
 	const currentExercise = exercicios[currentExerciseIndex];
 	// #endregion
@@ -90,6 +91,12 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			setTimeout(() => {
 				setShowPopup(true);
 			}, 1500);
+
+		goingToNextExercise &&
+			useIsMobile() &&
+			setTimeout(() => {
+				setGoingToNextExercise(false);
+			}, 200);
 	}, [exercise.exerciseStatus]);
 
 	useEffect(() => {

@@ -16,5 +16,7 @@ export default function mainAnimationHandler(
 	}
 	if (e.animationName === 'next') {
 		setGoingToNextExercise(false);
+		
+	
 	}
 }

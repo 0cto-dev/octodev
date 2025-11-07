@@ -16,8 +16,15 @@
 	--orange: oklch(0.75 0.18 60); /* orange */
 	--pink: oklch(0.7 0.18 350); /* pink */
 }
+@media (prefers-color-scheme: dark) {
+  html,body {
+	  background-color: var(--background);
+	  color: #ffffff;
+	}
+}
 
 body {
+	background: black;
 	background: radial-gradient(circle, var(--background) 80%, #000 140%);
 	color: var(--foreground);
 	font-family: system-ui, sans-serif;
