@@ -1,0 +1,13 @@
+main{
+    header{
+        background-color: var(--card);
+    }
+    section{
+        background-color: var(--background);
+        
+    }
+    footer{
+        background-color: var(--card);
+
+    }
+}
