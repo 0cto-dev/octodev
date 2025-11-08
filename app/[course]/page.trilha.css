@@ -132,6 +132,7 @@ main {
 			gap: 10px;
 			align-items: center;
 			flex-direction: row;
+			transition: transform 0.1s ease;
 			p {
 				position: absolute;
 				font-size: 1.2rem;
@@ -158,8 +159,7 @@ main {
 				position: static;
 			}
 		}
-		transition: transform 0.1s ease;
-		&.enabled:hover {
+		&.enabled:hover .nodeHtml {
 			transform: scale(1.1);
 		}
 	}

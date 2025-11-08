@@ -30,7 +30,9 @@ export default function LessonsNode(props: NodeProps) {
 	}
 	return (
 		<div
-			className={`nodeContent practice ${props.data.disabled?'disabled':'enabled'} ${position.class} ${props.data.whichSideOpenPopUp} ${
+			className={`nodeContent practice ${props.data.disabled ? 'disabled' : 'enabled'} ${position.class} ${
+				props.data.whichSideOpenPopUp
+			} ${
 				(props.data.lessonIdMenuOpen as string) === props.data.id &&
 				position.index < (props.data.lastMadeLesson as number) + 1
 					? 'open'
