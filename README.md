@@ -16,21 +16,22 @@ Cada módulo combina **explicações teóricas**, **exercícios práticos** e **
 
 ## Features
 
--   **Aprendizado Gamificado** — Avance em trilhas, complete desafios e conquiste medalhas.
+-   **Aprendizado Gamificado** — Avance em trilhas, complete desafios e conquiste medalhas. ✅
 -   **Suporte com IA Integrada** — Tire dúvidas em tempo real com o auxílio de uma inteligência artificial.
--   **Lições Teóricas e Práticas** — Exercícios curtos e diretos baseados em situações reais de desenvolvimento.
+-   **Lições Teóricas** — Exercícios curtos e diretos baseados em situações reais de desenvolvimento. ✅
+-   **Lições Práticas** — Vídeo-Aulas divertidas e descontraidas explicando do básico ao avançado da linguagem.
 -   **Sistema de Progresso e Recompensas** — Acompanhe sua evolução e ganhe pontos conforme aprende.
 -   **Fornecimento de Certificados** — Ganhe certificados ao concluir cada curso.
--   **Multilíngue em Programação** — Suporte a diversas linguagens, incluindo:
+-   **Multilíngue em Programação** — Suporte a diversas linguagens, incluindo: 
     -   C
     -   C++
     -   C#
     -   Rust
     -   PHP
-    -   Python
+    -   Python ✅
     -   JavaScript
 -   **Conteúdos Extras**
-    -   Lógica de programação usando a linguagem **Tenda**
+    -   Lógica de programação usando a linguagem **Tenda** ✅
     -   Banco de dados
     -   Tutoriais em vídeo
     -   Rankings e conquistas
@@ -81,25 +82,25 @@ npm run dev
 ### Linux/MacOS
 
 ```sh
-mkdir -p data/NOME_DO_CURSO/practice/
-touch data/NOME_DO_CURSO/practice/lessons.json
+mkdir -p data/NOME_DO_CURSO/pratica/
+touch data/NOME_DO_CURSO/pratica/lessons.json
 ```
 
 ### Windows (powershell)
 
 ```powershell
-New-Item -ItemType Directory -Path "data\NOME_DO_CURSO\practice" -Force
-New-Item -ItemType File -Path "data\NOME_DO_CURSO\practice\lessons.json" -Force
+New-Item -ItemType Directory -Path "data\NOME_DO_CURSO\pratica" -Force
+New-Item -ItemType File -Path "data\NOME_DO_CURSO\pratica\lessons.json" -Force
 ```
 
 depois que as pastas e o arquivo forem criados podemos escrever as lições dentro desse arquivo
 
-**@/data/logica/practice/lessons.json**
+**@/data/logica/pratica/lessons.json**
 
 ```json
 [
 	{
-		"id": "lesson1",
+		"id": "licao1",
 		"titulo": "Olá Tenda",
 		"descricao": "Introdução à linguagem tenda",
 		"exercicios": [
@@ -119,7 +120,7 @@ depois que as pastas e o arquivo forem criados podemos escrever as lições dent
 				"id": "ex002",
 				"tipo": "codigo",
 				"pergunta": "Consegue corrigir este código?",
-				"codigo": "lesson1/ex002.tenda",
+				"codigo": "licao1/ex002.tenda",
 				"autocompletar": true,
 				"respostaCodigo": "1\n2\n3\n4\n5\n",
 				"verificadorTrapaca": "^\\s*para cada (\\w+) em 1 até 5 faça\\s*exiba\\(\\1\\)\\s*fim\\s*$"
@@ -135,12 +136,12 @@ Observações:
 
 -   tipo (obrigatório): Atualmente existem apenas 2 tipos de lições: `alternativas` e `codigo`;
 
-    > para o exercício do tipo `"codigo"` devemos passar o path do arquivo que contém o codigo usando a key: `"codigo":"PATH_DO_ARQUIVO"` e obrigatoriamente ele deve estar em `@/data/NOME_DO_CURSO/practice/codes/`.
+    > para o exercício do tipo `"codigo"` devemos passar o path do arquivo que contém o codigo usando a key: `"codigo":"PATH_DO_ARQUIVO"` e obrigatoriamente ele deve estar em `@/data/NOME_DO_CURSO/pratica/codes/`.
 
     > exemplo:
-    > crie uma pasta dentro de practice: `codes/lesson1/ex002.FORMATO_DO_ARQUIVO ` o caminho pode ser do jeito que preferir, no octo estamos usando este formato: `lição_em_que_o_exercicio_se_encontra/id_do_exercicio.formato`, a seguir usarei a linguagem [Tenda](https://github.com/gabrielbrunop/tenda/) para exemplificar:
+    > crie uma pasta dentro de pratica: `codes/licao1/ex002.FORMATO_DO_ARQUIVO ` o caminho pode ser do jeito que preferir, no octo estamos usando este formato: `lição_em_que_o_exercicio_se_encontra/id_do_exercicio.formato`, a seguir usarei a linguagem [Tenda](https://github.com/gabrielbrunop/tenda/) para exemplificar:
 
-    **@/data/logica/practice/codes/lesson1/ex002.tenda**
+    **@/data/logica/pratica/codes/licao1/ex002.tenda**
 
     ```tenda
     para cada i em 1 até 5 faça
@@ -153,11 +154,11 @@ Observações:
 -   codigo (Opcional para o tipo `alternativas` e obrigatório para o tipo `codigo`): É o código que será renderizado ao iniciar um exercício que tenha essa chave. Assim como usamos o código no tipo `codigo` usamos no tipo alternativa, com a diferença de que aqui ele é opcional e aparecerá entre a pergunta e a caixa de opções.
     > Exemplo:
 	
-	>**@/data/python/practice/lessons.json**
+	>**@/data/python/pratica/lessons.json**
 	>	```json
 	>	[
 	>		{
-	>			"id": "lesson1",
+	>			"id": "licao1",
 	>			"titulo": "Olá Python",
 	>			"descricao": "Introdução ao mundo Python",
 	>			"exercicios": [
@@ -181,7 +182,7 @@ Observações:
 	>	]
 	>	```
 
-	>**@/data/python/practice/codes/lesson1/ex004.py**
+	>**@/data/python/pratica/codes/licao1/ex004.py**
 	> ```python
 	> x = 5
 	> x += 3
