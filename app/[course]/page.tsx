@@ -21,6 +21,8 @@ import TeoricsNode from '@/components/nodes/TeoricsNode';
 import { useReactFlow } from '@xyflow/react';
 import Tab from './page.Tab';
 import { FaArrowUp } from 'react-icons/fa';
+import { FaArrowDown } from 'react-icons/fa';
+import { useIsMobile } from '@/lib/isMobile';
 
 const NODE_TYPES = {
 	lessonsNode: LessonsNode,
@@ -43,7 +45,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	// #endregion
 
 	const nodeSize = 40;
-	const lastMadeLesson = 0;
+	const lastMadeLesson = isLoaded ? ((localStorage.getItem(`${lessons.course}Progress`) || 0) as number) : 0;
 
 	// #region Effects
 	useEffect(() => {
@@ -75,6 +77,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			windowWidth,
 			lessonIdMenuOpen,
 			jumpBetweenPositions,
+			lastMadeLesson,
 			nodeSize,
 			setNodes,
 			nodesType,
@@ -110,25 +113,23 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		}
 		setLessonIdMenuOpen(lessonIdMenuOpen => (lessonIdMenuOpen === clickedAriaLabel ? '' : clickedAriaLabel));
 
-		console.log(clickedAriaLabel);
 	}
-
 	if (!windowWidth || !windowHeight || !isLoaded || nodes[0]?.id === '0' || edges[0]?.id === '0') return null;
+
+	const maxHeight = nodesType === 'pratica' ? 200 * nodes.length + windowHeight * 0.1 + 300 : windowHeight;
 	return (
 		<main onClick={handleOnClick} key="trilha">
 			<div className="blur"></div>
 			<ReactFlowProvider>
-				<Tab  nodesType={nodesType} setNodesType={setNodesType} />
-				<GoToTopButton  />
+				<Tab nodesType={nodesType} setNodesType={setNodesType} />
+				<GoToTopButton />
+				<GoToCurrentButton currentLesson={+lastMadeLesson+1} nodesType={nodesType}/>
 				<ReactFlow
 					minZoom={1}
 					maxZoom={1}
 					translateExtent={[
 						[0, 0],
-						[
-							windowWidth,
-							nodesType === 'pratica' ? 200 * nodes.length + windowHeight * 0.1 + 300 : windowHeight,
-						],
+						[windowWidth, maxHeight],
 					]}
 					nodeTypes={NODE_TYPES}
 					nodes={nodes}
@@ -152,11 +153,31 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		</main>
 	);
 }
-function GoToTopButton(){
+function GoToTopButton() {
+	const { setViewport } = useReactFlow();
 
-	return(
-		<button className='goToTop'>
-			<FaArrowUp size={15}/>
+	function handleClick() {
+		setViewport({ x: 0, y: 0, zoom: 1 }, { interpolate: 'smooth', duration: 1000 });
+	}
+	return (
+		<button className="goToTop" onClick={handleClick}>
+			<FaArrowUp size={15} />
 		</button>
-	)
+	);
+
+}
+
+function GoToCurrentButton({ currentLesson,nodesType }: { currentLesson: number,nodesType:'pratica'|'teorica' }) {
+	const { setViewport } = useReactFlow();
+
+	const currentLessonHeight = nodesType === 'pratica' ? 200 * (currentLesson-1)+50 : 0;
+
+	function handleClick() {
+		setViewport({ x: 0, y: -currentLessonHeight, zoom: 1 }, { interpolate: 'smooth', duration: 1000 });
+	}
+	return (
+		<button className="goToCurrent" onClick={handleClick}>
+			<FaArrowDown size={15} />
+		</button>
+	);
 }

@@ -14,6 +14,7 @@ type loadNodesType = {
 	windowHeight: number;
 	windowWidth: number;
 	jumpBetweenPositions: number;
+	lastMadeLesson: number;
 	nodeSize: number;
 
 	lessonIdMenuOpen: string;
@@ -30,18 +31,20 @@ export default function loadNodes({
 	windowWidth,
 	lessonIdMenuOpen,
 	jumpBetweenPositions,
+	lastMadeLesson,
 	nodeSize,
 	setNodes,
 	nodesType,
 }: loadNodesType) {
 	const isMobile = useIsMobile();
-	let lastMadeLesson = (localStorage.getItem(`${lessons.course}Progress`)||0) as number;
-	console.log(`${lessons.course}Progress: `+localStorage.getItem(`${lessons.course}Progress`))
+
+	// console.log(`${lessons.course}Progress: `+localStorage.getItem(`${lessons.course}Progress`))
+
 	const INITIAL_NODES: Node[] =
 		nodesType === 'pratica'
 			? lessons.data.map((lesson, i) => {
 					i === 0 && !xPositions[0] && xPositions.push(position);
-					if (!positionOfCurrentLessonNode && i === lastMadeLesson)
+					if (!positionOfCurrentLessonNode && i === +lastMadeLesson)
 						positionOfCurrentLessonNode = position + nodeSize / 2;
 
 					const lessonObj = {
@@ -49,7 +52,7 @@ export default function loadNodes({
 						type: 'lessonsNode',
 						position: {
 							x: xPositions[i] || position,
-							y: 200 * i + (isMobile?windowHeight * 0.2:windowHeight * 0.1),
+							y: 200 * i + (isMobile ? windowHeight * 0.2 : windowHeight * 0.1),
 						},
 						data: {
 							course: lessons.course,
@@ -62,7 +65,7 @@ export default function loadNodes({
 							whichSideOpenPopUp:
 								windowWidth - xPositions[i] < 210 ? 'left' : xPositions[i] < 130 ? 'right' : '',
 							lastMadeLesson,
-							disabled: i > lastMadeLesson,
+							disabled: i > +lastMadeLesson,
 							position: {
 								index: i,
 								class:
@@ -70,9 +73,9 @@ export default function loadNodes({
 										? 'first'
 										: i + 1 === lessons.data.length
 										? 'last'
-										: i === lastMadeLesson && positionOfCurrentLessonNode > windowWidth / 2
+										: i === +lastMadeLesson && positionOfCurrentLessonNode > windowWidth / 2
 										? 'current leftTitle'
-										: i === lastMadeLesson && positionOfCurrentLessonNode <= windowWidth / 2
+										: i === +lastMadeLesson && positionOfCurrentLessonNode <= windowWidth / 2
 										? 'current rightTitle'
 										: '',
 							},
@@ -93,7 +96,7 @@ export default function loadNodes({
 					}
 					position += random;
 
-					if (position < (isMobile?0:220)) {
+					if (position < (isMobile ? 0 : 220)) {
 						position += jumpBetweenPositions * 2;
 					}
 
@@ -111,7 +114,7 @@ export default function loadNodes({
 						type: 'teoricNode',
 						position: {
 							// centralizando no responsivamente em portrait e landscape
-							x: windowWidth / 2 - (isMobile ? (windowWidth * 0.95) / 2 :  (windowWidth * 0.45)/2),
+							x: windowWidth / 2 - (isMobile ? (windowWidth * 0.95) / 2 : (windowWidth * 0.45) / 2),
 							y: windowHeight / 2 - 150,
 						},
 						data: {
