@@ -256,7 +256,7 @@ main {
 		}
 	}
 	.goToTop,
-	.goToCurrent {
+	.goToCurrent,.goToBottom {
 		border-radius: 20px;
 		background: var(--background);
 		color: var(--foreground);
@@ -274,10 +274,13 @@ main {
 		justify-content: center;
 	}
 	.goToCurrent {
-		bottom: 20px;
+		bottom: 65px;
 	}
 	.goToTop {
-		bottom: 65px;
+		bottom: 110px;
+	}
+	.goToBottom {
+		bottom: 20px;
 	}
 	@media (orientation: portrait) {
 		div.blur {

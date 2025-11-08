@@ -23,6 +23,7 @@ import Tab from './page.Tab';
 import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa';
 import { useIsMobile } from '@/lib/isMobile';
+import { BiCurrentLocation } from 'react-icons/bi';
 
 const NODE_TYPES = {
 	lessonsNode: LessonsNode,
@@ -112,7 +113,6 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			return null;
 		}
 		setLessonIdMenuOpen(lessonIdMenuOpen => (lessonIdMenuOpen === clickedAriaLabel ? '' : clickedAriaLabel));
-
 	}
 	if (!windowWidth || !windowHeight || !isLoaded || nodes[0]?.id === '0' || edges[0]?.id === '0') return null;
 
@@ -122,8 +122,23 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			<div className="blur"></div>
 			<ReactFlowProvider>
 				<Tab nodesType={nodesType} setNodesType={setNodesType} />
-				<GoToTopButton />
-				<GoToCurrentButton currentLesson={+lastMadeLesson+1} nodesType={nodesType}/>
+				<GoToPosition className={'goToTop'} type="yCords" value={0}>
+					<FaArrowUp size={15} />
+				</GoToPosition>
+
+				<GoToPosition
+					className={'goToCurrent'}
+					type="nodeNumber"
+					value={+lastMadeLesson + 1}
+					nodesType={nodesType}
+				>
+					<BiCurrentLocation size={15} />
+				</GoToPosition>
+				
+				<GoToPosition className={'goToBottom'} type="nodeNumber" value={nodes.length} nodesType={nodesType}>
+					<FaArrowDown size={15} />
+				</GoToPosition>
+
 				<ReactFlow
 					minZoom={1}
 					maxZoom={1}
@@ -153,31 +168,42 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		</main>
 	);
 }
-function GoToTopButton() {
+
+function GoToPosition({
+	type,
+	value = 0,
+	nodesType = 'pratica',
+	className,
+	children,
+}: {
+	type: 'yCords' | 'nodeNumber';
+	value: number;
+	nodesType?: 'pratica' | 'teorica';
+	className?: string;
+	children: React.ReactNode;
+}) {
 	const { setViewport } = useReactFlow();
 
-	function handleClick() {
-		setViewport({ x: 0, y: 0, zoom: 1 }, { interpolate: 'smooth', duration: 1000 });
+	let yPosition: number;
+	switch (type) {
+		case 'yCords':
+			yPosition = value;
+			break;
+		case 'nodeNumber':
+			yPosition = nodesType === 'pratica' ? 200 * (value - 1) + 50 : 0;
+			break;
+
+		default:
+			yPosition = 0;
+			break;
 	}
-	return (
-		<button className="goToTop" onClick={handleClick}>
-			<FaArrowUp size={15} />
-		</button>
-	);
-
-}
-
-function GoToCurrentButton({ currentLesson,nodesType }: { currentLesson: number,nodesType:'pratica'|'teorica' }) {
-	const { setViewport } = useReactFlow();
-
-	const currentLessonHeight = nodesType === 'pratica' ? 200 * (currentLesson-1)+50 : 0;
 
 	function handleClick() {
-		setViewport({ x: 0, y: -currentLessonHeight, zoom: 1 }, { interpolate: 'smooth', duration: 1000 });
+		setViewport({ x: 0, y: -yPosition, zoom: 1 }, { interpolate: 'smooth', duration: 1000 });
 	}
 	return (
-		<button className="goToCurrent" onClick={handleClick}>
-			<FaArrowDown size={15} />
+		<button className={className} onClick={handleClick}>
+			{children}
 		</button>
 	);
 }
