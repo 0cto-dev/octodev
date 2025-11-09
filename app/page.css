@@ -35,6 +35,11 @@ main {
 			border: 10px solid var(--secondary);
 			box-shadow: 10px 10px 5px #00000055;
 			background-color: var(--secondary);
+			&.courseCard.disabled {
+				cursor: default;
+				opacity: 0.6;
+				filter: grayscale(100%);
+			}
 			.image {
 				border: 5px solid var(--secondary);
 				border-radius: 5px;

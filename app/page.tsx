@@ -5,19 +5,19 @@ import './page.css';
 import { getLesson } from './[course]/pratica/[id]/lib/lessonsData';
 import { courseType, lessonType } from '../types/types';
 import Image from 'next/image';
-import { useIsMobile } from '../lib/isMobile';
 import ProgressBarComp from '../components/progressBar/ProgressBar';
 
 export default function Home() {
 	// #region States
 	const [avaliableCourses, setAvaliableCourses] = useState<courseType[]>([]);
 	const [courses, setCourses] = useState<{ course: string; data: lessonType[] }[]>([]);
+	const [isCoursesLoaded, setIsCoursesLoaded] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
 	// #endregion
 
 	// #region Effects
 	useEffect(() => {
-		getCourses(setAvaliableCourses, setIsLoaded);
+		getCourses(setAvaliableCourses, setIsCoursesLoaded);
 	}, []);
 
 	useEffect(() => {
@@ -33,7 +33,6 @@ export default function Home() {
 				});
 
 			const allCoursesLessons = await Promise.all(lessonPromises);
-			console.log(allCoursesLessons);
 
 			setCourses(
 				allCoursesLessons.map((lessons, i) => {
@@ -43,8 +42,13 @@ export default function Home() {
 		};
 
 		Lessonsfetch();
-	}, [isLoaded, avaliableCourses]);
+	}, [isCoursesLoaded]);
 
+	useEffect(() => {
+		if (courses.length > 0) {
+			setIsLoaded(true);
+		}
+	}, [courses]);
 	// #endregion
 
 	return (
@@ -58,7 +62,7 @@ export default function Home() {
 				</header>
 				<section>
 					{avaliableCourses.map((course, i) => {
-						return <Course key={i} course={course} />;
+						return <Course key={i} course={course} lengthExercises={courses[i]?.data.length} />;
 					})}
 				</section>
 				<footer>footer</footer>
@@ -67,7 +71,15 @@ export default function Home() {
 	);
 }
 
-function Course({ course }: { course: courseType }) {
+function Course({ course, lengthExercises }: { course: courseType; lengthExercises: number }) {
+	// Calcula o progresso do curso com base no localStorage
+	const progress = lengthExercises
+		? (((localStorage.getItem(`${course.nome === 'Tenda' ? 'logica' : course.nome.toLocaleLowerCase()}Progress`) ||
+				0) as number) /
+				lengthExercises) *
+		  100
+		: 0;
+
 	return (
 		<div className={`courseCard ${course.disponivel ? '' : 'disabled'}`}>
 			<div className="image">
@@ -80,7 +92,7 @@ function Course({ course }: { course: courseType }) {
 			</div>
 			<div className="texts">
 				<h1>{course.nome}</h1>
-				<ProgressBarComp progress={50}/>
+				<ProgressBarComp progress={progress} />
 				<p>{course.descricao}</p>
 			</div>
 		</div>
