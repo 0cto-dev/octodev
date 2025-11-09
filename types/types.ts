@@ -199,6 +199,7 @@ export const emptyEdges = [
 export type courseType = {
 	nome:string,
 	descricao:string,
+	cor:string,
 	banner:string,
 	dificuldade:string,
 	disponivel: boolean,

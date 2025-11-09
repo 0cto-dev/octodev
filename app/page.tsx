@@ -61,9 +61,25 @@ export default function Home() {
 					</ul>
 				</header>
 				<section>
-					{avaliableCourses.map((course, i) => {
-						return <Course key={i} course={course} lengthExercises={courses[i]?.data.length} />;
-					})}
+					{avaliableCourses
+						.toSorted((a, b) => {
+							if (a.disponivel && !b.disponivel) return -1;
+							if (!a.disponivel && b.disponivel) return 1;
+
+							return a.nome.localeCompare(b.nome);
+						})
+						.map((course, i) => {
+							return (
+								<Course
+									key={i}
+									course={course}
+									lengthExercises={
+										courses.toSorted((a, b) => a.course.localeCompare(b.course))[i]?.data.length ||
+										0
+									}
+								/>
+							);
+						})}
 				</section>
 				<footer>footer</footer>
 			</main>
@@ -79,12 +95,20 @@ function Course({ course, lengthExercises }: { course: courseType; lengthExercis
 				lengthExercises) *
 		  100
 		: 0;
-
+		const [isHovered, setIsHovered] = useState(false);
 	return (
-		<div className={`courseCard ${course.disponivel ? '' : 'disabled'}`}>
+		<div
+			className={`courseCard ${course.nome.toLowerCase()} `}
+			style={isHovered?{ boxShadow: `${course.nome !== 'Tenda'?`0px 0px 15px 4px ${course.cor}`:''}` }:{}}
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+		>
 			<div className="image">
 				<img
-					src={'https://placehold.co/900x400/8868ff/f7f8ff?text=Banner+' + course.nome}
+					src={
+						`https://placehold.co/900x400/${course.cor.replace('#','')}/f7f8ff?text=Banner+` +
+						course.nome.replaceAll('+', '%2B').replaceAll('#', '%23')
+					}
 					alt={`${course.nome}Banner`}
 					width={100}
 					height={100}
