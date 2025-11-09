@@ -98,7 +98,7 @@ function Course({ course, lengthExercises }: { course: courseType; lengthExercis
 		const [isHovered, setIsHovered] = useState(false);
 	return (
 		<div
-			className={`courseCard ${course.nome.toLowerCase()} `}
+			className={`courseCard ${course.nome.toLowerCase()} ${course.disponivel ? '' : 'disabled'}`}
 			style={isHovered?{ boxShadow: `${course.nome !== 'Tenda'?`0px 0px 15px 4px ${course.cor}`:''}` }:{}}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
