@@ -226,10 +226,10 @@ main {
 				align-items: center;
 				justify-content: center;
 				border-radius: 8px;
-				background: color-mix(in srgb, var(--secondary) 100%, transparent);
+				background: color-mix(in srgb, var(--input) 75%, var(--background));
 				transition: transform 0.3s ease, background 0.3s ease;
 				&:hover {
-					background: color-mix(in srgb, var(--secondary) 95%, #fff);
+					background: color-mix(in srgb, color-mix(in srgb, var(--input) 75%, var(--background))95%, #fff);
 
 					transform: scale(110%);
 				}
@@ -300,7 +300,7 @@ main {
 
 			button {
 				padding: 25px;
-				background: var(--secondary);
+				background: color-mix(in srgb, var(--input) 75%, var(--background));
 				color: var(--foreground);
 				border: 1px solid var(--border);
 				font-size: 1.2rem;

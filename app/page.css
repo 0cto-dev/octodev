@@ -1,13 +1,89 @@
-main{
-    header{
-        background-color: var(--card);
-    }
-    section{
-        background-color: var(--background);
-        
-    }
-    footer{
-        background-color: var(--card);
-
-    }
+main {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	header {
+		background-color: var(--card);
+		display: flex;
+		ul {
+			display: flex;
+			width: 100%;
+			list-style: none;
+			padding: 5px;
+			li:first-child {
+				flex-grow: 1;
+			}
+		}
+	}
+	section {
+		background-color: var(--background);
+		flex-grow: 1;
+		display: flex;
+        padding: 50px;
+		padding-top: 50px;
+		justify-content: center;
+        align-content: start;
+		flex-wrap: wrap;
+		gap: 40px;
+		.courseCard {
+			max-width: 450px;
+            min-height: 300px;
+			border-radius: 15px;
+			border: 10px solid var(--secondary);
+			box-shadow: 10px 10px 5px #00000055;
+			background-color: var(--secondary);
+			.image {
+                border: 5px solid var(--secondary);
+                border-radius: 5px;
+				position: relative;
+				height: fit-content;
+				img {
+					width: 100%;
+					height: 100%;
+					border-radius: 5px;
+					display: block;
+				}
+				&::after {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					border-radius: 5px;
+					height: 100%;
+					box-shadow: inset 1px 1px 10px 7px #00000090;
+				}
+				/* border-radius: 15px; */
+				/* overflow: hidden; */
+			}
+			.texts {
+				padding: 10px;
+				font-size: 1.2rem;
+				font-family: var(--nunito);
+				color: var(--foreground);
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+                
+				h1 {
+                    font-size: 1.8rem;
+                    padding-left: 20px;
+					font-weight: 800;
+                    padding-bottom:10px;
+                    line-height: 1.6rem;
+				}
+			}
+		}
+		@media (orientation: portrait) {
+			gap: 50px;
+			padding: 20px;
+			.courseCard {
+				width: 95%;
+			}
+		}
+	}
+	footer {
+		background-color: var(--card);
+	}
 }

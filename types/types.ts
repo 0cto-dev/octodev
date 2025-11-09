@@ -194,3 +194,12 @@ export const emptyEdges = [
 		target: '0',
 	},
 ];
+
+export type courseType = {
+	nome:string,
+	descricao:string,
+	banner:string,
+	dificuldade:string,
+	disponivel: boolean,
+	dependencias: string[]
+}
