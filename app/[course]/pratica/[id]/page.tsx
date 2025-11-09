@@ -13,6 +13,7 @@ import updateTimer from '@/app/[course]/pratica/[id]/lib/timer';
 import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
 import PopUp from '@/components/popUp/PopUp';
 import { useIsMobile } from '@/lib/isMobile';
+import TargetCursor from '@/components/targetCursor/TargetCursor';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States
@@ -31,6 +32,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [lives, setLives] = useState(5);
 	const [showPopup, setShowPopup] = useState(false);
 	const [seconds, setSeconds] = useState(999999);
+	const [mouseOverSection, setMouseOverSection] = useState(false);
 	// #endregion
 	// #region alias Variables
 	const exercicios = lesson.data?.exercicios || errorFetch.exercicios;
@@ -117,9 +119,8 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		loaded && (
 			<>
 				<PopUp type={exercise.exerciseStatus} course={lesson.course} className={showPopup ? 'show' : ''} />
-
+				{mouseOverSection&&!showPopup&&<TargetCursor warn={seconds<=10} spinDuration={1.5} hideDefaultCursor={true} parallaxOn={true} />}
 				<main
-					key="exercicios"
 					className={exercise.exerciseStatus + `${goingToNextExercise ? ' next' : ''}`}
 					onAnimationEnd={e => mainAnimationHandler(e, setExercise, setGoingToNextExercise)}
 				>
@@ -140,6 +141,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 						setCode={setCode}
 						output={output}
 						goingToNextExercise={goingToNextExercise}
+						setmouseOverSection={setMouseOverSection}
 					/>
 					<footer>
 						<button

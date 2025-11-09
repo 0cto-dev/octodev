@@ -38,6 +38,7 @@ export default function LessonSection({
 	setCode,
 	output,
 	goingToNextExercise,
+	setmouseOverSection,
 }: LessonSectionType) {
 	function RenderLessonExercise(exerciseObj: exercisesType) {
 		const title = <h1>{exerciseObj?.pergunta}</h1>;
@@ -99,7 +100,7 @@ export default function LessonSection({
 		);
 	}
 	return (
-		<section>
+		<section onMouseEnter={() => setmouseOverSection(true)} onMouseLeave={() => setmouseOverSection(false)}>
 			{RenderLessonExercise(lesson.data.exercicios[exercise.currentExerciseNum - 1] || errorFetch.exercicios[0])}
 		</section>
 	);

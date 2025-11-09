@@ -3,22 +3,22 @@ import { useEffect, useState } from 'react';
 
 type OptionComponentType = {
 	option: alternativasType;
-} & Omit<LessonSectionType, 'lesson' | 'shuffledAlternatives'|'code'|'output'|'setCode'|'goingToNextExercise'>;
+} & Omit<LessonSectionType, 'lesson' | 'shuffledAlternatives' | 'code' | 'output' | 'setCode' | 'goingToNextExercise' | 'setmouseOverSection'>;
 
 export default function Option({ option, setExercise, exercise }: OptionComponentType) {
 	const isSelected = option.id === exercise.selectedAlternative?.id;
 	const isCorrectPhase = exercise.exerciseStatus === 'correct';
 	const isWrong = isCorrectPhase && !option.correto;
-	const [rotationValue,setRotationValue] = useState(0)
+	const [rotationValue, setRotationValue] = useState(0);
 
-	useEffect(()=>{
-		setRotationValue(Math.random() * 500)
-	},[exercise.exerciseStatus])
+	useEffect(() => {
+		setRotationValue(Math.random() * 500);
+	}, [exercise.exerciseStatus]);
 
 	function handleEndRotation(e: React.AnimationEvent<HTMLButtonElement>) {
-		const target = e.target as HTMLElement
+		const target = e.target as HTMLElement;
 		if (e.animationName !== 'rotate') return;
-		setRotationValue(0)
+		setRotationValue(0);
 		target.style.transform = 'rotate(0deg) !important';
 	}
 	const getButtonStyle = (): React.CSSProperties => {
@@ -38,7 +38,7 @@ export default function Option({ option, setExercise, exercise }: OptionComponen
 
 	const handleClick = () => !isCorrectPhase && setExercise(prev => ({ ...prev, selectedAlternative: option }));
 	return (
-		<div className={isWrong ? 'wrong' : ''}>
+		<div className={isWrong ? 'wrong' : '' + 'cursor-target'}>
 			<button
 				onClick={handleClick}
 				className={`option-button ${isSelected ? 'selected' : ''} ${isWrong ? 'wrong' : ''}`}

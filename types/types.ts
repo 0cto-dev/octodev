@@ -53,6 +53,7 @@ export type LessonSectionType = {
 	setCode: Dispatch<SetStateAction<string[]>>;
 	output: string[];
 	goingToNextExercise: boolean;
+	setmouseOverSection: Dispatch<SetStateAction<boolean>>;
 };
 export type exerciseType = {
 	selectedAlternative: alternativasType;

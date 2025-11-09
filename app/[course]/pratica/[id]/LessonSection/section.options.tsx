@@ -5,7 +5,7 @@ export default function Options({
 	setExercise,
 	exercise,
 	shuffledAlternatives,
-}: Omit<LessonSectionType, 'lesson' | 'code' | 'output' | 'setCode'| 'goingToNextExercise'>) {
+}: Omit<LessonSectionType, 'lesson' | 'code' | 'output' | 'setCode'| 'goingToNextExercise'|'setmouseOverSection'>) {
 	return (
 		<div className="options">
 			{shuffledAlternatives.map(option => {

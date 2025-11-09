@@ -35,10 +35,24 @@ main {
 			border: 10px solid var(--secondary);
 			box-shadow: 10px 10px 5px #00000055;
 			background-color: var(--secondary);
-			&.courseCard.disabled {
+			&.disabled {
+				position: relative;
 				cursor: default;
-				opacity: 0.6;
-				filter: grayscale(100%);
+
+				filter: grayscale(100%) brightness(60%);
+				&::after {
+					content: 'Em breve...';
+					position: absolute;
+					top: 50%;	
+					left: 50%;	
+					transform: translate(-50%, 0) rotate(-30deg) scale(2);
+					filter: drop-shadow(0 10px 8px rgb(0 0 0 / .5)) drop-shadow(0 4px 3px rgb(0 0 0 / 1)) ;
+					font-size: 2rem;
+					font-weight: 700;
+					font-family: var(--roboto);
+					color: var(--foreground);
+										
+				}
 			}
 			.image {
 				border: 5px solid var(--secondary);

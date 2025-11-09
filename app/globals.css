@@ -18,9 +18,10 @@
 	--pink: oklch(0.7 0.18 350); /* pink */
 }
 @media (prefers-color-scheme: dark) {
-  html,body {
-	  background-color: var(--background);
-	  color: #ffffff;
+	html,
+	body {
+		background-color: var(--background);
+		color: #ffffff;
 	}
 }
 
