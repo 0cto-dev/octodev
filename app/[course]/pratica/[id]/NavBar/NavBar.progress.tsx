@@ -1,3 +1,4 @@
+import ProgressBarComp from '@/components/progressBar/ProgressBar';
 import { exerciseType } from '@/types/types';
 
 export default function ProgressBar({
@@ -18,21 +19,8 @@ export default function ProgressBar({
 
 	const lessonProgress = (completedExercises / totalExercises) * 100;
 	return (
-		<div
-			className="progress-bar"
-			/* create am gradient effect on progress bar */
-			style={{
-				background: `
-                        linear-gradient(
-                            90deg,
-                            var(--primary), 
-                            color-mix(in srgb, var(--accent) 80% ,var(--primary)) 
-                        ),
-                        var(--input)
-                        `,
-				backgroundSize: `${lessonProgress}% 100%, 100% 100%`,
-				backgroundRepeat: 'no-repeat',
-			}}
-		></div>
+		<>
+			<ProgressBarComp progress={lessonProgress} />
+		</>
 	);
 }

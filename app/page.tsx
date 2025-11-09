@@ -6,6 +6,7 @@ import { getLesson } from './[course]/pratica/[id]/lib/lessonsData';
 import { courseType, lessonType } from '../types/types';
 import Image from 'next/image';
 import { useIsMobile } from '../lib/isMobile';
+import ProgressBarComp from '../components/progressBar/ProgressBar';
 
 export default function Home() {
 	// #region States
@@ -79,7 +80,7 @@ function Course({ course }: { course: courseType }) {
 			</div>
 			<div className="texts">
 				<h1>{course.nome}</h1>
-				<hr />
+				<ProgressBarComp progress={50}/>
 				<p>{course.descricao}</p>
 			</div>
 		</div>
