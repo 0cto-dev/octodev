@@ -104,7 +104,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	useEffect(() => {
 		// Atualiza a cada secundo para atualizar o timer caso o exercício não tenha sido finalizado
 		if (seconds !== 999999) {
-			!(exercise.exerciseStatus === 'fisnish' || exercise.exerciseStatus === 'lose') && updateTimer(setSeconds);
+			!(exercise.exerciseStatus === 'finish' || exercise.exerciseStatus === 'lose') && updateTimer(setSeconds);
 			!seconds && setExercise(exercise => ({ ...exercise, exerciseStatus: 'lose' }));
 		}
 	}, [seconds]);
