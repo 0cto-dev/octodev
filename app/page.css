@@ -27,46 +27,53 @@ main {
 		flex-wrap: wrap;
 		gap: 40px;
 		.courseCard {
+			display: flex;
+			flex-direction: column;
 			max-width: 450px;
 			min-height: 300px;
 			border-radius: 15px;
 			position: relative;
 			cursor: pointer;
-			outline: 2px solid var(--border);
+			outline: 2px solid var(--lighter-border);
 			border: 10px solid var(--secondary);
 			box-shadow: 10px 10px 5px #00000055;
 			background-color: var(--secondary);
-			transition: 0.3s box-shadow;
-			&:hover {
+			transition: 0.3s box-shadow ease, transform 0.3s ease;
+			&:hover:not(.disabled) {
+				transform: scale(1.02);
 				.image::after {
 					transition: background 0.3s;
-					background:transparent;
+					background: transparent;
+				}
+				.texts p {
+					color: var(--foreground);
+					transition: color 0.3s;
 				}
 			}
-			&::before {
+			&.tenda::before {
 				content: '';
 				position: absolute;
 				bottom: 0;
 				right: 0;
 				transform: translate(12px, 12px);
-				width: 60%;
-				height: 75%;
-				border-radius: 15px;
-				transition: 0.1s box-shadow;
+				width: 65%;
+				height: 65%;
+				border-radius: 17px;
+				transition: 0.1s box-shadow ease;
 			}
 			&.tenda:hover {
-				box-shadow: 0px 0px 15px 4px #eab308;
-				transition: .4s box-shadow;
+				box-shadow: 0px 0px 15px 6px #eab308;
+				transition: 0.4s box-shadow ease, transform 0.3s ease;
 
 				&::before {
-					box-shadow: 10px 10px 10px -4px #047857;
+					box-shadow: 13px 13px 15px -6px #047857e0;
 				}
 			}
 			&.disabled {
 				position: relative;
 				cursor: default;
 
-				filter: grayscale(100%) brightness(60%);
+				filter: grayscale(80%) brightness(50%);
 				&::after {
 					content: 'Em breve...';
 					position: absolute;
@@ -107,32 +114,108 @@ main {
 				/* overflow: hidden; */
 			}
 			.texts {
-				padding: 10px;
 				font-size: 1.2rem;
 				font-family: var(--nunito);
 				color: var(--foreground);
 				display: flex;
-				flex-direction: column;
-				gap: 5px;
-				.progress-bar {
-					width: 100%;
-					height: 5px;
-					border-radius: 5px;
-					transition: background 1s;
-					margin-top: 5px;
-					margin-bottom: 5px;
+				flex-grow: 1;
+				padding-top: 10px;
+				padding-bottom: 20px;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				box-sizing: content-box;
+				align-items: center;
+				align-content: start;
+				gap: 20px;
+				.header {
+					display: flex;
+					flex-grow: 1;
+					flex-wrap: wrap;
+					.tags {
+						flex-basis: 100%;
+						flex-grow: 1;
+						display: flex;
+						padding-left: 15px;
+						padding-right: 15px;
+						align-items: center;
+						justify-content: end;
+						margin-bottom: 5px;
+						span {
+							font-size: 1rem;
+							padding: 0px 20px;
+							border-radius: 6px;
+							text-transform: capitalize;
+							font-weight: 600;
+							font-family: var(--inter);
+							&.easy {
+								background-color: color-mix(in srgb, var(--green) 10%, transparent);
+								border: 1px solid var(--green);
+								color: var(--green);
+							}
+							&.medium {
+								background-color: color-mix(in srgb, var(--orange) 10%, transparent);
+								border: 1px solid var(--orange);
+								color: var(--orange);
+							}
+							&.hard {
+								background-color: color-mix(in srgb, var(--red) 10%, transparent);
+								border: 1px solid var(--red);
+								color: var(--red);
+							}
+						}
+					}
+					h1 {
+						font-size: 1.8rem;
+						padding-left: 20px;
+						padding-right: 20px;
+						font-weight: 800;
+						line-height: auto;
+						flex-grow: 1;
+					}
+
+					.info {
+						padding-right: 15px;
+						display: flex;
+						align-items: center;
+						span {
+							color: var(--disabled-foreground);
+							font-size: 1.3rem;
+							font-weight: 500;
+							font-family: var(--inter);
+						}
+					}
 				}
 				p {
 					padding-left: 20px;
 					padding-right: 20px;
+					flex-basis: 100%;
+					color: var(--disabled-foreground);
+					font-size: 1.3rem;
 				}
-				h1 {
-					font-size: 1.8rem;
-					padding-left: 20px;
-					padding-right: 20px;
-					font-weight: 800;
-					padding-top: 10px;
-					line-height: 1.6rem;
+			}
+			.progress-barDiv {
+				display: flex;
+				width: 100%;
+				justify-content: space-between;
+				align-items: center;
+				flex-wrap: wrap;
+				margin-top: 5px;
+				span {
+					font-family: var(--inter);
+					font-size: 1.1rem;
+					color: var(--foreground);
+					font-weight: 600;
+					padding-left: 15px;
+					padding-right: 15px;
+					text-transform: capitalize;
+				}
+				.progress-bar {
+					flex-basis: 100%;
+					height: 10px;
+					border-radius: 5px;
+					transition: background 1s;
+					margin-top: 10px;
+					margin-bottom: 3px;
 				}
 			}
 		}
@@ -141,6 +224,21 @@ main {
 			padding: 20px;
 			.courseCard {
 				width: 95%;
+				.texts {
+					p {
+						font-size: 1.1rem;
+					}
+					.header {
+						.info {
+							span {
+								font-size: 1.2rem;
+							}
+						}
+						h1 {
+							font-size: 1.5rem;
+						}
+					}
+				}
 			}
 		}
 	}

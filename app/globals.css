@@ -2,6 +2,7 @@
 	--background: oklch(0.12 0.02 285); /* background color for body */
 	--foreground: oklch(0.98 0.01 285); /* text color */
 	--border: oklch(0.25 0.04 285); /* color for thin lines like border or hr tags */
+	--lighter-border: oklch(0.35 0.04 285); /* ligher color for thin lines like border or hr tags */
 	--card: oklch(0.16 0.03 285); /* lighter color for background items */
 	--primary: oklch(0.65 0.25 285); /* main color for the app */
 	--secondary: oklch(0.22 0.03 285); /* idk */
@@ -16,6 +17,7 @@
 	--green: oklch(0.7 0.2 180); /* green */
 	--orange: oklch(0.75 0.18 60); /* orange */
 	--pink: oklch(0.7 0.18 350); /* pink */
+	
 }
 @media (prefers-color-scheme: dark) {
 	html,

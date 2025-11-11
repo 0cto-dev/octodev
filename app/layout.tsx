@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { Lato, Roboto, Nunito } from 'next/font/google';
+import { Lato, Roboto, Nunito, Inter } from 'next/font/google';
 
 export const metadata: Metadata = {
 	title: 'OctoDev',
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '700'], variable: '--roboto' });
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700'], variable: '--lato' });
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '800'], variable: '--nunito' });
+const inter = Inter({ subsets: ['latin'], weight: ['400', '500','600'], variable: '--inter' });
 
 export const viewport: Viewport = {
 	themeColor: 'black',
@@ -25,7 +26,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="pt-br" className={`${roboto.variable} ${lato.variable} ${nunito.variable}`}>
+		<html lang="pt-br" className={`${roboto.variable} ${lato.variable} ${nunito.variable} ${inter.variable}`}>
 			<body>{children}</body>
 		</html>
 	);
