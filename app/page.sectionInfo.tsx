@@ -17,7 +17,7 @@ export default function CourseInfo({ course, LessonsNum }: CourseProps) {
 				</div>
 				<h1>{course.nome}</h1>
 			<div className="info">
-				<span>{LessonsNum || '???'} Exercícios</span>
+				<span>{LessonsNum || '???'} Lições</span>
 			</div>
 			</div>
 			<p>{course.descricao}</p>

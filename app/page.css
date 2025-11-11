@@ -55,6 +55,7 @@ main {
 					border-radius: 12px 0 0 12px;
 				}
 				&.focus {
+					height: 100%;
 					border-radius: 0 12px 12px 0;
 				}
 				&:hover {
@@ -320,21 +321,31 @@ main {
 			padding-left: 10px;
 			padding-right: 10px;
 			.coursesContent {
-				gap: 50px;
+				gap: 30px;
+				width: 80%;
 				.courseCard {
 					width: 95%;
 					.texts {
+						gap: 5px;
+						padding-bottom: 10px;
 						p {
-							font-size: 1.1rem;
+							font-size: 1rem;
+							padding-left: 10px;
+							padding-right: 10px;
 						}
 						.header {
 							.info {
 								span {
-									font-size: 1.2rem;
+									font-size: 1rem;
 								}
 							}
 							h1 {
-								font-size: 1.5rem;
+								font-size: 1.2rem;
+							}
+							.tags{
+								span{
+									font-size: .7rem;
+								}
 							}
 						}
 					}
