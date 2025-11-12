@@ -28,6 +28,7 @@ main {
 			width: 100%;
 			max-width: 70%;
 			display: flex;
+			position: relative;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
@@ -35,7 +36,7 @@ main {
 			button {
 				width: fit-content;
 				display: flex;
-				justify-content: center;
+				justify-content: space-between;
 				background-color: color-mix(in srgb, var(--input) 95%, var(--foreground));
 				align-items: center;
 				padding: 10px;
@@ -44,18 +45,16 @@ main {
 				border-radius: 12px;
 				border: 1px solid var(--lighter-border);
 				color: var(--foreground);
+				height: 100%;
 				transition: 0.3s background;
 				&#order {
 					align-self: flex-end;
-					height: 100%;
 				}
 				&#filter {
 					padding-left: 12px;
-					height: 100%;
 					border-radius: 12px 0 0 12px;
 				}
 				&.focus {
-					height: 100%;
 					border-radius: 0 12px 12px 0;
 				}
 				&:hover {
@@ -74,7 +73,10 @@ main {
 				background-color: var(--input);
 				padding: 4px;
 				gap: 4px;
-
+				position: relative;
+				ul.options {
+					right: 55px;
+				}
 				input {
 					height: 100%;
 					padding-left: 20px;
@@ -92,6 +94,10 @@ main {
 						color: var(--disabled-foreground);
 					}
 				}
+			}
+			ul.options {
+				right: 0;
+				
 			}
 			@media (orientation: portrait) {
 				max-width: 100%;
@@ -342,9 +348,9 @@ main {
 							h1 {
 								font-size: 1.2rem;
 							}
-							.tags{
-								span{
-									font-size: .7rem;
+							.tags {
+								span {
+									font-size: 0.7rem;
 								}
 							}
 						}
@@ -355,5 +361,53 @@ main {
 	}
 	footer {
 		background-color: var(--card);
+	}
+}
+ul.options {
+	list-style: none;
+	position: absolute;
+	z-index: 999;
+	top: calc(100% + 10px);
+	display: flex;
+	flex-direction: column;
+	gap: 0px;
+	border-radius: 12px;
+	background-color: var(--border);
+	border-radius: 12px;
+	overflow: hidden;
+	border: 1px solid var(--lighter-border);
+	box-shadow: 0 0 30px 5px #000;
+	li {
+		width: 100%;
+
+		button.option {
+			height: 50px;
+			width: 100%;
+			border-radius: 0;
+			border: none;
+			&.selected {
+				background-color: color-mix(in srgb, var(--input) 90%, var(--foreground));
+			}
+		}
+		&:last-child button {
+			border-bottom: none;
+		}
+		&:not(:last-child) {
+			&:after {
+				content: '';
+				position: absolute;
+				width: 90%;
+				left: 50%;
+				z-index: 64;
+				display: flex;
+				border-bottom: 1px solid var(--lighter-border);
+			}
+			&:not(:has(button.selected))::after {
+				transform: translateX(-50%);
+			}
+			&:has(button.selected)::after {
+				transform: translate(-50%, -1px);
+			}
+		}
 	}
 }
