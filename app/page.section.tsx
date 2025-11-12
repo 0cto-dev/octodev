@@ -40,11 +40,16 @@ export default function Section({
 }
 
 export function SearchBar() {
+	const [activeDropDown, setActiveDropDown] = useState('');
+	function handleDropDownClick(content:string){
+		setActiveDropDown(content)
+	}
 	return (
 		<div className="searchBarArea">
 			<div className="searchBar">
 				<input type="text" placeholder="Pesquisar por cursos..." id="searchBar" />
 				<DropDown
+					onClick={handleDropDownClick}
 					id="filter"
 					items={[
 						{ name: 'Fácil', handler: () => {} },
@@ -53,6 +58,7 @@ export function SearchBar() {
 						{ name: 'Disponível', handler: () => {} },
 						{ name: 'Não concluido', handler: () => {} },
 					]}
+					active={activeDropDown===''||activeDropDown==='Filtrar'}
 				>
 					Filtrar
 				</DropDown>
@@ -62,12 +68,14 @@ export function SearchBar() {
 				</button>
 			</div>
 			<DropDown
+				onClick={handleDropDownClick}
 				id="order"
 				items={[
 					{ name: 'Ordem alfabética', handler: () => {} },
 					{ name: 'Dificuldade', handler: () => {} },
 					{ name: 'Progresso', handler: () => {} },
 				]}
+				active={activeDropDown===''||activeDropDown==='Ordenar'}
 			>
 				Ordenar
 			</DropDown>

@@ -1,24 +1,34 @@
 import { AnimationEventHandler, useState } from 'react';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import './DropDown.css';
-type DropDownType = { children: React.ReactNode; id: string; items: { name: string; handler: () => void }[] };
+type DropDownType = {
+	children: string;
+	id: string;
+	items: { name: string; handler: () => void }[];
+	active: boolean;
+	onClick?: (content: string) => void;
+};
 
-export default function DropDown({ children, id, items }: DropDownType) {
+export default function DropDown({ children, id, items, active, onClick }: DropDownType) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentItem, setCurrentItem] = useState(-1);
 	const [close, setClose] = useState(false);
 	function handleClick(i: number = -1) {
+		console.log(active)
+		if(!active) return
 		if (isOpen) {
 			i >= 0 && items[i].handler();
 			setCurrentItem(currentItem => (i === currentItem ? -1 : i));
-			setClose(true)
+			setClose(true);
 		}
 		if (!isOpen) setIsOpen(true);
+		onClick && onClick(children);
 	}
-	function handleEndAnimation(e:React.AnimationEvent<HTMLElement>){
-		if(e.animationName === 'hide'){
+	function handleEndAnimation(e: React.AnimationEvent<HTMLElement>) {
+		if (e.animationName === 'hide') {
 			setIsOpen(false);
-			setClose(false)
+			setClose(false);
+			onClick && onClick('');
 		}
 	}
 	return (
@@ -29,7 +39,7 @@ export default function DropDown({ children, id, items }: DropDownType) {
 			</button>
 
 			{isOpen && (
-				<ul className={`options ${close?'close':''}`} onAnimationEnd={handleEndAnimation}>
+				<ul className={`options ${close ? 'close' : ''}`} onAnimationEnd={handleEndAnimation}>
 					{items.map((item, i) => {
 						const selected = item.name === items[currentItem]?.name;
 						return (
