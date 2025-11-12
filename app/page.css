@@ -25,14 +25,14 @@ main {
 		flex-grow: 1;
 		width: 100%;
 		.searchBarArea {
-			width: 100%;
-			max-width: 70%;
+			width: 80%;
+			max-width: 1000px;
 			display: flex;
 			position: relative;
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			gap: 20px;
+			gap: 10px;
 			button {
 				width: fit-content;
 				display: flex;
@@ -49,6 +49,7 @@ main {
 				transition: 0.3s background;
 				&#order {
 					align-self: flex-end;
+					height: 40px;
 				}
 				&#filter {
 					padding-left: 12px;
@@ -58,7 +59,7 @@ main {
 					border-radius: 0 12px 12px 0;
 				}
 				&:hover {
-					background-color: color-mix(in srgb, var(--input) 90%, var(--foreground));
+					background-color: color-mix(in srgb, var(--input) 90%, var(--foreground)) !important;
 				}
 			}
 			.searchBar {
@@ -95,9 +96,12 @@ main {
 					}
 				}
 			}
-			ul.options {
+			& > ul.options {
 				right: 0;
-				
+			}
+			ul.options {
+				border-radius: 8px;
+				box-shadow: 2px 2px 15px 7px #00000099;
 			}
 			@media (orientation: portrait) {
 				max-width: 100%;
@@ -327,10 +331,15 @@ main {
 			padding-left: 10px;
 			padding-right: 10px;
 			.coursesContent {
-				gap: 30px;
-				width: 80%;
+				row-gap: 30px;
+				column-gap: 20px;
+				justify-content: space-evenly;
+
+				margin-left: 30px;
+				margin-right: 30px;
 				.courseCard {
 					width: 95%;
+					max-width: 350px;
 					.texts {
 						gap: 5px;
 						padding-bottom: 10px;
@@ -361,53 +370,5 @@ main {
 	}
 	footer {
 		background-color: var(--card);
-	}
-}
-ul.options {
-	list-style: none;
-	position: absolute;
-	z-index: 999;
-	top: calc(100% + 10px);
-	display: flex;
-	flex-direction: column;
-	gap: 0px;
-	border-radius: 12px;
-	background-color: var(--border);
-	border-radius: 12px;
-	overflow: hidden;
-	border: 1px solid var(--lighter-border);
-	box-shadow: 0 0 30px 5px #000;
-	li {
-		width: 100%;
-
-		button.option {
-			height: 50px;
-			width: 100%;
-			border-radius: 0;
-			border: none;
-			&.selected {
-				background-color: color-mix(in srgb, var(--input) 90%, var(--foreground));
-			}
-		}
-		&:last-child button {
-			border-bottom: none;
-		}
-		&:not(:last-child) {
-			&:after {
-				content: '';
-				position: absolute;
-				width: 90%;
-				left: 50%;
-				z-index: 64;
-				display: flex;
-				border-bottom: 1px solid var(--lighter-border);
-			}
-			&:not(:has(button.selected))::after {
-				transform: translateX(-50%);
-			}
-			&:has(button.selected)::after {
-				transform: translate(-50%, -1px);
-			}
-		}
 	}
 }
