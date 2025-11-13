@@ -1,15 +1,15 @@
 :root {
-	--background: oklch(0.12 0.02 285); /* background color for body */
-	--foreground: oklch(0.98 0.01 285); /* text color */
-	--border: oklch(0.25 0.04 285); /* color for thin lines like border or hr tags */
-	--lighter-border: oklch(0.35 0.04 285); /* ligher color for thin lines like border or hr tags */
-	--card: oklch(0.16 0.03 285); /* lighter color for background items */
+	--background: oklch(0.95 0.04 285); /* text color */
+	--foreground: oklch(0.16 0.03 285); /* background color for body */
+	--border: oklch(0.75 0.04 285); /* color for thin lines like border or hr tags */
+	--lighter-border: oklch(0.75 0.04 285); /* ligher color for thin lines like border or hr tags */
+	--card: oklch(0.98 0.01 285); /* lighter color for background items */
 	--primary: oklch(0.65 0.25 285); /* main color for the app */
-	--secondary: oklch(0.22 0.04 285); /* idk */
+	--secondary: oklch(0.98 0.01 285); /* idk */
 	--accent: oklch(0.55 0.22 320); /* bright color for enphasis situations */
-	--disabled-foreground: oklch(0.65 0.02 285); /* darker color for disabled effect or darker texts */
+	--disabled-foreground: oklch(0.45 0.02 285); /* darker color for disabled effect or darker texts */
 	--error: oklch(0.577 0.245 27.325); /* error color */
-	--input: oklch(0.25 0.04 285); /* inputs color */
+	--input: oklch(0.95 0.01 285); /* inputs color */
 	--white: oklch(0.98 0.01 285); /* text color */
 	--magenta: #a632bf; /* magenta */
 	--red: oklch(58.305% 0.23863 28.392 / 0.764); /* error color */
@@ -17,9 +17,28 @@
 	--green: oklch(0.7 0.2 180); /* green */
 	--orange: oklch(0.75 0.18 60); /* orange */
 	--pink: oklch(0.7 0.18 350); /* pink */
-	
 }
 @media (prefers-color-scheme: dark) {
+	:root {
+		--background: oklch(0.12 0.02 285); /* background color for body */
+		--foreground: oklch(0.98 0.01 285); /* text color */
+		--border: oklch(0.25 0.04 285); /* color for thin lines like border or hr tags */
+		--lighter-border: oklch(0.35 0.04 285); /* ligher color for thin lines like border or hr tags */
+		--card: oklch(0.16 0.03 285); /* lighter color for background items */
+		--primary: oklch(0.65 0.25 285); /* main color for the app */
+		--secondary: oklch(0.22 0.04 285); /* idk */
+		--accent: oklch(0.55 0.22 320); /* bright color for enphasis situations */
+		--disabled-foreground: oklch(0.65 0.02 285); /* darker color for disabled effect or darker texts */
+		--error: oklch(0.577 0.245 27.325); /* error color */
+		--input: oklch(0.25 0.04 285); /* inputs color */
+		--white: oklch(0.98 0.01 285); /* text color */
+		--magenta: #a632bf; /* magenta */
+		--red: oklch(58.305% 0.23863 28.392 / 0.764); /* error color */
+		--blue: oklch(0.7 0.15 270); /* blue */
+		--green: oklch(0.7 0.2 180); /* green */
+		--orange: oklch(0.75 0.18 60); /* orange */
+		--pink: oklch(0.7 0.18 350); /* pink */
+	}
 	html,
 	body {
 		background-color: var(--background);

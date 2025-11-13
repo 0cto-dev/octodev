@@ -31,7 +31,7 @@ main {
 			div.nodeHtml {
 				.node {
 					background-color: var(--primary);
-					color: var(--foreground);
+					color: var(--white);
 				}
 			}
 		}
@@ -60,8 +60,14 @@ main {
 				div.nodeHtml {
 					.node {
 						border: 5px solid color-mix(in srgb, var(--orange) 30%, var(--background));
-						opacity: 1;
-						box-shadow: 0px 0px 100px 10px color-mix(in srgb, var(--orange) 30%, var(--background));
+						opacity: .7;
+						box-shadow: 0px 0px 100px 10px color-mix(in srgb, var(--orange) 70%, var(--background));
+						@media (prefers-color-scheme: dark) {
+							border: 5px solid color-mix(in srgb, var(--orange) 30%, var(--background));
+							opacity: 1;
+							box-shadow: 0px 0px 100px 10px color-mix(in srgb, var(--orange) 30%, var(--background));
+							
+						}
 					}
 				}
 			}
@@ -71,7 +77,7 @@ main {
 				.node {
 					/* box-shadow: 0px 0px 50px 0px color-mix(in srgb, var(--primary) 60%, transparent); */
 					background-color: color-mix(in srgb, var(--primary) 40%, var(--input));
-					color: var(--foreground);
+					color: var(--white);
 					transform: scale(1.1);
 				}
 				p {
@@ -229,7 +235,7 @@ main {
 						Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 					background: var(--card);
 					border: none;
-					color: white;
+					color: var(--foreground);
 					height: 40px;
 					padding: 5px;
 					border-radius: 5px;

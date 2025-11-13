@@ -169,6 +169,7 @@ main {
 	background: var(--card);
 	border-radius: 15px;
 	border: 1px solid var(--border);
+	box-shadow: 10 10 20 -8px #000000;
 
 	&.next {
 		animation: next 1.5s linear 1;

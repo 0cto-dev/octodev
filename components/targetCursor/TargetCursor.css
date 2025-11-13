@@ -26,6 +26,10 @@
   width: 4px;
   height: 4px;
   background: var(--foreground);
+  @media (prefers-color-scheme: dark) {
+    background: var(--background);
+    
+  }
   border-radius: 50%;
   transform: translate(-50%, -50%);
   will-change: transform;
@@ -64,3 +68,13 @@
   border-right: none;
   border-top: none;
 }
+@media (prefers-color-scheme: light) {
+    .target-cursor-dot{
+      background: var(--background);
+    }
+    .target-cursor-corner{
+      border-color:var(--background);
+
+    }
+    
+  }
