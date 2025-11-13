@@ -1,6 +1,10 @@
 import { CourseProps } from './page.course';
 
-export default function CourseInfo({ course, LessonsNum }: CourseProps) {
+type CourseInfoType = {
+	course: CourseProps['course'];
+	LessonsNum: CourseProps['LessonsNum'];
+}
+export default function CourseInfo({ course, LessonsNum }: CourseInfoType) {
 	return (
 		<div className="texts">
 			<div className="header">

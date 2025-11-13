@@ -36,7 +36,7 @@ export default function Home() {
 
 			setCourses(
 				allCoursesLessons.map((lessons, i) => {
-					return { course: avaliableCourses[i].nome, data: lessons };
+					return { course: avaliableCourses.filter((course=>course.disponivel))[i].nome, data: lessons };
 				})
 			);
 		};

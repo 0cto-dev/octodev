@@ -1,22 +1,51 @@
 import { courseType, lessonType } from '@/types/types';
 import Course from './page.course';
-import { IoSearch } from 'react-icons/io5';
-import { RiArrowDropDownLine } from 'react-icons/ri';
-import { useState } from 'react';
-import DropDown from '../components/dropDown/DropDown';
+import { SearchBar } from './page.searchBar';
+import { useEffect, useState } from 'react';
 
-export default function Section({
-	avaliableCourses,
-	courses,
-}: {
+type SectionType = {
 	avaliableCourses: courseType[];
 	courses: { course: string; data: lessonType[] }[];
-}) {
+};
+export type filterType = 'Fácil' | 'Médio' | 'Difícil' | 'Disponível' | 'Não concluido' | '';
+export type sortType = 'Ordem alfabética' | 'Dificuldade' | 'Progresso' | '';
+
+export default function Section({ avaliableCourses, courses }: SectionType) {
+	const [search, setSearch] = useState('');
+	const [filter, setFilter] = useState<filterType>('');
+	const [sort, setSort] = useState<sortType>('');
+	const filterMap = {
+		Difícil: (course: courseType) => course.dificuldade === 'difícil',
+		Médio: (course: courseType) => course.dificuldade === 'intermediário',
+		Fácil: (course: courseType) => course.dificuldade === 'fácil',
+		Disponível: (course: courseType) => course.disponivel,
+		'Não concluido': (course: courseType) => {
+			const courseName = course.nome === 'Tenda' ? 'logica' : course.nome;
+
+			const progress = +(localStorage.getItem(`${courseName.toLowerCase()}Progress`) || 0);
+			const courseData = courses.find(courseI => courseI.course === course.nome)?.data || [];
+			const completionPercentage = ((progress / courseData.length) * 100) | 0;
+			return completionPercentage < 100;
+		},
+	};
 	return (
 		<section>
-			<SearchBar />
+			<SearchBar setSearch={setSearch} search={search} setFilter={setFilter} setSort={setSort} />
 			<div className="coursesContent">
 				{avaliableCourses
+					// Filtra de acordo com a pesquisa da SearchBar
+					.filter(course => {
+						if (!search) return true;
+						return (
+							course.descricao.toLowerCase().includes(search.toLowerCase()) ||
+							course.nome.toLowerCase().includes(search.toLowerCase())
+						);
+					})
+					.filter((course, i) => {
+						if (!filter) return true;
+						const filterCondition = filterMap[filter];
+						return filterCondition ? filterCondition(course) : true;
+					})
 					.toSorted((a, b) => {
 						if (a.disponivel && !b.disponivel) return -1;
 						if (!a.disponivel && b.disponivel) return 1;
@@ -36,49 +65,5 @@ export default function Section({
 					})}
 			</div>
 		</section>
-	);
-}
-
-export function SearchBar() {
-	const [activeDropDown, setActiveDropDown] = useState('');
-	function handleDropDownClick(content:string){
-		setActiveDropDown(content)
-	}
-	return (
-		<div className="searchBarArea">
-			<div className="searchBar">
-				<input type="text" placeholder="Pesquisar por cursos..." id="searchBar" />
-				<DropDown
-					onClick={handleDropDownClick}
-					id="filter"
-					items={[
-						{ name: 'Fácil', handler: () => {} },
-						{ name: 'Médio', handler: () => {} },
-						{ name: 'Difícil', handler: () => {} },
-						{ name: 'Disponível', handler: () => {} },
-						{ name: 'Não concluido', handler: () => {} },
-					]}
-					active={activeDropDown===''||activeDropDown==='Filtrar'}
-				>
-					Filtrar
-				</DropDown>
-
-				<button className="focus">
-					<IoSearch size={25} />
-				</button>
-			</div>
-			<DropDown
-				onClick={handleDropDownClick}
-				id="order"
-				items={[
-					{ name: 'Ordem alfabética', handler: () => {} },
-					{ name: 'Dificuldade', handler: () => {} },
-					{ name: 'Progresso', handler: () => {} },
-				]}
-				active={activeDropDown===''||activeDropDown==='Ordenar'}
-			>
-				Ordenar
-			</DropDown>
-		</div>
 	);
 }
