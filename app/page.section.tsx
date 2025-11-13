@@ -1,5 +1,5 @@
 import { courseType, lessonType } from '@/types/types';
-import Course from './page.course';
+import Course, { getProgress } from './page.course';
 import { SearchBar } from './page.searchBar';
 import { useEffect, useState } from 'react';
 
@@ -20,12 +20,24 @@ export default function Section({ avaliableCourses, courses }: SectionType) {
 		Fácil: (course: courseType) => course.dificuldade === 'fácil',
 		Disponível: (course: courseType) => course.disponivel,
 		'Não concluido': (course: courseType) => {
-			const courseName = course.nome === 'Tenda' ? 'logica' : course.nome;
+			const courseDataLength = courses.find(courseI => courseI.course === course.nome)?.data.length || 0;
 
-			const progress = +(localStorage.getItem(`${courseName.toLowerCase()}Progress`) || 0);
-			const courseData = courses.find(courseI => courseI.course === course.nome)?.data || [];
-			const completionPercentage = ((progress / courseData.length) * 100) | 0;
-			return completionPercentage < 100;
+			return getProgress(course, courseDataLength) < 100;
+		},
+	};
+	const sortMap = {
+		'Ordem alfabética': (a: courseType, b: courseType) => a.nome.localeCompare(b.nome),
+		Progresso: (a: courseType, b: courseType) => {
+			const aCourseDataLength = courses.find(courseI => courseI.course === a.nome)?.data.length || 0;
+			const bCourseDataLength = courses.find(courseI => courseI.course === b.nome)?.data.length || 0;
+			console.log(getProgress(b,bCourseDataLength),getProgress(a,aCourseDataLength))
+			const compareProgress = getProgress(b,bCourseDataLength) - getProgress(a,aCourseDataLength) 
+			return compareProgress
+		},
+		Dificuldade: (a: courseType, b: courseType) => {
+			const dificulty: Record<string, number> = { fácil: 0, intermediário: 1, difícil: 2 };
+
+			return (dificulty[a.dificuldade] - dificulty[b.dificuldade]);
 		},
 	};
 	return (
@@ -44,13 +56,14 @@ export default function Section({ avaliableCourses, courses }: SectionType) {
 					.filter((course, i) => {
 						if (!filter) return true;
 						const filterCondition = filterMap[filter];
-						return filterCondition ? filterCondition(course) : true;
+						return filterCondition(course);
 					})
 					.toSorted((a, b) => {
 						if (a.disponivel && !b.disponivel) return -1;
 						if (!a.disponivel && b.disponivel) return 1;
-
-						return a.nome.localeCompare(b.nome);
+						if (!sort) return a.nome.localeCompare(b.nome);
+						const sortCompare = sortMap[sort];
+						return sortCompare(a, b) || a.nome.localeCompare(b.nome);
 					})
 					.map((course, i) => {
 						return (
@@ -58,7 +71,7 @@ export default function Section({ avaliableCourses, courses }: SectionType) {
 								key={i}
 								course={course}
 								LessonsNum={
-									courses.toSorted((a, b) => a.course.localeCompare(b.course))[i]?.data.length || 0
+									courses[courses.findIndex((c) => c.course === course.nome)]?.data.length
 								}
 							/>
 						);
