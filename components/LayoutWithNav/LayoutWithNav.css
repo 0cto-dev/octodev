@@ -1,14 +1,53 @@
 header {
-		background-color: var(--card);
+	margin-top: 20px;
+	display: flex;
+	position: absolute;
+	background-color: var(--card);
+	box-shadow: 7px 7px 12px #00000099;
+	border-radius: 15px;
+	width: calc(100% - 40px);
+	@media (orientation: portrait) {
+		margin-top: 7.5px;
+		width: calc(100% - 15px);
+	}
+	ul {
 		display: flex;
-        width: 100%;
-		ul {
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
+		list-style: none;
+		padding: 15px;
+		li {
 			display: flex;
-			width: 100%;
-			list-style: none;
-			padding: 5px;
-			li:first-child {
-				flex-grow: 1;
+			justify-content: start;
+			align-items: center;
+			&#octo {
+				position: relative;
+				filter: drop-shadow(0 0 10px 15px);
+				.blur {
+					position: absolute;
+					top: 50%;
+					z-index: 4;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					width: 1px;
+					border-radius: 50px;
+					height: 1px;
+					box-shadow: 0 0 15px 13px color-mix(in srgb, var(--accent) 70%, transparent);
+				}
+				img {
+					z-index: 5;
+				}
+			}
+			&#pfp a{
+				line-height: 0;
+				color: var(--disabled-foreground);
+				transition: color .3s, transform 0.3s;
+				&:hover{
+					color: color-mix(in srgb, var(--foreground) 70%, var(--disabled-foreground));
+					transform: scale(1.1);
+				}
 			}
 		}
 	}
+}

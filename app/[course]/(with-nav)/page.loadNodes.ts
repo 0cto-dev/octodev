@@ -52,7 +52,7 @@ export default function loadNodes({
 						type: 'lessonsNode',
 						position: {
 							x: xPositions[i] || position,
-							y: 200 * i + (isMobile ? windowHeight * 0.2 : windowHeight * 0.1),
+							y: 200 * i + (isMobile ? windowHeight * 0.2 : windowHeight * 0.2),
 						},
 						data: {
 							course: lessons.course,
