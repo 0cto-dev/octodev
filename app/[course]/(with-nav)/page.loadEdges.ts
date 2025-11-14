@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { emptyEdges, lessonType } from '../../types/types';
+import { emptyEdges, lessonType } from '../../../types/types';
 import { Edge, Node } from '@xyflow/react';
 
 type loadEdgesType = {

@@ -2,8 +2,8 @@
 import getCourses from '@/lib/readCoursesNames';
 import { useEffect, useState } from 'react';
 import './page.css';
-import { getLesson } from './[course]/pratica/[id]/lib/lessonsData';
-import { courseType, lessonType } from '../types/types';
+import { getLesson } from '../[course]/pratica/[id]/lib/lessonsData';
+import { courseType, lessonType } from '../../types/types';
 import Image from 'next/image';
 import SectionCourses from './page.section';
 
@@ -54,12 +54,6 @@ export default function Home() {
 	return (
 		isLoaded && (
 			<main>
-				<header>
-					<ul>
-						<li>OctoDev</li>
-						<li>ProfilePicture</li>
-					</ul>
-				</header>
 				<SectionCourses avaliableCourses={avaliableCourses} courses={courses} />
 				<footer>footer</footer>
 			</main>

@@ -1,7 +1,7 @@
 import { lessonType } from '@/types/types';
 import { Node } from '@xyflow/react';
 import { Dispatch, SetStateAction } from 'react';
-import { useIsMobile } from '../../lib/isMobile';
+import { useIsMobile } from '../../../lib/isMobile';
 
 type loadNodesType = {
 	lessons: {
