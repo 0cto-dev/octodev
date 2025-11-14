@@ -1,10 +1,9 @@
-header{
-	bottom: 10px;
-	z-index: 500;
+body>header{
+	z-index: 2;
 }
 main {
 	width: 100%;
-	height: calc(100% - 80px);
+	height: 100%;
 	position: relative;
 	cursor: default;
 	.nodeContent.practice {
@@ -65,13 +64,12 @@ main {
 				div.nodeHtml {
 					.node {
 						border: 5px solid color-mix(in srgb, var(--orange) 30%, var(--background));
-						opacity: .7;
+						opacity: 0.7;
 						box-shadow: 0px 0px 100px 10px color-mix(in srgb, var(--orange) 70%, var(--background));
 						@media (prefers-color-scheme: dark) {
 							border: 5px solid color-mix(in srgb, var(--orange) 30%, var(--background));
 							opacity: 1;
 							box-shadow: 0px 0px 100px 10px color-mix(in srgb, var(--orange) 30%, var(--background));
-							
 						}
 					}
 				}
@@ -267,7 +265,8 @@ main {
 		}
 	}
 	.goToTop,
-	.goToCurrent,.goToBottom {
+	.goToCurrent,
+	.goToBottom {
 		border-radius: 20px;
 		background: var(--background);
 		color: var(--foreground);
@@ -394,5 +393,14 @@ div.popUp {
 		&:hover {
 			background-color: color-mix(in srgb, var(--primary) 70%, var(--background));
 		}
+	}
+}
+@media (orientation: portrait) {
+	body>header {
+		bottom: 10px;
+		z-index: 500;
+	}
+	main {
+		height: calc(100% - 80px);
 	}
 }

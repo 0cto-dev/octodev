@@ -55,7 +55,6 @@ export default function Home() {
 		isLoaded && (
 			<main>
 				<SectionCourses avaliableCourses={avaliableCourses} courses={courses} />
-				<footer>footer</footer>
 			</main>
 		)
 	);

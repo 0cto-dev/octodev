@@ -116,7 +116,9 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	}
 	if (!windowWidth || !windowHeight || !isLoaded || nodes[0]?.id === '0' || edges[0]?.id === '0') return null;
 
-	const maxHeight = nodesType === 'pratica' ? 200 * nodes.length + windowHeight * 0.1 + 300 : windowHeight;
+	const lastNodePos = (200 * (nodes.length-1)+windowHeight*0.2)
+	const maxHeight = nodesType === 'pratica' ? lastNodePos+windowHeight-220: windowHeight;
+	console.log(lastNodePos+windowHeight-220)
 	return (
 		<main onClick={handleOnClick} key="trilha">
 			<div className="blur"></div>
@@ -134,7 +136,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 				>
 					<BiCurrentLocation size={15} />
 				</GoToPosition>
-				
+
 				<GoToPosition className={'goToBottom'} type="nodeNumber" value={nodes.length} nodesType={nodesType}>
 					<FaArrowDown size={15} />
 				</GoToPosition>
@@ -190,7 +192,7 @@ function GoToPosition({
 			yPosition = value;
 			break;
 		case 'nodeNumber':
-			yPosition = nodesType === 'pratica' ? 200 * (value - 1) + 50 : 0;
+			yPosition = nodesType === 'pratica' ? 200 * (value - 1) + 40 : 0;
 			break;
 
 		default:

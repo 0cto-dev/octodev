@@ -46,13 +46,15 @@ export default function loadNodes({
 					i === 0 && !xPositions[0] && xPositions.push(position);
 					if (!positionOfCurrentLessonNode && i === +lastMadeLesson)
 						positionOfCurrentLessonNode = position + nodeSize / 2;
+					
+					console.log(200 * i +windowHeight*0.2)
 
 					const lessonObj = {
 						id: lesson.id,
 						type: 'lessonsNode',
 						position: {
 							x: xPositions[i] || position,
-							y: 200 * i + (isMobile ? windowHeight * 0.2 : windowHeight * 0.2),
+							y: 200 * i + windowHeight * 0.2,
 						},
 						data: {
 							course: lessons.course,
