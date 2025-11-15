@@ -2,6 +2,7 @@ body > header {
 	margin-top: 20px;
 	display: flex;
 	position: absolute;
+	top: 0;
 	background-color: var(--card);
 	box-shadow: 7px 7px 12px #00000099;
 	border-radius: 15px;
@@ -23,9 +24,10 @@ body > header {
 			justify-content: start;
 			align-items: center;
 			&#octo {
-				position: relative;
 				filter: drop-shadow(0 0 10px 15px);
+				flex-grow: 1;
 				a{
+					position: relative;
 					height: 35px;
 					width: 35px;
 				}
@@ -46,6 +48,20 @@ body > header {
 					top: 50%;
 					left: 50%;
 					transform: translate(-50%, -50%);
+				}
+			}
+			&#leaderboard{
+				padding-right: 20px;
+				p{
+					font-size: 1.1rem;
+					font-family: var(--fredoka);
+					font-weight: 600;
+					color: var(--foreground);
+					transition: color .1s ease;
+					cursor: pointer;
+					&:hover{
+						color: var(--primary);
+					}
 				}
 			}
 			&#pfp a {

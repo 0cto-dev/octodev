@@ -1,0 +1,36 @@
+body {
+	justify-content: center;
+	height: 100vh;
+	align-items: center;
+}
+main {
+	background: var(--card);
+	border-radius: 15px;
+	border: 1px solid var(--border);
+	box-shadow: 10 10 20 -8px #000000;
+	height: 50%;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: 20px;
+	.content {
+		margin-top: 20px;
+		color: var(--foreground);
+		max-width: 90%;
+		font-family: var(--inter);
+		font-size: 1.2rem;
+		flex-grow: 1;
+		max-height: 50%;
+		span {
+			font-size: 1.3rem;
+			color: var(--accent);
+			text-shadow: 0px 0px 8px var(--accent);
+		}
+	}
+	@media (orientation: portrait) {
+		width: 90%;
+	}
+}
