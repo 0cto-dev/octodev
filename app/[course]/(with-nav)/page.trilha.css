@@ -397,8 +397,11 @@ div.popUp {
 }
 @media (orientation: portrait) {
 	body>header {
+		position: absolute;
 		bottom: 10px;
+		top: unset;
 		z-index: 500;
+		height: fit-content;
 	}
 	main {
 		height: calc(100% - 80px);

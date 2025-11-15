@@ -1,50 +1,112 @@
-@keyframes openMenuView {
-	0% {
-		box-shadow: inset -25px 0 8px -10px #00000055,
-			5px 0px 8px -2px color-mix(in srgb, var(--foreground) 10%, transparent);
+@media (min-width: 700px) {
+	@keyframes openMenuView {
+		0% {
+			box-shadow: inset -25px 0 8px -10px #00000055,
+				5px 0px 8px -2px color-mix(in srgb, var(--foreground) 10%, transparent);
+			transform: scaleY(0);
+		}
+		20% {
+			transform: scaleY(1.2);
+		}
+		40% {
+			transform: scaleY(1);
+		}
+		100% {
+			max-width: 600px;
+			box-shadow: inset -25px 0 8px -10px #00000000,
+				5px 0px 8px -2px color-mix(in srgb, var(--foreground) 0%, transparent);
+		}
 	}
-	100% {
-		max-width: 600px;
-		box-shadow: inset -25px 0 8px -10px #00000000,
-			5px 0px 8px -2px color-mix(in srgb, var(--foreground) 0%, transparent);
+	@keyframes closeMenuView {
+		0% {
+			max-width: 600px;
+			box-shadow: inset -25px 0 8px -10px #00000000,
+				5px 0px 8px -2px color-mix(in srgb, var(--foreground) 0%, transparent);
+		}
+		40%,
+		100% {
+			box-shadow: inset -25px 0 8px -10px #00000055,
+				5px 0px 8px -2px color-mix(in srgb, var(--foreground) 10%, transparent);
+		}
+		78% {
+			transform: scaleY(1.2);
+		}
+		80% {
+			transform: scaleY(1);
+		}
+		90% {
+			transform: scaleY(0);
+		}
+		100% {
+			max-width: 0px;
+			transform: scaleY(0);
+		}
 	}
-}
-@keyframes closeMenuView {
-	0% {
-		max-width: 600px;
-		box-shadow: inset -25px 0 8px -10px #00000000,
-			5px 0px 8px -2px color-mix(in srgb, var(--foreground) 0%, transparent);
-	}
-	40%,
-	100% {
-		box-shadow: inset -25px 0 8px -10px #00000055,
-			5px 0px 8px -2px color-mix(in srgb, var(--foreground) 10%, transparent);
-	}
-	100% {
-		max-width: 0px;
-	}
-}
-@keyframes scaleIn {
-	0% {
-		transform: scale(0);
-		opacity: 0;
-	}
-	100% {
-		transform: scale(1);
-		opacity: 1;
-	}
-}
-@keyframes scaleOut {
-	0% {
-		transform: scale(1);
-		opacity: 1;
-	}
-	100% {
-		transform: scale(0);
-		opacity: 0;
-	}
-}
 
+	@keyframes scaleIn {
+		0% {
+			transform: scale(0);
+			opacity: 0;
+		}
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+	@keyframes scaleOut {
+		0% {
+			transform: scale(1);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(0);
+			opacity: 0;
+		}
+	}
+}
+@media (max-width: 699px) {
+	@keyframes showMenu {
+		0% {
+			max-height: 0px;
+		}
+		40% {
+			border-color: var(--lighter-border);
+		}
+		100% {
+			max-height: 500px;
+			border-color: var(--lighter-border);
+		}
+	}
+	@keyframes hideMenu {
+		0% {
+			max-height: 500px;
+			border-color: var(--lighter-border);
+		}
+		60% {
+			border-color: var(--lighter-border);
+		}
+		100% {
+			max-height: 0px;
+		}
+	}
+
+	@keyframes translateFromLeft {
+		0% {
+			transform: translateX(-300%);
+		}
+		100% {
+			transform: translateX(0%);
+		}
+	}
+	@keyframes translateToLeft {
+		0% {
+			transform: translateX(0%);
+		}
+		100% {
+			transform: translateX(-300%);
+		}
+	}
+}
 body > header {
 	margin-top: 20px;
 	display: flex;
@@ -54,7 +116,9 @@ body > header {
 	box-shadow: 7px 7px 12px #00000099;
 	border-radius: 15px;
 	width: calc(100% - 40px);
-	overflow: hidden;
+	@media (min-width: 700px) {
+		overflow: hidden;
+	}
 	@media (orientation: portrait) {
 		margin-top: 7.5px;
 		width: calc(100% - 15px);
@@ -124,34 +188,45 @@ body > header {
 				}
 				.menu {
 					display: flex;
+					visibility: hidden;
 					background-color: var(--card);
 					border-radius: 8px;
+					z-index: 1000;
 					max-width: 0px;
 					overflow: hidden;
+					&.open,&.close{
+						visibility: visible;
+					}
 					&.open {
-						animation: openMenuView 1.5s ease-in-out forwards;
-						ul{
-							:nth-child(1) a{ animation-delay: .1s}
-							:nth-child(2) a{ animation-delay: 0.3s}
-							:nth-child(3) a{ animation-delay: .5s}
-							li a{
-								transform: scale(0);
-								animation: scaleIn 0.5s ease-in-out forwards;
-
+						ul {
+							:nth-child(1) a {
+								animation-delay: 0.1s !important;
 							}
-							
+							:nth-child(2) a {
+								animation-delay: 0.3s !important;
+							}
+							:nth-child(3) a {
+								animation-delay: 0.5s !important;
+							}
+							:nth-child(4) a {
+								animation-delay: 0.6s !important;
+							}
 						}
 					}
 					&.close {
-						animation: closeMenuView 1.5s ease-out forwards;
 						ul {
-							:nth-child(1) a{ animation-delay: 0.8s}
-							:nth-child(2) a{ animation-delay: 0.5s}
-							:nth-child(3) a{ animation-delay: .4s}
-							li a{
-								animation: scaleOut 0.5s ease-in-out forwards;
+							:nth-child(1) a {
+								animation-delay: 0.8s !important;
 							}
-
+							:nth-child(2) a {
+								animation-delay: 0.6s !important;
+							}
+							:nth-child(3) a {
+								animation-delay: 0.4s !important;
+							}
+							:nth-child(4) a {
+								animation-delay: 0.2s !important;
+							}
 						}
 					}
 					ul {
@@ -161,7 +236,7 @@ body > header {
 						display: flex;
 						flex-direction: row;
 						margin-left: 10px;
-						
+
 						gap: 20px;
 						li {
 							a {
@@ -170,6 +245,75 @@ body > header {
 								font-family: var(--inter);
 								font-weight: 400;
 								font-size: 1.05rem;
+							}
+							&.logout a {
+								background: color-mix(
+									in srgb,
+									var(--error) 50%,
+									color-mix(in srgb, var(--foreground) 20%, transparent)
+								);
+								padding: 0px 8px;
+								border-radius: 5px;
+								transition: .3s background;
+								&:hover {
+									background: color-mix(
+									in srgb,
+									var(--error) 80%,
+									color-mix(in srgb, var(--foreground) 20%, transparent));
+								}
+							}
+						}
+					}
+					@media (min-width: 700px) {
+						&.open {
+							animation: openMenuView 1.5s ease-in-out forwards;
+							ul {
+								li a {
+									transform: scale(0);
+									animation: scaleIn 0.5s ease-in-out forwards;
+								}
+							}
+						}
+						&.close {
+							animation: closeMenuView 1.5s ease-out forwards;
+							ul {
+								li a {
+									animation: scaleOut 0.5s ease-in-out forwards;
+								}
+							}
+						}
+					}
+					@media (max-width: 699px) {
+						position: absolute;
+						top: 60px;
+						right: 15px;
+						width: 100%;
+						max-width: 150px;
+						overflow: hidden;
+						border-radius: 8px;
+						background-color: var(--card);
+						border: 1px solid transparent;
+						& > ul {
+							flex-direction: column;
+							gap: 10px;
+							margin: 10px 0;
+						}
+						&.open {
+							animation: showMenu 1.3s ease-in-out forwards;
+							ul {
+								li a {
+									transform: translateX(-300%);
+									animation: translateFromLeft 0.5s ease-in-out forwards;
+								}
+							}
+						}
+						&.close {
+							animation: hideMenu 1s ease-out forwards;
+
+							ul {
+								li a {
+									animation: translateToLeft 0.5s ease-in-out forwards;
+								}
 							}
 						}
 					}

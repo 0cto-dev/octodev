@@ -6,7 +6,7 @@ import './NavBar.css';
 import { useEffect, useState } from 'react';
 
 export default function NavBar() {
-	const [menuOpen, setMenuOpen] = useState(false);
+	const [menuOpen, setMenuOpen] = useState<string|boolean>('');
 
 	function handleClick(e: React.MouseEvent<HTMLElement, MouseEvent>) {
 		const target = e.target as HTMLElement;
@@ -39,15 +39,18 @@ export default function NavBar() {
 						<a href="#">
 							<FaUserCircle size={35} />
 						</a>
-						<div className={`menu ${menuOpen ? 'open' : 'close'}`}>
+						<div className={`menu ${menuOpen===''? '' : menuOpen ? 'open' : 'close'}`}>
 							<ul>
 								<li>
 									<a href="/profile">Perfil</a>
 								</li>
 								<li>
-									<a href="/settings">Configurações</a>
+									<a href="/achievements">Conquistas</a>
 								</li>
 								<li>
+									<a href="/settings">Configurações</a>
+								</li>
+								<li className="logout">
 									<a href="/logout">Sair</a>
 								</li>
 							</ul>
