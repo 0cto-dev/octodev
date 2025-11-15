@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '700'], variable: '--roboto' });
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700'], variable: '--lato' });
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '800'], variable: '--nunito' });
-const inter = Inter({ subsets: ['latin'], weight: ['400', '500','600'], variable: '--inter' });
+const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--inter' });
 
 export const viewport: Viewport = {
 	themeColor: 'black',
@@ -27,6 +27,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="pt-br" className={`${roboto.variable} ${lato.variable} ${nunito.variable} ${inter.variable}`}>
+			<head>
+				<link rel="icon" href="/favicon.png" sizes="any" />
+			</head>
 			<body>{children}</body>
 		</html>
 	);
