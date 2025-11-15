@@ -1,3 +1,50 @@
+@keyframes openMenuView {
+	0% {
+		box-shadow: inset -25px 0 8px -10px #00000055,
+			5px 0px 8px -2px color-mix(in srgb, var(--foreground) 10%, transparent);
+	}
+	100% {
+		max-width: 600px;
+		box-shadow: inset -25px 0 8px -10px #00000000,
+			5px 0px 8px -2px color-mix(in srgb, var(--foreground) 0%, transparent);
+	}
+}
+@keyframes closeMenuView {
+	0% {
+		max-width: 600px;
+		box-shadow: inset -25px 0 8px -10px #00000000,
+			5px 0px 8px -2px color-mix(in srgb, var(--foreground) 0%, transparent);
+	}
+	40%,
+	100% {
+		box-shadow: inset -25px 0 8px -10px #00000055,
+			5px 0px 8px -2px color-mix(in srgb, var(--foreground) 10%, transparent);
+	}
+	100% {
+		max-width: 0px;
+	}
+}
+@keyframes scaleIn {
+	0% {
+		transform: scale(0);
+		opacity: 0;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+@keyframes scaleOut {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(0);
+		opacity: 0;
+	}
+}
+
 body > header {
 	margin-top: 20px;
 	display: flex;
@@ -19,6 +66,7 @@ body > header {
 		justify-content: space-between;
 		list-style: none;
 		padding: 15px;
+
 		li {
 			display: flex;
 			justify-content: start;
@@ -26,7 +74,7 @@ body > header {
 			&#octo {
 				filter: drop-shadow(0 0 10px 15px);
 				flex-grow: 1;
-				a{
+				a {
 					position: relative;
 					height: 35px;
 					width: 35px;
@@ -50,27 +98,81 @@ body > header {
 					transform: translate(-50%, -50%);
 				}
 			}
-			&#leaderboard{
+			&#leaderboard {
 				padding-right: 20px;
-				p{
+				p {
 					font-size: 1.1rem;
 					font-family: var(--fredoka);
 					font-weight: 600;
 					color: var(--foreground);
-					transition: color .1s ease;
+					transition: color 0.1s ease;
 					cursor: pointer;
-					&:hover{
+					&:hover {
 						color: var(--primary);
 					}
 				}
 			}
-			&#pfp a {
-				line-height: 0;
-				color: var(--disabled-foreground);
-				transition: color 0.3s, transform 0.3s;
-				&:hover {
-					color: color-mix(in srgb, var(--foreground) 70%, var(--disabled-foreground));
-					transform: scale(1.1);
+			&#pfp {
+				> a {
+					line-height: 0;
+					color: var(--disabled-foreground);
+					transition: color 0.3s, transform 0.3s;
+					&:hover {
+						color: color-mix(in srgb, var(--foreground) 70%, var(--disabled-foreground));
+						transform: scale(1.1);
+					}
+				}
+				.menu {
+					display: flex;
+					background-color: var(--card);
+					border-radius: 8px;
+					max-width: 0px;
+					overflow: hidden;
+					&.open {
+						animation: openMenuView 1.5s ease-in-out forwards;
+						ul{
+							:nth-child(1) a{ animation-delay: .1s}
+							:nth-child(2) a{ animation-delay: 0.3s}
+							:nth-child(3) a{ animation-delay: .5s}
+							li a{
+								transform: scale(0);
+								animation: scaleIn 0.5s ease-in-out forwards;
+
+							}
+							
+						}
+					}
+					&.close {
+						animation: closeMenuView 1.5s ease-out forwards;
+						ul {
+							:nth-child(1) a{ animation-delay: 0.8s}
+							:nth-child(2) a{ animation-delay: 0.5s}
+							:nth-child(3) a{ animation-delay: .4s}
+							li a{
+								animation: scaleOut 0.5s ease-in-out forwards;
+							}
+
+						}
+					}
+					ul {
+						list-style: none;
+						margin: 0;
+						padding: 10px 20px;
+						display: flex;
+						flex-direction: row;
+						margin-left: 10px;
+						
+						gap: 20px;
+						li {
+							a {
+								text-decoration: none;
+								color: var(--foreground);
+								font-family: var(--inter);
+								font-weight: 400;
+								font-size: 1.05rem;
+							}
+						}
+					}
 				}
 			}
 		}
