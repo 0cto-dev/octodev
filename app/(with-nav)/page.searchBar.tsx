@@ -10,13 +10,13 @@ type SearchBarType = {
 	setSort: Dispatch<SetStateAction<sortType>>;
 };
 
-export function SearchBar({ search, setSearch, setFilter,setSort }: SearchBarType) {
+export function SearchBar({ search, setSearch, setFilter, setSort }: SearchBarType) {
 	const [activeDropDown, setActiveDropDown] = useState('');
 	function handleDropDownClick(content: string) {
 		setActiveDropDown(content);
 	}
 	return (
-		<div className="searchBarArea">
+		<div className={`searchBarArea ${activeDropDown ? 'active' : ''}`}>
 			<div className="searchBar">
 				<input
 					type="text"
@@ -35,7 +35,7 @@ export function SearchBar({ search, setSearch, setFilter,setSort }: SearchBarTyp
 						{ name: 'Disponível', handler: () => {} },
 						{ name: 'Não concluido', handler: () => {} },
 					]}
-                    updateState={setFilter}
+					updateState={setFilter}
 					active={activeDropDown === '' || activeDropDown === 'Filtrar'}
 				>
 					Filtrar
@@ -53,7 +53,7 @@ export function SearchBar({ search, setSearch, setFilter,setSort }: SearchBarTyp
 					{ name: 'Dificuldade', handler: () => {} },
 					{ name: 'Progresso', handler: () => {} },
 				]}
-                updateState={setSort}
+				updateState={setSort}
 				active={activeDropDown === '' || activeDropDown === 'Ordenar'}
 			>
 				Ordenar

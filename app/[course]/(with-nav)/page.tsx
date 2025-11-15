@@ -118,7 +118,6 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 
 	const lastNodePos = (200 * (nodes.length-1)+windowHeight*0.2)
 	const maxHeight = nodesType === 'pratica' ? lastNodePos+windowHeight-220: windowHeight;
-	console.log(lastNodePos+windowHeight-220)
 	return (
 		<main onClick={handleOnClick} key="trilha">
 			<div className="blur"></div>

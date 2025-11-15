@@ -1,4 +1,4 @@
-body>header {
+body > header {
 	margin-top: 20px;
 	display: flex;
 	position: absolute;
@@ -6,6 +6,7 @@ body>header {
 	box-shadow: 7px 7px 12px #00000099;
 	border-radius: 15px;
 	width: calc(100% - 40px);
+	overflow: hidden;
 	@media (orientation: portrait) {
 		margin-top: 7.5px;
 		width: calc(100% - 15px);
@@ -24,26 +25,34 @@ body>header {
 			&#octo {
 				position: relative;
 				filter: drop-shadow(0 0 10px 15px);
+				a{
+					height: 35px;
+					width: 35px;
+				}
 				.blur {
 					position: absolute;
+					z-index: 3;
 					top: 50%;
-					z-index: 4;
 					left: 50%;
 					transform: translate(-50%, -50%);
-					width: 1px;
+					width: 15px;
+					height: 15px;
 					border-radius: 50px;
-					height: 1px;
-					box-shadow: 0 0 15px 13px color-mix(in srgb, var(--accent) 70%, transparent);
+					box-shadow: 0 0 15px 14px color-mix(in srgb, var(--accent) 60%, transparent);
 				}
 				img {
+					position: absolute;
 					z-index: 5;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
 				}
 			}
-			&#pfp a{
+			&#pfp a {
 				line-height: 0;
 				color: var(--disabled-foreground);
-				transition: color .3s, transform 0.3s;
-				&:hover{
+				transition: color 0.3s, transform 0.3s;
+				&:hover {
 					color: color-mix(in srgb, var(--foreground) 70%, var(--disabled-foreground));
 					transform: scale(1.1);
 				}

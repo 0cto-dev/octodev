@@ -20,15 +20,17 @@ main {
 			max-width: 1000px;
 			display: flex;
 			position: relative;
+			z-index: 999;
 			flex-direction: column;
 			opacity: 0.6;
 			justify-content: center;
 			align-items: center;
 			gap: 10px;
 			transition: opacity 0.3s;
-			&:hover,
+			&:has(:hover),
 			&:has(input:focus),
-			&:has(input:not(:placeholder-shown)) {
+			&:has(input:not(:placeholder-shown)),
+			&.active {
 				opacity: 1;
 			}
 			button {

@@ -47,7 +47,6 @@ export default function loadNodes({
 					if (!positionOfCurrentLessonNode && i === +lastMadeLesson)
 						positionOfCurrentLessonNode = position + nodeSize / 2;
 					
-					console.log(200 * i +windowHeight*0.2)
 
 					const lessonObj = {
 						id: lesson.id,

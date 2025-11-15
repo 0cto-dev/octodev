@@ -3,6 +3,7 @@ import { courseType } from '@/types/types';
 import { useState } from 'react';
 import CourseImage from './page.sectionImage';
 import CourseInfo from './page.sectionInfo';
+import getCourseName from '@/lib/getCourseName';
 
 export type CourseProps = { course: courseType; LessonsNum: number };
 
@@ -18,12 +19,18 @@ export default function Course({ course, LessonsNum }: CourseProps) {
 				: {}
 			: {};
 
+	function handleClick(){
+
+		if(course.disponivel)location.href = `/${getCourseName(course.nome)}`
+	}
+
 	return (
 		<div
 			className={`courseCard ${course.nome.toLowerCase()} ${course.disponivel ? '' : 'disabled'}`}
 			style={shadowStyle}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
+			onClick={handleClick}
 		>
 			<CourseImage course={course} />
 			<CourseInfo course={course} LessonsNum={LessonsNum} />
@@ -37,7 +44,7 @@ export default function Course({ course, LessonsNum }: CourseProps) {
 }
 
 export function getProgress(course: courseType, LessonsNum: number) {
-	const key = course.nome === 'Tenda' ? 'logica' : course.nome.toLowerCase();
+	const key = getCourseName(course.nome)
 	const stored = typeof window !== 'undefined' ? localStorage.getItem(`${key}Progress`) : null;
 	const value = Number(stored ?? 0);
 	return LessonsNum ? (value / LessonsNum) * 100 : 0;

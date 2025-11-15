@@ -5,9 +5,5 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return (
-		<LayoutWithNav>
-			{children}
-		</LayoutWithNav>
-	);
+	return <LayoutWithNav>{children}</LayoutWithNav>;
 }

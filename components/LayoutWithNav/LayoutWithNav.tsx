@@ -10,7 +10,7 @@ export default function LayoutWithNav({ children, className = '' }: { children: 
 					<li id="octo">
 						<a href="/">
 							<div className="blur"></div>
-							<Image src={'/images/octoSemFundo.png'} alt="logo" width={40} height={40}></Image>
+							<Image src={'/images/octoSemFundo.png'} alt="logo" loading='eager' width={40} height={40}></Image>
 						</a>
 					</li>
 					<li id="pfp">

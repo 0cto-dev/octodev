@@ -15,7 +15,6 @@ export default function loadEdges({ nodes, lessons, setEdges }: loadEdgesType) {
 	const edgeColor = window.matchMedia('(prefers-color-scheme: dark)').matches
 		? 'var(--disabled-foreground)'
 		: 'var(--border)';
-		console.log(edgeColor)
 
 	const INITIAL_EDGES: Edge[] =
 		nodes[0]?.id !== '0'

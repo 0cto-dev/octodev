@@ -6,6 +6,7 @@ import { getLesson } from '../[course]/pratica/[id]/lib/lessonsData';
 import { courseType, lessonType } from '../../types/types';
 import Image from 'next/image';
 import SectionCourses from './page.section';
+import getCourseName from '@/lib/getCourseName';
 
 export default function Home() {
 	// #region States
@@ -27,7 +28,7 @@ export default function Home() {
 				.filter(course => course.disponivel)
 				.map(async course => {
 					return (await getLesson(
-						course.nome === 'Tenda' ? 'logica' : course.nome.toLowerCase(),
+						getCourseName(course.nome),
 						undefined
 					)) as lessonType[];
 				});
