@@ -35,7 +35,7 @@ export default function NavBar() {
 					<li id="leaderboard" onClick={handleClick}>
 						<p>Placar de Lideres</p>
 					</li>
-					<li id="pfp" onClick={handleClick}>
+					<li id="pfp" onClick={handleClick} className={`${menuOpen?'open':''}`}>
 						<a href="#">
 							<FaUserCircle size={35} />
 						</a>

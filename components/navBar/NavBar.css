@@ -180,11 +180,18 @@ body > header {
 				> a {
 					line-height: 0;
 					color: var(--disabled-foreground);
-					transition: color 0.3s, transform 0.3s;
+					transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
+					margin-right: 7px;
+					border-radius: 50px;
 					&:hover {
 						color: color-mix(in srgb, var(--foreground) 70%, var(--disabled-foreground));
 						transform: scale(1.1);
 					}
+				}
+				&.open > a {
+					color: color-mix(in srgb, var(--foreground) 80%, var(--disabled-foreground));
+					box-shadow: 0 0 5px 1px color-mix(in srgb, var(--green) 100%, transparent);
+					transform: scale(1.1) rotate(-15deg);
 				}
 				.menu {
 					display: flex;
@@ -194,7 +201,8 @@ body > header {
 					z-index: 1000;
 					max-width: 0px;
 					overflow: hidden;
-					&.open,&.close{
+					&.open,
+					&.close {
 						visibility: visible;
 					}
 					&.open {
@@ -254,12 +262,13 @@ body > header {
 								);
 								padding: 0px 8px;
 								border-radius: 5px;
-								transition: .3s background;
+								transition: 0.3s background;
 								&:hover {
 									background: color-mix(
-									in srgb,
-									var(--error) 80%,
-									color-mix(in srgb, var(--foreground) 20%, transparent));
+										in srgb,
+										var(--error) 80%,
+										color-mix(in srgb, var(--foreground) 20%, transparent)
+									);
 								}
 							}
 						}
@@ -285,10 +294,10 @@ body > header {
 					}
 					@media (max-width: 699px) {
 						position: absolute;
-						top: 60px;
-						right: 15px;
+						top: 70px;
+						right: 5px;
 						width: 100%;
-						max-width: 150px;
+						max-width: 200px;
 						overflow: hidden;
 						border-radius: 8px;
 						background-color: var(--card);
@@ -297,6 +306,18 @@ body > header {
 							flex-direction: column;
 							gap: 10px;
 							margin: 10px 0;
+							text-align: center;
+							align-items: center;
+							justify-content: center;
+							li {
+								width: 100%;
+								text-align: center;
+								align-self: center;
+								justify-self: center;
+								a {
+									width: 100% !important;
+								}
+							}
 						}
 						&.open {
 							animation: showMenu 1.3s ease-in-out forwards;
