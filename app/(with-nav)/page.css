@@ -373,3 +373,18 @@ main {
 		background-color: var(--card);
 	}
 }
+
+.chat{
+	position: fixed;
+	background-color: var(--primary);
+	bottom: 50px;
+	right: 50px;
+	display: flex;
+	width: 75px;
+	height: 75px;
+	border-radius: 35px;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding: 20px;
+}

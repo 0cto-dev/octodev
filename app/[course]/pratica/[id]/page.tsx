@@ -22,7 +22,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExerciseNum: 1,
+		currentExerciseNum: 3,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -119,7 +119,9 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 		loaded && (
 			<>
 				<PopUp type={exercise.exerciseStatus} course={lesson.course} className={showPopup ? 'show' : ''} />
-				{mouseOverSection&&!showPopup&&<TargetCursor warn={seconds<=10} spinDuration={1.5} hideDefaultCursor={true} parallaxOn={true} />}
+				{mouseOverSection && !showPopup && currentExercise?.tipo === 'alternativas' && (
+					<TargetCursor warn={seconds <= 10} spinDuration={1.5} hideDefaultCursor={true} parallaxOn={true} />
+				)}
 				<main
 					className={exercise.exerciseStatus + `${goingToNextExercise ? ' next' : ''}`}
 					onAnimationEnd={e => mainAnimationHandler(e, setExercise, setGoingToNextExercise)}

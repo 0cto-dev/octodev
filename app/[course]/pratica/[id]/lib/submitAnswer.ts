@@ -1,5 +1,5 @@
 import fetchResultPiston from '@/app/[course]/pratica/[id]/lib/pistonApi/pistonApi';
-import { runTenda } from '@/app/[course]/pratica/[id]/lib/tenda/tendaFetch';
+import { runTenda } from '@/app/api/tenda/tendaFetch'
 import verifyHardCode from '@/app/[course]/pratica/[id]/lib/verifyHardCode';
 import { alternativasType, exercisesType, lessonType, submitAnswerType } from '@/types/types';
 import { Dispatch, SetStateAction } from 'react';
@@ -72,9 +72,10 @@ export default async function submitAnswer(
 		setOutput([output, result || '', error || '']);
 
 		const hardCoded = verifyHardCode(code[0], currentExercise.verificadorTrapaca || '');
-		console.log(currentExercise.respostaCodigo ? output === currentExercise.respostaCodigo : true);
+		console.log(output.trim(), currentExercise.respostaCodigo?.trim());
+
 		userGuessedRight =
-			(currentExercise.respostaCodigo ? output === currentExercise.respostaCodigo : true) && !hardCoded;
+			(currentExercise.respostaCodigo ? output.trim() === currentExercise.respostaCodigo.trim() : true) && !hardCoded;
 	}
 
 	if (!userGuessedRight) {

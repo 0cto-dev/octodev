@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import './page.css';
 import { getLesson } from '../[course]/pratica/[id]/lib/lessonsData';
 import { courseType, lessonType } from '../../types/types';
-import Image from 'next/image';
 import SectionCourses from './page.section';
 import getCourseName from '@/lib/getCourseName';
+import { IoChatbox } from "react-icons/io5";
 
 export default function Home() {
 	// #region States
@@ -56,6 +56,11 @@ export default function Home() {
 		isLoaded && (
 			<main>
 				<SectionCourses avaliableCourses={avaliableCourses} courses={courses} />
+				<div className="chat">
+					<div className="button">
+						<IoChatbox size={20}/>
+					</div>
+				</div>
 			</main>
 		)
 	);
