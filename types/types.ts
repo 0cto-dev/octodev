@@ -205,3 +205,13 @@ export type courseType = {
 	disponivel: boolean,
 	dependencias: string[]
 }
+
+export const emptyCourse = {
+	nome:'',
+	descricao:'',
+	cor:'',
+	banner:'',
+	dificuldade:'',
+	disponivel: false,
+	dependencias: []
+};

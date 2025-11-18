@@ -374,17 +374,114 @@ main {
 	}
 }
 
-.chat{
+.chat {
 	position: fixed;
-	background-color: var(--primary);
-	bottom: 50px;
-	right: 50px;
+	bottom: 30px;
+	right: 30px;
 	display: flex;
-	width: 75px;
-	height: 75px;
-	border-radius: 35px;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	padding: 20px;
+	flex-direction: column;
+	align-items: end;
+	z-index: 1000;
+	gap: 15px;
+	.chatMenu {
+		width: 400px;
+		height: 700px;
+		background: var(--card);
+		padding: 10px;
+		border: 1px solid var(--lighter-border);
+		border-radius: 15px;
+		display: flex;
+		flex-direction: column;
+		.chatMenuContent {
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+			overflow: scroll;
+			overflow-y: auto;
+			justify-content: start;
+			gap: 10px;
+			padding-bottom: 15px;
+			.msgComp{
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+			.message{
+				max-width: 80%;
+				padding: 8px 12px;
+				border-radius: 10px;
+				font-size: 1.1rem;
+				flex-wrap: wrap;
+				overflow-wrap: break-word;
+			}
+			.messageUser {
+				background-color: var(--secondary);
+				align-self: flex-end;
+			}
+			.messageAI {
+				background-color: var(--primary);
+				align-self: start;
+			}
+		}
+		.chatMenuForm {
+			position: relative;
+			textarea {
+				height: auto;
+				width: 100%;
+				display: block;
+				min-height: 50px;
+				max-height: 150px;
+				resize: none;
+				padding: 10px;
+				padding-right: 50px;
+				border: 1px solid var(--lighter-border);
+				border-radius: 5px;
+				color: var(--disabled-foreground);
+				outline: none;
+				background: var(--input);
+				font-size: 1.1rem;
+				transition: 0.1s height linear;
+			}
+			button {
+				position: absolute;
+				bottom: 5px;
+				right: 5px;
+				border-radius: 5px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 40px;
+				height: 40px;
+				border: 1px solid var(--lighter-border);
+				background-color: var(--primary);
+				color: var(--foreground);
+				svg {
+					/* fix: math centered to visual centered */
+					transform: translate(-1px, 0px);
+					display: block;
+					fill: currentColor;
+					filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.35));
+				}
+			}
+		}
+	}
+	.button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		width: 60px;
+		height: 60px;
+
+		border-radius: 35px;
+		background-color: var(--primary);
+		box-shadow: inset -5px -5px 15px color-mix(in srgb, var(--primary) 30%, #000),
+			inset 5px 5px 15px color-mix(in srgb, var(--primary) 70%, #fff), 5px 5px 15px #00000099;
+		svg {
+			display: block;
+
+			fill: currentColor;
+			filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.35));
+		}
+	}
 }
