@@ -32,6 +32,7 @@ export default function RootLayout({
 			className={`${roboto.variable} ${lato.variable} ${nunito.variable} ${inter.variable} ${fredoka.variable}`}
 		>
 			<head>
+				<meta name="google-site-verification" content="aDOPi6ctOVGByWjhEwth9BDdeQOK3jO6KT2mGa09AQc" />
 				<link rel="icon" href="/favicon.png" sizes="any" />
 			</head>
 			<body>{children}</body>
