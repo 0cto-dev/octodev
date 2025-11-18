@@ -382,7 +382,7 @@ main {
 	flex-direction: column;
 	align-items: end;
 	z-index: 1000;
-	gap: 15px;
+	gap: 10px;
 	.chatMenu {
 		width: 400px;
 		height: 700px;
@@ -392,6 +392,19 @@ main {
 		border-radius: 15px;
 		display: flex;
 		flex-direction: column;
+		margin-right:40px;
+		border-bottom-right-radius: 5px;
+		box-shadow: 5px 5px 15px #00000099;
+		@media (orientation: portrait) {
+			position: absolute;
+			width: 95vw;
+			z-index: 1001;
+			height: 75vh;
+			bottom: 0;
+			right: 0;
+			transform: translate(20px,-10%);
+			margin-right: 0;
+		}
 		.chatMenuContent {
 			flex-grow: 1;
 			display: flex;
@@ -400,7 +413,8 @@ main {
 			overflow-y: auto;
 			justify-content: start;
 			gap: 10px;
-			padding-bottom: 15px;
+			padding: 5px;
+			margin-bottom: 10px;
 			.msgComp{
 				display: flex;
 				flex-direction: column;
@@ -417,16 +431,18 @@ main {
 			.messageUser {
 				background-color: var(--secondary);
 				align-self: flex-end;
+				border-top-right-radius: 0;
 			}
 			.messageAI {
 				background-color: var(--primary);
 				align-self: start;
+				border-top-left-radius: 0;
 			}
 		}
 		.chatMenuForm {
 			position: relative;
 			textarea {
-				height: auto;
+				height: 40px;
 				width: 100%;
 				display: block;
 				min-height: 50px;
@@ -455,6 +471,7 @@ main {
 				border: 1px solid var(--lighter-border);
 				background-color: var(--primary);
 				color: var(--foreground);
+				z-index: 1005;
 				svg {
 					/* fix: math centered to visual centered */
 					transform: translate(-1px, 0px);

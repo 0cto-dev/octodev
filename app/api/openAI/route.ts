@@ -36,7 +36,7 @@ async function runOpenAI(message: string, avaliableCourses: courseType[]): Promi
 				{
 					role: 'system',
 					content: `Você é um assistente útil que ajuda os usuários a entender conceitos de programação de forma fácil e descontraída,
-                    seja breve e não use emojis.
+                    seja breve e não use emojis e nem markdown.
 					Caso a pergunta não seja relacionada a programação, ou à plataforma diga: "Desculpe, esta pergunta não está relacionada à programação."
 					informações sobre o aplicativo(OctoDev): OctoDev é uma plataforma educacional gamificada focada no ensino de programação, 
                     oferecendo uma abordagem interativa e divertida para aprender a programar.
