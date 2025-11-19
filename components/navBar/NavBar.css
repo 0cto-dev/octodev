@@ -137,7 +137,6 @@ body > header {
 			align-items: center;
 			&#octo {
 				filter: drop-shadow(0 0 10px 15px);
-				flex-grow: 1;
 				a {
 					position: relative;
 					height: 35px;
@@ -160,6 +159,17 @@ body > header {
 					top: 50%;
 					left: 50%;
 					transform: translate(-50%, -50%);
+				}
+			}
+			&#title {
+				flex-grow: 1;
+				p {
+					font-size: 1.3rem;
+					font-family: var(--lato);
+					font-weight: 700;
+					color: var(--foreground);
+					text-transform: capitalize;
+					margin-left: 20px;
 				}
 			}
 			&#leaderboard {

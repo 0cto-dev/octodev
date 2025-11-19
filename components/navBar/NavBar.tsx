@@ -7,15 +7,19 @@ import { useEffect, useState } from 'react';
 
 export default function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<string|boolean>('');
+	const [isClient, setIsClient] = useState(false);
 
 	function handleClick(e: React.MouseEvent<HTMLElement, MouseEvent>) {
 		const target = e.target as HTMLElement;
 		if (target.closest('#leaderboard')) window.location.href = '/placar';
 		if (target.closest('#pfp')) setMenuOpen(menuOpen => !menuOpen);
 	}
+
 	useEffect(() => {
-		console.log(menuOpen);
-	}, [menuOpen]);
+		setIsClient(true);
+	}, []);
+	let courseName = isClient ? window.location.pathname.split('/')[1]||'' : ''
+	courseName = courseName==='logica' ? 'Tenda' : courseName
 	return (
 		<>
 			<header>
@@ -31,6 +35,9 @@ export default function NavBar() {
 								height={40}
 							></Image>
 						</a>
+					</li>
+					<li id="title">
+						<p>{courseName}</p>
 					</li>
 					<li id="leaderboard" onClick={handleClick}>
 						<p>Placar de Lideres</p>
