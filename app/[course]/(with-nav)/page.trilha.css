@@ -407,3 +407,6 @@ div.popUp {
 		height: calc(100% - 80px);
 	}
 }
+body > header {
+	position: absolute;
+}

@@ -110,7 +110,7 @@
 body > header {
 	margin-top: 20px;
 	display: flex;
-	position: absolute;
+	position: relative;
 	top: 0;
 	background-color: var(--card);
 	box-shadow: 7px 7px 12px #00000099;
