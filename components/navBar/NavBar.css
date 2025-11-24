@@ -116,9 +116,7 @@ body > header {
 	box-shadow: 7px 7px 12px #00000099;
 	border-radius: 15px;
 	width: calc(100% - 40px);
-	@media (min-width: 700px) {
-		overflow: hidden;
-	}
+	
 	@media (orientation: portrait) {
 		margin-top: 7.5px;
 		width: calc(100% - 15px);
@@ -163,13 +161,14 @@ body > header {
 			}
 			&#title {
 				flex-grow: 1;
+
 				p {
-					font-size: 1.3rem;
+					font-size: 1.1rem;
 					font-family: var(--lato);
 					font-weight: 700;
 					color: var(--foreground);
 					text-transform: capitalize;
-					margin-left: 20px;
+					margin-left: 15px;
 				}
 			}
 			&#leaderboard {

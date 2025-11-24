@@ -1,5 +1,14 @@
-body>header{
+body > header {
 	z-index: 2;
+}
+[data-id="LicaoTeoricaTempMsg"] {
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) !important;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 main {
 	width: 100%;
@@ -396,17 +405,10 @@ div.popUp {
 	}
 }
 @media (orientation: portrait) {
-	body>header {
-		position: absolute;
-		bottom: 10px;
-		top: unset;
-		z-index: 500;
-		height: fit-content;
+	body > header {
+		z-index: 100;
 	}
 	main {
 		height: calc(100% - 80px);
 	}
-}
-body > header {
-	position: absolute;
 }
