@@ -4,10 +4,13 @@ import Image from 'next/image';
 import { FaUserCircle } from 'react-icons/fa';
 import './NavBar.css';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 export default function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<string|boolean>('');
 	const [isClient, setIsClient] = useState(false);
+	const { data: session } = useSession();
+	
 
 	function handleClick(e: React.MouseEvent<HTMLElement, MouseEvent>) {
 		const target = e.target as HTMLElement;
@@ -37,7 +40,8 @@ export default function NavBar() {
 						</a>
 					</li>
 					<li id="title">
-						<p>{courseName}</p>
+						<p>{courseName||`Olá, ${session?.user.name||'visitante'}!
+						`}</p>
 					</li>
 					<li id="leaderboard" onClick={handleClick}>
 						<p>Placar de Lideres</p>

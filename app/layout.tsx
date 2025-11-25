@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Lato, Roboto, Nunito, Inter, Fredoka, Varela_Round } from 'next/font/google';
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
 	title: 'OctoDev',
@@ -36,7 +37,9 @@ export default function RootLayout({
 				<meta name="google-site-verification" content="aDOPi6ctOVGByWjhEwth9BDdeQOK3jO6KT2mGa09AQc" />
 				<link rel="icon" href="/favicon.png" sizes="any" />
 			</head>
-			<body>{children}</body>
+			<body>
+				<Providers>{children} </Providers>
+			</body>
 		</html>
 	);
 }
