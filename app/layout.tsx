@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { Lato, Roboto, Nunito, Inter, Fredoka } from 'next/font/google';
+import { Lato, Roboto, Nunito, Inter, Fredoka, Varela_Round } from 'next/font/google';
 
 export const metadata: Metadata = {
 	title: 'OctoDev',
@@ -12,6 +12,7 @@ const lato = Lato({ subsets: ['latin'], weight: ['400', '700'], variable: '--lat
 const nunito = Nunito({ subsets: ['latin'], weight: ['400', '800'], variable: '--nunito' });
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--inter' });
 const fredoka = Fredoka({ subsets: ['latin'], weight: ['400', '600'], variable: '--fredoka' });
+const varela = Varela_Round({ subsets: ['latin'], weight: ['400'], variable: '--varela' });
 
 export const viewport: Viewport = {
 	themeColor: 'black',
@@ -29,7 +30,7 @@ export default function RootLayout({
 	return (
 		<html
 			lang="pt-br"
-			className={`${roboto.variable} ${lato.variable} ${nunito.variable} ${inter.variable} ${fredoka.variable}`}
+			className={`${roboto.variable} ${lato.variable} ${nunito.variable} ${inter.variable} ${fredoka.variable} ${varela.variable}`}
 		>
 			<head>
 				<meta name="google-site-verification" content="aDOPi6ctOVGByWjhEwth9BDdeQOK3jO6KT2mGa09AQc" />
