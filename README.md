@@ -32,7 +32,7 @@ Cada módulo combina **explicações teóricas**, **exercícios práticos** e **
     -   JavaScript
 -   **Conteúdos Extras**
     -   Lógica de programação usando a linguagem **Tenda** ✅
-    -   Banco de dados
+    -   Banco de dados ✅
     -   Tutoriais em vídeo
     -   Rankings e conquistas
 
