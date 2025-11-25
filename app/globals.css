@@ -96,21 +96,21 @@ html {
 	}
 }
 
-/* :root {
-	--background: #05050d;                background color for body 
-	--foreground: #f7f8ff;                text color 
-	--border: #201f34;                    color for thin lines like border or hr tags 
-	--card: #0c0b1a;                      lighter color for background items 
-	--primary: #8868ff;                   main color for the app 
-	--secondary: #19182c;                 idk 
-	--accent: #a632bf;                    bright color for enphasis situations 
-	--disabled-foreground: #8d8e9b;       darker color for disabled effect or darker texts 
-	--error: #e7000b;                     error color 
-	--input: #201f34;                     inputs color 
-	--magenta: #a632bf;                   magenta 
-	--red: #e7000cc3;                     error color 
-	--blue: #7a97fb;                      blue 
-	--green: #00c4a3;                     green 
-	--orange: #fe8d00;                    orange 
-	--pink: #ed68ae;                      pink 
-} */
+/*
+--background: #05050d;                background color for body 
+--foreground: #f7f8ff;                text color 
+--border: #201f34;                    color for thin lines like border or hr tags 
+--card: #0c0b1a;                      lighter color for background items 
+--primary: #8868ff;                   main color for the app 
+--secondary: #19182c;                 idk 
+--accent: #a632bf;                    bright color for enphasis situations 
+--disabled-foreground: #8d8e9b;       darker color for disabled effect or darker texts 
+--error: #e7000b;                     error color 
+--input: #201f34;                     inputs color 
+--magenta: #a632bf;                   magenta 
+--red: #e7000cc3;                     error color 
+--blue: #7a97fb;                      blue 
+--green: #00c4a3;                     green 
+--orange: #fe8d00;                    orange 
+--pink: #ed68ae;                      pink 
+*/
