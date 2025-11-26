@@ -62,7 +62,7 @@ export default function NavBar() {
 									<a href="/settings">Configurações</a>
 								</li>
 								<li className="logout">
-									<a href="/logout">Sair</a>
+									<a href="/api/auth/signout" >Sair</a>
 								</li>
 							</ul>
 						</div>

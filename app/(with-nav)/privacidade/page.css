@@ -1,48 +1,77 @@
 body:has(main.privacidadePage) {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
+	display: flex;
+	height: fit-content;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 50px;
+	padding-bottom: 50px;
 }
-main.privacidadePage{
-    background-color: var(--card);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 0 15px #00000088;
-    width: 80%;
-    max-width: 800px;
-    margin: auto 0;
-    .content {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
+main.privacidadePage {
+	background-color: var(--card);
+	border-radius: 15px;
+	box-shadow: 0 0 15px #00000088;
+	width: 60%;
+	margin: auto 0;
+	nav {
+		width: 100%;
+		margin-bottom: 20px;
+		font-family: var(--roboto);
+		padding: 15px 30px;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+		border-bottom: 1px solid var(--border);
+		box-shadow: 0 2px 5px #00000055;
+		display: flex;
+		align-items: center;
+		text-align: center;
+        gap: 10px;
+		a,
+		span {
+			color: var(--foreground);
+			font-weight: 500;
+			font-family: var(--varela);
+			font-size: 1.2rem;
+		}
+		a {
+			color: var(--primary);
+			text-decoration: none;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+	.content {
+		display: flex;
+		padding: 20px 40px;
 
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+		flex-direction: column;
+		gap: 15px;
+		h1 {
+			text-align: center;
+			margin-bottom: 20px;
+		}
 
-    p {
-        margin-bottom: 15px;
-        line-height: 1.5;
-    }
-    ul {
-        margin-left: 40px;
-        margin-bottom: 15px;
-        li {
-            margin-bottom: 10px;
-            span.info{
-                font-weight: bold;
-                &::after {
-                    content: ": ";
-                }
-            }
-        }
-    }
-
+		p,
+		span {
+			margin-bottom: 15px;
+			line-height: 1.5;
+			font-size: 1.1em;
+			font-family: var(--roboto);
+			font-weight: 400;
+		}
+		ul {
+			margin-left: 40px;
+			margin-bottom: 15px;
+			li {
+				margin-bottom: 10px;
+				span.info {
+					font-weight: bold;
+					&::after {
+						content: ': ';
+					}
+				}
+			}
+		}
+	}
 }
