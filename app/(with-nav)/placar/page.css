@@ -5,6 +5,7 @@ body {
 }
 main {
 	background: var(--card);
+	margin:auto 0;
 	border-radius: 15px;
 	border: 1px solid var(--border);
 	box-shadow: 10 10 20 -8px #000000;

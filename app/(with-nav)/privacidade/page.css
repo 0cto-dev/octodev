@@ -1,0 +1,48 @@
+body:has(main.privacidadePage) {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+main.privacidadePage{
+    background-color: var(--card);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 15px #00000088;
+    width: 80%;
+    max-width: 800px;
+    margin: auto 0;
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    p {
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+    ul {
+        margin-left: 40px;
+        margin-bottom: 15px;
+        li {
+            margin-bottom: 10px;
+            span.info{
+                font-weight: bold;
+                &::after {
+                    content: ": ";
+                }
+            }
+        }
+    }
+
+}
