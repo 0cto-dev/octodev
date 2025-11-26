@@ -9,6 +9,7 @@ body:has(main.privacidadePage) {
 }
 main.privacidadePage {
 	background-color: var(--card);
+	border: 1px solid var(--border);
 	border-radius: 15px;
 	box-shadow: 0 0 15px #00000088;
 	width: 60%;
@@ -73,5 +74,17 @@ main.privacidadePage {
 				}
 			}
 		}
+	}
+	@media (orientation: portrait) {
+		width: 90%;
+		font-size: .9rem;
+		nav,.content{
+			padding: 15px 15px;
+		}
+		nav a, nav span {
+			font-size: 1.1rem;
+		}
+
+		
 	}
 }

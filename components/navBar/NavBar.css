@@ -1,4 +1,4 @@
-@media (min-width: 700px) {
+@media (min-width: 850px) {
 	@keyframes openMenuView {
 		0% {
 			box-shadow: inset -25px 0 8px -10px #00000055,
@@ -64,7 +64,7 @@
 		}
 	}
 }
-@media (max-width: 699px) {
+@media (max-width: 849px) {
 	@keyframes showMenu {
 		0% {
 			max-height: 0px;
@@ -282,7 +282,7 @@ body > header {
 							}
 						}
 					}
-					@media (min-width: 700px) {
+					@media (min-width: 850px) {
 						&.open {
 							animation: openMenuView 1.5s ease-in-out forwards;
 							ul {
@@ -301,7 +301,7 @@ body > header {
 							}
 						}
 					}
-					@media (max-width: 699px) {
+					@media (max-width: 849px) {
 						position: absolute;
 						top: 70px;
 						right: 5px;
