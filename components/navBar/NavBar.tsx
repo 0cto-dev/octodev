@@ -5,6 +5,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import './NavBar.css';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import iconImage from '@/public/images/octoSemFundo.png';
 
 export default function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<string|boolean>('');
@@ -31,7 +32,7 @@ export default function NavBar() {
 						<a href="/">
 							<div className="blur"></div>
 							<Image
-								src={'/images/octoSemFundo.png'}
+								src={iconImage}
 								alt="logo"
 								loading="eager"
 								width={40}
