@@ -33,7 +33,11 @@ body:has(.loginPage) > header {
 }
 main.loginPage {
 	min-width: 30%;
-	background: radial-gradient(circle, var(--pink), var(--primary), var(--blue), var(--green));
+	--color-radial-bg: var(--pink) 20%, var(--primary) 40%,var(--primary) 60%,var(--blue) 70%,var(--blue) 80%, var(--green);
+	background: radial-gradient(ellipse 55% 50%  at center, var(--color-radial-bg));
+	@media (orientation: portrait) {
+		background: radial-gradient(ellipse 60% 60%  at center, var(--color-radial-bg));
+	}
 	background-size: 200% 200%;
 	animation: backgroundAnimation 7s linear infinite;
 	border-radius: 15px;
@@ -149,7 +153,7 @@ main.loginPage {
 				svg {
 					position: absolute;
 					left: 20px;
-					transition: transform 0.5s;
+					transition: transform 0.2s;
 				}
 				&.githubBtn {
 					svg {
@@ -166,6 +170,7 @@ main.loginPage {
 					transform: scale(1.05);
 					color: var(--foreground);
 					svg {
+						transition: transform 0.5s;
 						transform: rotateY(360deg) scale(1.3);
 					}
 				}

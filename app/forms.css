@@ -1,4 +1,4 @@
-body:has(main.privacidadePage) {
+body:has(main.formPage) {
 	display: flex;
 	height: fit-content;
 	flex-direction: column;
@@ -7,7 +7,7 @@ body:has(main.privacidadePage) {
 	gap: 50px;
 	padding-bottom: 50px;
 }
-main.privacidadePage {
+main.formPage {
 	background-color: var(--card);
 	border: 1px solid var(--border);
 	border-radius: 15px;
@@ -48,6 +48,13 @@ main.privacidadePage {
 
 		flex-direction: column;
 		gap: 15px;
+		a{
+			font-weight: 600;
+			margin-left: 5px;
+			color: var(--primary);
+			cursor: pointer;
+			text-decoration: none;
+		}
 		h1 {
 			text-align: center;
 			margin-bottom: 20px;

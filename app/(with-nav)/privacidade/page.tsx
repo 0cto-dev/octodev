@@ -1,7 +1,7 @@
-import './page.css';
+import '@/app/forms.css';
 export default function PrivacidadePage() {
 	return (
-		<main className="privacidadePage">
+		<main className="formPage">
 			<nav>
 				<a href="/">Página Inicial</a> &gt; <span>Política de Privacidade</span>
 			</nav>
@@ -53,13 +53,6 @@ export default function PrivacidadePage() {
 					sobre esta Política de Privacidade, entre em contato conosco através do e-mail:
 					<a
 						href="mailto:octodevproject@gmail.com"
-						style={{
-							fontWeight: 600,
-							marginLeft: '5px',
-							color: 'var(--primary)',
-							cursor: 'pointer',
-							textDecoration: 'none',
-						}}
 						aria-label="Enviar email para octodevproject@gmail.com"
 					>
 						octodevproject@gmail.com
