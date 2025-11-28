@@ -46,7 +46,7 @@ export default function LoginPage() {
 						<FiGithub size={25} />
 						Entrar com GitHub
 					</button>
-					<button onClick={() => {}} className="linkedinBtn button">
+					<button onClick={() => signIn('linkedin')} className="linkedinBtn button">
 						<FaLinkedinIn size={20} />
 						Entrar com LinkedIn
 					</button>

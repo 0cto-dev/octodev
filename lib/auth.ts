@@ -1,22 +1,40 @@
 import GoogleProvider from 'next-auth/providers/google';
-import GitHubProvider from "next-auth/providers/github";
+import GitHubProvider from 'next-auth/providers/github';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb-client';
 import User from '@/models/Users';
 import { connectDB } from '@/lib/mongodb';
 import { NextAuthOptions } from 'next-auth';
+import { LinkedinProvider } from './linkedinProvider';
+
+
+
 export const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),
 	providers: [
 		GoogleProvider({
 			clientId: process.env.GOOGLE_ID!,
 			clientSecret: process.env.GOOGLE_SECRET!,
-			allowDangerousEmailAccountLinking:true
+			allowDangerousEmailAccountLinking: true,
 		}),
 		GitHubProvider({
 			clientId: process.env.GITHUB_ID!,
 			clientSecret: process.env.GITHUB_SECRET!,
-			allowDangerousEmailAccountLinking:true
+			allowDangerousEmailAccountLinking: true,
+		}),
+		LinkedinProvider({
+			id: 'linkedin',
+			name: 'LinkedIn',
+			type: 'oauth',
+			clientId: process.env.LINKEDIN_ID!,
+			clientSecret: process.env.LINKEDIN_SECRET!,
+			issuer: "https://www.linkedin.com",
+			authorization: {
+				params: {
+					scope: 'openid profile email',
+				},
+			},
+			allowDangerousEmailAccountLinking: true,
 		}),
 	],
 
