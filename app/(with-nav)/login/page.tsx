@@ -8,22 +8,22 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function LoginPage() {
-	// const { data: session } = useSession();
-	// const [isRedirecting, setIsRedirecting] = useState(false);
-	// const [isLoading, setIsLoading] = useState(true);
-	// useEffect(() => {
-	// 	if (!window ) return;
-	// 	if (session) {
-	// 		setIsRedirecting(true);
-	// 		window.location.href = '/';
-	// 		console.log(!isLoading, !isRedirecting);
-	// 	}else{
-	// 		setIsLoading(false);
-	// 	}
-	// }, [session]);
-	// if (isRedirecting || isLoading) {
-	// 	return null;
-	// }
+	const { data: session } = useSession();
+	const [isRedirecting, setIsRedirecting] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	useEffect(() => {
+		if (!window ) return;
+		if (session) {
+			setIsRedirecting(true);
+			window.location.href = '/';
+			console.log(!isLoading, !isRedirecting);
+		}else{
+			setIsLoading(false);
+		}
+	}, [session]);
+	if (isRedirecting || isLoading) {
+		return null;
+	}
 
 	return (
 		<main className="loginPage">
@@ -42,7 +42,7 @@ export default function LoginPage() {
 						<FcGoogle size={25} />
 						Entrar com Google
 					</button>
-					<button onClick={() => {}} className="githubBtn button">
+					<button onClick={() => signIn('github')} className="githubBtn button">
 						<FiGithub size={25} />
 						Entrar com GitHub
 					</button>
