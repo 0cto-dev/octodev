@@ -1,4 +1,4 @@
-body:has(main.formPage) {
+body:has(main.formPage),  html:has(main.formPage){
 	display: flex;
 	height: fit-content;
 	flex-direction: column;
