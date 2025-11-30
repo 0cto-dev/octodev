@@ -197,21 +197,33 @@ export const emptyEdges = [
 ];
 
 export type courseType = {
-	nome:string,
-	descricao:string,
-	cor:string,
-	banner:string,
-	dificuldade:string,
-	disponivel: boolean,
-	dependencias: string[]
-}
+	nome: string;
+	descricao: string;
+	cor: string;
+	banner: string;
+	dificuldade: string;
+	disponivel: boolean;
+	dependencias: string[];
+};
 
 export const emptyCourse = {
-	nome:'',
-	descricao:'',
-	cor:'',
-	banner:'',
-	dificuldade:'',
+	nome: '',
+	descricao: '',
+	cor: '',
+	banner: '',
+	dificuldade: '',
 	disponivel: false,
-	dependencias: []
+	dependencias: [],
 };
+export type CourseWithProgress = {
+	course: courseType;
+	progress: number;
+};
+
+export type SectionType = {
+	avaliableCourses: courseType[];
+	courses: { course: string; data: lessonType[] }[];
+};
+
+export type filterType = 'Fácil' | 'Médio' | 'Difícil' | 'Disponível' | 'Não concluido' | '';
+export type sortType = 'Ordem alfabética' | 'Dificuldade' | 'Progresso' | '';

@@ -5,7 +5,9 @@ body:has(main.formPage),  html:has(main.formPage){
 	align-items: center;
 	justify-content: center;
 	gap: 50px;
-	padding-bottom: 50px;
+}
+body:has(main.formPage){
+	padding-bottom: 100px;
 }
 main.formPage {
 	background-color: var(--card);

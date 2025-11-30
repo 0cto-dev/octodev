@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
 			const dbUser = await User.findById(token.id).lean();
 
 			if (dbUser) {
-				token.nome = dbUser.nome;
+				token.name = dbUser.name;
 				token.email = dbUser.email;
 				token.courses = dbUser.courses;
 			}

@@ -46,7 +46,7 @@ function CourseProgressBar({ course, len }: { course: courseType; len: number })
 		}
 
 		getProgressBarProgress(course);
-	}, [course]);
+	}, [course, len]);
 
 	return (
 		<ProgressBar>
@@ -61,8 +61,8 @@ export async function getProgress(course: courseType, LessonsNum: number) {
 	const courseName = getCourseName(course.nome);
 
 	const last = session?.user?.courses?.find((c: any) => c.courseName === courseName)?.lastLessonMade ?? 0;
-	
-	return computeProgress(last, LessonsNum||1);
+
+	return computeProgress(last, LessonsNum || 1);
 }
 
 function ProgressBar({ children }: { children: React.ReactNode }) {
