@@ -1,7 +1,7 @@
 import DropDown from '@/components/dropDown/DropDown';
+import { filterType, sortType } from '@/types/types';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
-import { filterType, sortType } from './page.section';
 
 type SearchBarType = {
 	search: string;
