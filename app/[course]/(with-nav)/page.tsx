@@ -22,8 +22,9 @@ import { useReactFlow } from '@xyflow/react';
 import Tab from './page.Tab';
 import { FaArrowUp } from 'react-icons/fa';
 import { FaArrowDown } from 'react-icons/fa';
-import { useIsMobile } from '@/lib/isMobile';
 import { BiCurrentLocation } from 'react-icons/bi';
+import { computeProgress } from '@/app/api/progress/progress';
+import { getSession } from 'next-auth/react';
 
 const NODE_TYPES = {
 	lessonsNode: LessonsNode,
@@ -46,7 +47,20 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	// #endregion
 
 	const nodeSize = 40;
-	const lastMadeLesson = isLoaded ? ((localStorage.getItem(`${lessons.course}Progress`) || 0) as number) : 0;
+
+	const [lastMadeLesson, setLastMadeLesson] = useState<number>(0);
+
+	useEffect(() => {
+		async function loadLastMadeLesson() {
+			if (!isLoaded) return;
+			
+			const session = await getSession();
+			const last = session?.user?.courses?.find((c: any) => c.courseName === lessons.course)?.lastLessonMade ?? 0;
+
+			setLastMadeLesson(Number(last) || 0);
+		}
+		loadLastMadeLesson();
+	}, [isLoaded, lessons.course]);
 
 	// #region Effects
 	useEffect(() => {
@@ -59,6 +73,32 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 		});
 		fetchData(params, setLessons, setIsLoaded);
 	}, []);
+
+	useEffect(() => {
+		if (lessons.data.length === 0) return;
+
+		async function updateProgress() {
+			const session = await getSession();
+
+			const lastLesson =
+				session?.user?.courses?.find((c: any) => c.courseName === lessons.course)?.lastLessonMade || 0;
+
+			const progressPercent = computeProgress(lastLesson, lessons.data.length);
+
+			await fetch('/api/progress/', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					userId: session?.user?.id,
+					courseName: lessons.course,
+					lessonId: lastLesson,
+					progress: progressPercent,
+				}),
+			});
+		}
+
+		updateProgress();
+	}, [lessons.data]);
 
 	useEffect(() => {
 		// Ao carregar as lições do lessons.json é chamada essa função
@@ -83,7 +123,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			setNodes,
 			nodesType,
 		});
-	}, [lessons, lessonIdMenuOpen, nodesType]);
+	}, [lessons, lessonIdMenuOpen, nodesType, lastMadeLesson]);
 
 	useEffect(() => {
 		// Ao carregar os nodes cria um array sem o último node e cria edges ligando com o id da proxima lição
@@ -116,8 +156,8 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	}
 	if (!windowWidth || !windowHeight || !isLoaded || nodes[0]?.id === '0' || edges[0]?.id === '0') return null;
 
-	const lastNodePos = (200 * (nodes.length-1)+windowHeight*0.2)
-	const maxHeight = nodesType === 'pratica' ? lastNodePos+windowHeight-220: windowHeight;
+	const lastNodePos = 200 * (nodes.length - 1) + windowHeight * 0.2;
+	const maxHeight = nodesType === 'pratica' ? lastNodePos + windowHeight - 220 : windowHeight;
 	return (
 		<main onClick={handleOnClick} key="trilha">
 			<div className="blur"></div>

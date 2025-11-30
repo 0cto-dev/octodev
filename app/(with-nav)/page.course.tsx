@@ -1,16 +1,16 @@
 import ProgressBarComp from '@/components/progressBar/ProgressBar';
 import { courseType } from '@/types/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CourseImage from './page.sectionImage';
 import CourseInfo from './page.sectionInfo';
 import getCourseName from '@/lib/getCourseName';
+import { getSession } from 'next-auth/react';
+import { computeProgress } from '../api/progress/progress';
 
 export type CourseProps = { course: courseType; LessonsNum: number };
 
 export default function Course({ course, LessonsNum }: CourseProps) {
 	const [isHovered, setIsHovered] = useState(false);
-
-	const progress = getProgress(course, LessonsNum);
 
 	const shadowStyle =
 		isHovered && course.disponivel
@@ -19,9 +19,8 @@ export default function Course({ course, LessonsNum }: CourseProps) {
 				: {}
 			: {};
 
-	function handleClick(){
-
-		if(course.disponivel)location.href = `/${getCourseName(course.nome)}`
+	function handleClick() {
+		if (course.disponivel) location.href = `/${getCourseName(course.nome)}`;
 	}
 
 	return (
@@ -34,20 +33,36 @@ export default function Course({ course, LessonsNum }: CourseProps) {
 		>
 			<CourseImage course={course} />
 			<CourseInfo course={course} LessonsNum={LessonsNum} />
-			<ProgressBar>
-				<span>progresso</span>
-				<span>{progress.toFixed(0)}%</span>
-				<ProgressBarComp progress={progress} />
-			</ProgressBar>
+			<CourseProgressBar course={course} len={LessonsNum} />
 		</div>
 	);
 }
 
-export function getProgress(course: courseType, LessonsNum: number) {
-	const key = getCourseName(course.nome)
-	const stored = typeof window !== 'undefined' ? localStorage.getItem(`${key}Progress`) : null;
-	const value = Number(stored ?? 0);
-	return LessonsNum ? (value / LessonsNum) * 100 : 0;
+function CourseProgressBar({ course, len }: { course: courseType; len: number }) {
+	const [progress, setProgress] = useState(0);
+	useEffect(() => {
+		async function getProgressBarProgress(course: courseType) {
+			setProgress(await getProgress(course, len));
+		}
+
+		getProgressBarProgress(course);
+	}, [course]);
+
+	return (
+		<ProgressBar>
+			<span>progresso</span>
+			<span>{progress.toFixed(0)}%</span>
+			<ProgressBarComp progress={progress} />
+		</ProgressBar>
+	);
+}
+export async function getProgress(course: courseType, LessonsNum: number) {
+	const session = await getSession();
+	const courseName = getCourseName(course.nome);
+
+	const last = session?.user?.courses?.find((c: any) => c.courseName === courseName)?.lastLessonMade ?? 0;
+	
+	return computeProgress(last, LessonsNum||1);
 }
 
 function ProgressBar({ children }: { children: React.ReactNode }) {

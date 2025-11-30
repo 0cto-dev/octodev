@@ -1,9 +1,9 @@
 import fetchResultPiston from '@/app/[course]/pratica/[id]/lib/pistonApi/pistonApi';
-import { runTenda } from '@/app/api/tenda/tendaFetch'
+import { runTenda } from '@/app/api/tenda/tendaFetch';
 import verifyHardCode from '@/app/[course]/pratica/[id]/lib/verifyHardCode';
-import { alternativasType, exercisesType, lessonType, submitAnswerType } from '@/types/types';
-import { Dispatch, SetStateAction } from 'react';
+import { submitAnswerType } from '@/types/types';
 import StartNextExercise from './startNewExercise';
+import { getSession } from 'next-auth/react';
 
 export default async function submitAnswer(
 	// #region Área de região
@@ -75,7 +75,8 @@ export default async function submitAnswer(
 		console.log(output.trim(), currentExercise.respostaCodigo?.trim());
 
 		userGuessedRight =
-			(currentExercise.respostaCodigo ? output.trim() === currentExercise.respostaCodigo.trim() : true) && !hardCoded;
+			(currentExercise.respostaCodigo ? output.trim() === currentExercise.respostaCodigo.trim() : true) &&
+			!hardCoded;
 	}
 
 	if (!userGuessedRight) {
@@ -105,17 +106,37 @@ export default async function submitAnswer(
 	}
 	if (userGuessedRight && exercise.lastExercise) {
 		setExercise(exercise => ({ ...exercise, exerciseStatus: 'finish' }));
-		saveProgress(lesson.course,lesson.id);
+		saveProgress(lesson.course, lesson.id);
 	}
 }
 
-function saveProgress(course:string,id: string) {
-	
+async function saveProgress(course: string, id: string) {
 	if (typeof window !== 'undefined') {
-		const progress = localStorage.getItem(`${course}Progress`);
 
-		if (!progress || +progress < +id.replace('licao', '')) {
-			localStorage.setItem(`${course}Progress`, id.replace('licao', ''));
-		}
+		const session = await getSession();
+		console.log(session?.user)
+		
+		await fetch('/api/progress', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				userId:session?.user?.id,
+				courseName: course,
+				lessonId: +id.replace('licao', ''),
+			}),
+		});
 	}
 }
+
+// function saveProgress(course:string,id: string,exercisesLen:exercisesType[]) {
+// 	console.log(course,id, exercisesLen)
+// 	if (typeof window !== 'undefined') {
+// 		const progress = localStorage.getItem(`${course}Progress`);
+
+// 		if (!progress || +progress < +id.replace('licao', '')) {
+// 			localStorage.setItem(`${course}Progress`, id.replace('licao', ''));
+// 		}
+// 	}
+// }
