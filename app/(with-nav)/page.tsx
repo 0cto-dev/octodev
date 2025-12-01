@@ -71,7 +71,7 @@ export default function Home() {
 	}
 	return (
 		isLoaded && (
-			<main>
+			<main className='mainPage'>
 				<SectionCourses avaliableCourses={avaliableCourses} courses={courses} />
 				<div className="chat">
 					{chatOpened && (
