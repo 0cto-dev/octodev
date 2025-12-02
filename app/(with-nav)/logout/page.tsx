@@ -8,7 +8,6 @@ import { TbLogout } from 'react-icons/tb';
 export default function logoutPage() {
 	return (
 		<main className="logoutPage">
-				<IoLogOutOutline size={130} />
 			<div className="header">
 				<h1>Sair da conta</h1>
 				<p>Oh não! Você realmente quer sair?</p>

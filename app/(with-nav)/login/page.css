@@ -82,7 +82,6 @@ main.loginPage {
 				font-family: var(--varela);
 				margin: 0 auto;
 				width: fit-content;
-				/* text-shadow: 0 0 4px color-mix(in srgb, var(--foreground) 50%, transparent); */
 				background: linear-gradient(
 					90deg,
 					var(--pink) -15%,

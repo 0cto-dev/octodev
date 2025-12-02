@@ -1,13 +1,13 @@
-import { courseType } from "@/types/types";
-
-export default async function openaiApi(message: string,avaliableCourses:courseType[]): Promise<string> {
+export default async function openaiApi(message: string,roleSystem:string): Promise<string> {
 	try {
+		console.log(message)
 		const response = await fetch(
-			`/api/openAI?message=${encodeURIComponent(message)}&avaliableCourses=${encodeURIComponent(JSON.stringify(avaliableCourses))}`
+			`/api/openAI?message=${encodeURIComponent(message)}&roleSystem=${encodeURIComponent(JSON.stringify(roleSystem))}`
 		);
 
 		if (!response.ok) {
 			console.error('Erro na resposta da API:', response.statusText);
+			console.error('Erro na resposta da API:', response);
 			return '';
 		}
 

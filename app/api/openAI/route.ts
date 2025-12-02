@@ -1,4 +1,3 @@
-import { courseType, emptyCourse } from '@/types/types';
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
@@ -6,16 +5,12 @@ export async function GET(request: Request) {
 	try {
 		const { searchParams } = new URL(request.url);
 		const message = searchParams.get('message') || '';
-		console.log('teste teste testando');
-		const avaliableCourses = JSON.parse(searchParams.get('avaliableCourses') || '[]');
+		const roleSystem = JSON.parse(searchParams.get('roleSystem') || '[]');
 
-		console.log('teste teste testissimo', avaliableCourses);
-
-		if (!message.trim() || !avaliableCourses[0])
+		if (!message.trim() || !roleSystem[0])
 			return NextResponse.json({ error: 'Mensagem vazia' }, { status: 400 });
 
-		const response = await runOpenAI(message, avaliableCourses as courseType[]);
-		console.log('Resposta da IA:', response);
+		const response = await runOpenAI(message, roleSystem);
 
 		return NextResponse.json({ response }, { status: 200 });
 	} catch (error) {
@@ -23,7 +18,7 @@ export async function GET(request: Request) {
 	}
 }
 
-async function runOpenAI(message: string, avaliableCourses: courseType[]): Promise<string> {
+async function runOpenAI(message: string, roleSystem: string): Promise<string> {
 	try {
 		const openai = new OpenAI({
 			baseURL: ' https://generativelanguage.googleapis.com/v1beta/openai/',
@@ -35,19 +30,7 @@ async function runOpenAI(message: string, avaliableCourses: courseType[]): Promi
 			messages: [
 				{
 					role: 'system',
-					content: `Você é um assistente útil que ajuda os usuários a entender conceitos de programação de forma fácil e descontraída,
-                    seja breve e não use emojis e nem markdown.
-					Caso a pergunta não seja relacionada a programação, ou à plataforma diga: "Desculpe, esta pergunta não está relacionada à programação."
-					informações sobre o aplicativo(OctoDev): OctoDev é uma plataforma educacional gamificada focada no ensino de programação, 
-                    oferecendo uma abordagem interativa e divertida para aprender a programar.
-					na tela inicial do aplicativo, o usuário pode escolher entre várias linguagens de programação, 
-                    aqui está um json mostrando os cursos disponíveis no momento: ${JSON.stringify(
-						avaliableCourses.length > 0 ? avaliableCourses : [emptyCourse]
-					)}.
-                    Recomende bastante tenda, pois é uma ótima linguagem para iniciantes. principalmente para pessoas que não dominam o inglês.
-                    Cada curso é dividido em lições que abrangem desde conceitos básicos até tópicos avançados, 
-                    incluindo exercícios práticos e quizzes para reforçar o aprendizado.
-					`,
+					content: roleSystem,
 				},
 				{
 					role: 'user',

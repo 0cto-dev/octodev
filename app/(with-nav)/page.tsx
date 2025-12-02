@@ -3,7 +3,7 @@ import getCourses from '@/lib/readCoursesNames';
 import { useEffect, useState } from 'react';
 import './page.css';
 import { getLesson } from '../[course]/pratica/[id]/lib/lessonsData';
-import { courseType, lessonType } from '../../types/types';
+import { courseType, emptyCourse, lessonType } from '../../types/types';
 import SectionCourses from './page.section';
 import getCourseName from '@/lib/getCourseName';
 import { IoChatboxEllipses } from 'react-icons/io5';
@@ -65,13 +65,27 @@ export default function Home() {
 		if (message.trim() === '') return;
 		setUserMessages([...userMessages, message]);
 		setMessage('');
-		const answer = await openaiApi(message, avaliableCourses);
+		const answer = await openaiApi(
+			message,
+			`Você é um assistente útil que ajuda os usuários a entender conceitos de programação de forma fácil e descontraída,
+			seja breve e não use emojis e nem markdown.
+			Caso a pergunta não seja relacionada a programação, ou à plataforma diga: "Desculpe, esta pergunta não está relacionada à programação."
+			informações sobre o aplicativo(OctoDev): OctoDev é uma plataforma educacional gamificada focada no ensino de programação, 
+			oferecendo uma abordagem interativa e divertida para aprender a programar.
+			na tela inicial do aplicativo, o usuário pode escolher entre várias linguagens de programação, 
+			aqui está um json mostrando os cursos disponíveis no momento: ${JSON.stringify(
+				avaliableCourses.length > 0 ? avaliableCourses : [emptyCourse]
+			)}.
+			Recomende bastante tenda, pois é uma ótima linguagem para iniciantes. principalmente para pessoas que não dominam o inglês.
+			Cada curso é dividido em lições que abrangem desde conceitos básicos até tópicos avançados, 
+			incluindo exercícios práticos e quizzes para reforçar o aprendizado.
+			`
+		);
 		setAIMessages([...aIMessages, answer]);
-		console.log('Resposta da IA:', answer);
 	}
 	return (
 		isLoaded && (
-			<main className='mainPage'>
+			<main className="mainPage">
 				<SectionCourses avaliableCourses={avaliableCourses} courses={courses} />
 				<div className="chat">
 					{chatOpened && (
@@ -85,12 +99,12 @@ export default function Home() {
 									cumque tempore!
 								</div> */}
 								{userMessages.map((msg, i) => (
-									<div className='msgComp' key={`message-group-${i}`}>
+									<div className="msgComp" key={`message-group-${i}`}>
 										<div className="message messageUser" key={`q${i}`}>
 											{msg}
 										</div>
 										<div className="message messageAI" key={`a${i}`}>
-											{aIMessages[i]||'...'}
+											{aIMessages[i] || '...'}
 										</div>
 									</div>
 								))}

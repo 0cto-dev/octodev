@@ -91,7 +91,6 @@ export default function LessonSection({
 				</>
 			);
 		}
-		console.log(exerciseObj);
 		return (
 			<>
 				{title}

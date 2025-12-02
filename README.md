@@ -123,7 +123,7 @@ depois que as pastas e o arquivo forem criados podemos escrever as lições dent
 				"codigo": "licao1/ex002.tenda",
 				"autocompletar": true,
 				"respostaCodigo": "1\n2\n3\n4\n5\n",
-				"verificadorTrapaca": "^\\s*para cada (\\w+) em 1 até 5 faça\\s*exiba\\(\\1\\)\\s*fim\\s*$"
+				"verificadorTrapaca": "O usuário deve fazer um loop que printe de 1 a 5 utilizando a linguagem tenda, resposta esperada: 1\\n2\\n3\\n4\\n5"
 			}
 		]
 	}
@@ -191,9 +191,9 @@ Observações:
 	> ```
 - autocompletar (opcional): Caso marcada como true o editor de texto mostrará snippets e recomendações neste exercício;
 
-- respostaCodigo (obrigatória para o tipo `codigo`): Esta é a respota associada ao exercício;
+- respostaCodigo (opicional para o tipo `codigo` e não usada no tipo `alternativas`): Esta é a respota associada ao exercício caso queira não ser mais liberal com o exercício, pode optar por deixa-lá como uma string vazia e utilizar apenas o verificadorTrapaca;
 
-- verificadorTrapaca (opcional): Regex que será usado para verificar se o usuario não apenas burlou o exercício
+- verificadorTrapaca (opicional para o tipo `codigo` e não usada no tipo `alternativas`): Descrição precisa de qual é o desafio e o qual deve ser a resposta esperada, esse texto será passado por uma ia que vai ser responsavel por corrigir e validar o código do usuário
 
 
 ## Contato

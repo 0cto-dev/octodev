@@ -71,7 +71,7 @@ export default async function submitAnswer(
 
 		setOutput([output, result || '', error || '']);
 
-		const hardCoded = verifyHardCode(code[0], currentExercise.verificadorTrapaca || '');
+		const hardCoded = await verifyHardCode(code[0],output, currentExercise.verificadorTrapaca || '',);
 		console.log(output.trim(), currentExercise.respostaCodigo?.trim());
 
 		userGuessedRight =
@@ -114,7 +114,6 @@ async function saveProgress(course: string, id: string) {
 	if (typeof window !== 'undefined') {
 
 		const session = await getSession();
-		console.log(session?.user)
 		
 		await fetch('/api/progress', {
 			method: 'POST',
@@ -129,14 +128,3 @@ async function saveProgress(course: string, id: string) {
 		});
 	}
 }
-
-// function saveProgress(course:string,id: string,exercisesLen:exercisesType[]) {
-// 	console.log(course,id, exercisesLen)
-// 	if (typeof window !== 'undefined') {
-// 		const progress = localStorage.getItem(`${course}Progress`);
-
-// 		if (!progress || +progress < +id.replace('licao', '')) {
-// 			localStorage.setItem(`${course}Progress`, id.replace('licao', ''));
-// 		}
-// 	}
-// }
