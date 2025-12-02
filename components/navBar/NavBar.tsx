@@ -41,7 +41,7 @@ export default function NavBar() {
 						</a>
 					</li>
 					<li id="title">
-						<p>{courseName||`Olá, ${session?.user.name||'visitante'}!
+						<p>{courseName||`Olá, ${(session?.user?.name||'' as string).split(' ')[0]||'visitante'}!
 						`}</p>
 					</li>
 					<li id="leaderboard" onClick={handleClick}>
