@@ -70,7 +70,13 @@ export default function LessonSection({
 					{title}
 					<div className="codeSpace">
 						<MonacoEditor
-							value={goingToNextExercise ? '' : exercise.exerciseStatus==="finish"?'':code[0]}
+							value={
+								goingToNextExercise
+									? ''
+									: exercise.exerciseStatus === 'finish' || exercise.exerciseStatus === 'lose'
+									? ''
+									: code[0]
+							}
 							language={lesson.course === 'logica' ? 'tenda' : lesson.course}
 							onChange={value => value !== undefined && setCode([value])}
 							autocomplete={exerciseObj.autocompletar ? exerciseObj.autocompletar : false}
@@ -110,7 +116,7 @@ function CodeBlock({ language, children }: { language: string; children: string[
 
 	useEffect(() => {
 		if (codeRef.current) {
-				delete codeRef.current.dataset.highlighted;
+			delete codeRef.current.dataset.highlighted;
 			hljs.highlightElement(codeRef.current);
 		}
 	}, [children]);
