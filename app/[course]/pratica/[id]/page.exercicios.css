@@ -94,7 +94,7 @@
 	}
 }
 body {
-	justify-content:center;
+	justify-content: center;
 	overflow: hidden;
 }
 div.popUp {
@@ -230,7 +230,7 @@ main {
 				background: color-mix(in srgb, var(--input) 75%, var(--background));
 				transition: transform 0.3s ease, background 0.3s ease;
 				&:hover {
-					background: color-mix(in srgb, color-mix(in srgb, var(--input) 75%, var(--background))95%, #fff);
+					background: color-mix(in srgb, color-mix(in srgb, var(--input) 75%, var(--background)) 95%, #fff);
 
 					transform: scale(110%);
 				}
@@ -290,6 +290,16 @@ main {
 		font-size: 1rem;
 		/* padding: 50px; */
 		height: 100%;
+		h1 {
+			font-size: 1.2rem;
+			padding-left: 30px;
+			padding-right: 30px;
+			@media (orientation: portrait) {
+				font-size: 1rem !important;
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+		}
 		.options {
 			display: flex;
 			margin-left: 80px;
@@ -615,7 +625,7 @@ div.wrong {
 					margin-right: 0;
 					padding-bottom: 10px;
 				}
-				.progress-bar{
+				.progress-bar {
 					height: 10px;
 				}
 			}
