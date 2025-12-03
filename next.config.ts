@@ -9,6 +9,7 @@ export default (phase: string, { defaultConfig }: { defaultConfig: NextConfig })
    */
   const nextConfig: NextConfig = {
     // Your existing Next.js configuration options
+    ...defaultConfig
   };
 
   if (phase === PHASE_PRODUCTION_BUILD) {

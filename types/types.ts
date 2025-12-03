@@ -227,3 +227,5 @@ export type SectionType = {
 
 export type filterType = 'Fácil' | 'Médio' | 'Difícil' | 'Disponível' | 'Não concluido' | '';
 export type sortType = 'Ordem alfabética' | 'Dificuldade' | 'Progresso' | '';
+
+export const currentDate = new Date().toISOString().split("T")[0];

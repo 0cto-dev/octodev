@@ -60,6 +60,8 @@ export const authOptions: NextAuthOptions = {
 				token.name = dbUser.name;
 				token.email = dbUser.email;
 				token.courses = dbUser.courses;
+				token.streak = dbUser.streak;
+				token.lastLessonDate = dbUser.lastLessonDate
 			}
 
 			return token;
@@ -68,9 +70,11 @@ export const authOptions: NextAuthOptions = {
 		async session({ session, token }) {
 			if (session.user) {
 				session.user.id = token.id as string;
-				session.user.nome = token.nome as string;
+				session.user.name = token.name as string;
 				session.user.email = token.email as string;
 				session.user.courses = token.courses as any[];
+				session.user.streak = token.streak as number;
+				session.user.lastLessonDate = token.lastLessonDate as string | undefined;
 			}
 			return session;
 		},

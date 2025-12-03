@@ -16,6 +16,7 @@
 	--blue: oklch(0.7 0.15 270); /* blue */
 	--green: oklch(0.7 0.2 180); /* green */
 	--orange: oklch(0.75 0.18 60); /* orange */
+	--yellow: oklch(0.8 0.18 90); /* yellow */
 	--pink: oklch(0.7 0.18 350); /* pink */
 }
 @media (prefers-color-scheme: dark) {
@@ -37,6 +38,7 @@
 		--blue: oklch(0.7 0.15 270); /* blue */
 		--green: oklch(0.7 0.2 180); /* green */
 		--orange: oklch(0.75 0.18 60); /* orange */
+		--yellow: oklch(0.8 0.18 90); /* yellow */
 		--pink: oklch(0.7 0.18 350); /* pink */
 	}
 	html,

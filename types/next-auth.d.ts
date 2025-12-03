@@ -7,6 +7,8 @@ declare module 'next-auth' {
 		nome?: string;
 		email: string;
 		courses?: ICourses[];
+		streak?: number;
+		lastLessonDate?: string | null;
 	}
 
 	interface Session {
@@ -15,6 +17,8 @@ declare module 'next-auth' {
 			nome?: string;
 			email: string;
 			courses?: ICourses[];
+			streak?: number;
+			lastLessonDate?: string | null;
 		} & DefaultSession['user'];
 	}
 }
@@ -25,5 +29,7 @@ declare module 'next-auth/jwt' {
 		nome?: string;
 		email?: string;
 		courses?: ICourses[];
+		streak?: number;
+		lastLessonDate?: string | null;
 	}
 }

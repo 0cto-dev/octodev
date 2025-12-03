@@ -116,7 +116,7 @@ body > header {
 	box-shadow: 7px 7px 12px #00000099;
 	border-radius: 15px;
 	width: calc(100% - 40px);
-	
+
 	@media (orientation: portrait) {
 		margin-top: 7.5px;
 		width: calc(100% - 15px);
@@ -182,6 +182,34 @@ body > header {
 					cursor: pointer;
 					&:hover {
 						color: var(--primary);
+					}
+				}
+			}
+			&#streak {
+				padding-right: 20px;
+				font-size: 1.5rem;
+				font-weight: 600;
+				font-family: var(--fredoka);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				p,
+				svg {
+					color: var(--disabled-foreground);
+				}
+				&.active {
+					p {
+						color: var(--orange);
+						background: linear-gradient(135deg, var(--red), var(--orange), var(--yellow));
+						-webkit-background-clip: text;
+						background-clip: text;
+						-webkit-text-fill-color: transparent;
+						
+					}
+					p{
+						line-height: 1.5rem;
+
 					}
 				}
 			}
