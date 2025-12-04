@@ -14,7 +14,7 @@ export default function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<string | boolean>('');
 	const [isClient, setIsClient] = useState(false);
 	const { data: session } = useSession();
-	const isLastLessonToday = session?.user?.lastLessonDate || '' === currentDate;
+	const isLastLessonToday = ((session?.user?.lastLessonDate || '') === currentDate) as boolean;
 	let courseName = isClient ? window.location.pathname.split('/')[1] || '' : '';
 	courseName = courseName === 'logica' ? 'Tenda' : courseName;
 
@@ -28,6 +28,7 @@ export default function NavBar() {
 	useEffect(() => {
 		setIsClient(true);
 	}, []);
+	console.log(isLastLessonToday);
 	return (
 		<>
 			<header>
