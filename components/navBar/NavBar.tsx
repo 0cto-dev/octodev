@@ -95,9 +95,9 @@ export default function NavBar() {
 								) : (
 									<>
 										<li>
-											{' '}
 											<a href="/about">Sobre nós</a>
-											<a href="https://github.com/0cto-dev/octodev">Github</a>
+										</li>
+										<li>
 											<a href="https://github.com/0cto-dev/octodev">Github</a>
 										</li>
 									</>

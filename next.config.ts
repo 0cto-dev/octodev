@@ -8,11 +8,21 @@ export default (phase: string, { defaultConfig }: { defaultConfig: NextConfig })
 	 */
 	const nextConfig: NextConfig = {
 		...defaultConfig,
-    images: {
+		images: {
 			remotePatterns: [
 				{
 					protocol: 'https',
 					hostname: 'media.licdn.com',
+					pathname: '/**',
+				},
+				{
+					protocol: 'https',
+					hostname: 'lh3.googleusercontent.com',
+					pathname: '/**',
+				},
+				{
+					protocol: 'https',
+					hostname: 'avatars.githubusercontent.com',
 					pathname: '/**',
 				},
 			],
