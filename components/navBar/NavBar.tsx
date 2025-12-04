@@ -14,7 +14,7 @@ export default function NavBar() {
 	const [menuOpen, setMenuOpen] = useState<string | boolean>('');
 	const [isClient, setIsClient] = useState(false);
 	const { data: session } = useSession();
-	const isLastLessonToday = session?.user?.lastLessonDate || '' === currentDate
+	const isLastLessonToday = session?.user?.lastLessonDate || '' === currentDate;
 	let courseName = isClient ? window.location.pathname.split('/')[1] || '' : '';
 	courseName = courseName === 'logica' ? 'Tenda' : courseName;
 
@@ -50,10 +50,7 @@ export default function NavBar() {
 							<li id="leaderboard" onClick={handleClick}>
 								<p>Placar de Lideres</p>
 							</li>
-							<li
-								id="streak"
-								className={isLastLessonToday ? 'active' : ''}
-							>
+							<li id="streak" className={isLastLessonToday ? 'active' : ''}>
 								<p>{session.user.streak}</p>
 								<svg width="30" height="30">
 									<linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
@@ -62,11 +59,7 @@ export default function NavBar() {
 										<stop stopColor="var(--red)" offset="90%" />
 									</linearGradient>
 									<HiMiniFire
-										style={
-											isLastLessonToday
-												? { fill: 'url(#blue-gradient)' }
-												: {}
-										}
+										style={isLastLessonToday ? { fill: 'url(#blue-gradient)' } : {}}
 										size={30}
 									/>
 								</svg>
@@ -75,22 +68,39 @@ export default function NavBar() {
 					)}
 					<li id="pfp" onClick={handleClick} className={`${menuOpen ? 'open' : ''}`}>
 						<a href="#">
-							<FaUserCircle size={35} />
+							{session?.user.image ? (
+								<Image src={session.user.image} width={35} height={35} alt="pfp" />
+							) : (
+								<FaUserCircle size={35} />
+							)}
 						</a>
 						<div className={`menu ${menuOpen === '' ? '' : menuOpen ? 'open' : 'close'}`}>
 							<ul>
-								<li>
-									<a href="/profile">Perfil</a>
-								</li>
-								<li>
-									<a href="/achievements">Conquistas</a>
-								</li>
-								<li>
-									<a href="/settings">Configurações</a>
-								</li>
-								<li className="logout">
-									<a href="/api/auth/signout">Sair</a>
-								</li>
+								{session ? (
+									<>
+										<li>
+											<a href="/profile">Perfil</a>
+										</li>
+										<li>
+											<a href="/achievements">Conquistas</a>
+										</li>
+										<li>
+											<a href="/settings">Configurações</a>
+										</li>
+										<li className="logout">
+											<a href="/api/auth/signout">Sair</a>
+										</li>
+									</>
+								) : (
+									<>
+										<li>
+											{' '}
+											<a href="/about">Sobre nós</a>
+											<a href="https://github.com/0cto-dev/octodev">Github</a>
+											<a href="https://github.com/0cto-dev/octodev">Github</a>
+										</li>
+									</>
+								)}
 							</ul>
 						</div>
 					</li>

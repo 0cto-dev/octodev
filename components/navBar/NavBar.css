@@ -220,6 +220,7 @@ body > header {
 					transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
 					margin-right: 7px;
 					border-radius: 50px;
+					overflow: hidden;
 					&:hover {
 						color: color-mix(in srgb, var(--foreground) 70%, var(--disabled-foreground));
 						transform: scale(1.1);
@@ -290,6 +291,7 @@ body > header {
 								font-family: var(--inter);
 								font-weight: 400;
 								font-size: 1.05rem;
+								text-wrap: nowrap;
 							}
 							&.logout a {
 								background: color-mix(
