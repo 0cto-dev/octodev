@@ -16,7 +16,7 @@ export default function Home() {
 	const [courses, setCourses] = useState<{ course: string; data: lessonType[] }[]>([]);
 	const [isCoursesLoaded, setIsCoursesLoaded] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
-	const [chatOpened, setChatOpened] = useState(false);
+	const [chatOpened, setChatOpened] = useState<''|boolean>('');
 	const [message, setMessage] = useState('');
 	const [userMessages, setUserMessages] = useState<string[]>([]);
 	const [aIMessages, setAIMessages] = useState<string[]>([]);
@@ -88,47 +88,39 @@ export default function Home() {
 			<main className="mainPage">
 				<SectionCourses avaliableCourses={avaliableCourses} courses={courses} />
 				<div className="chat">
-					{chatOpened && (
-						<div className="chatMenu">
-							<div className="chatMenuContent">
-								{/* <div className="message messageUser">Vegano pode comer batata?</div>
-								<div className="message messageAI">
-									Está é a mensagem da ia.... Lorem ipsum dolor sit, amet consectetur adipisicing
-									elit. Aliquid delectus necessitatibus nihil asperiores officiis beatae neque facilis
-									est! Sapiente, provident! Harum mollitia officiis tempora id laudantium sit dolores
-									cumque tempore!
-								</div> */}
-								{userMessages.map((msg, i) => (
-									<div className="msgComp" key={`message-group-${i}`}>
-										<div className="message messageUser" key={`q${i}`}>
-											{msg}
-										</div>
-										<div className="message messageAI" key={`a${i}`}>
-											{aIMessages[i] || '...'}
-										</div>
+					<div className={`chatMenu ${chatOpened===''?'':chatOpened ? 'open' : 'close'}`}>
+						<div className="chatMenuContent">
+							{userMessages.map((msg, i) => (
+								<div className="msgComp" key={`message-group-${i}`}>
+									<div className="message messageUser" key={`q${i}`}>
+										{msg}
 									</div>
-								))}
-							</div>
-
-							<div className="chatMenuForm">
-								<textarea
-									placeholder="Faça a sua pergunta"
-									value={message}
-									onChange={e => setMessage(e.currentTarget.value)}
-									onInput={e => {
-										const textarea = e.currentTarget;
-
-										// Ajusta a altura do textarea conforme o conteúdo, 29 caracteres por linha
-										textarea.style.height =
-											24 * Math.floor((textarea.value.length - 1) / 29) + 40 + 'px';
-									}}
-								></textarea>
-								<button className="ChatMenuSubmitBtn" onClick={handleClick}>
-									<FaPaperPlane size={20} />
-								</button>
-							</div>
+									<div className="message messageAI" key={`a${i}`}>
+										{aIMessages[i] || '...'}
+									</div>
+								</div>
+							))}
 						</div>
-					)}
+
+						<div className="chatMenuForm">
+							<textarea
+								placeholder="Faça a sua pergunta"
+								value={message}
+								onChange={e => setMessage(e.currentTarget.value)}
+								onInput={e => {
+									const textarea = e.currentTarget;
+
+									// Ajusta a altura do textarea conforme o conteúdo, 29 caracteres por linha
+									textarea.style.height =
+										24 * Math.floor((textarea.value.length - 1) / 29) + 40 + 'px';
+								}}
+							></textarea>
+							<button className="ChatMenuSubmitBtn" onClick={handleClick}>
+								<FaPaperPlane size={20} />
+							</button>
+						</div>
+					</div>
+
 					<div className="button" onClick={handleClick}>
 						<IoChatboxEllipses size={25} />
 					</div>

@@ -1,6 +1,24 @@
 body {
 	background: var(--background);
 }
+@keyframes chatOpen {
+	from {
+		max-height: 0px;
+	}
+	to {
+		max-height: 1000px;
+	}
+}
+
+@keyframes chatClose {
+	from {
+		max-height: 1000px;
+	}
+	to {
+		max-height: 0px;
+		visibility: hidden;
+	}
+}
 main.mainPage {
 	display: flex;
 	flex-direction: column;
@@ -386,15 +404,29 @@ main.mainPage {
 	.chatMenu {
 		width: 400px;
 		height: 700px;
+		max-height: 0px;
+		overflow: hidden;
+		visibility: hidden;
 		background: var(--card);
 		padding: 10px;
 		border: 1px solid var(--lighter-border);
 		border-radius: 15px;
 		display: flex;
 		flex-direction: column;
-		margin-right:40px;
+		margin-right: 40px;
 		border-bottom-right-radius: 5px;
 		box-shadow: 5px 5px 15px #00000099;
+		transition: max-height 0.3s linear;
+		&.open {
+			visibility: visible;
+
+			animation: chatOpen 0.3s ease forwards;
+		}
+		&.close {
+			visibility: visible;
+
+			animation: chatClose 0.3s ease forwards;
+		}
 		@media (orientation: portrait) {
 			position: absolute;
 			width: 95vw;
@@ -402,7 +434,7 @@ main.mainPage {
 			height: 75vh;
 			bottom: 0;
 			right: 0;
-			transform: translate(20px,-10%);
+			transform: translate(20px, -10%);
 			margin-right: 0;
 		}
 		.chatMenuContent {
@@ -415,12 +447,12 @@ main.mainPage {
 			gap: 10px;
 			padding: 5px;
 			margin-bottom: 10px;
-			.msgComp{
+			.msgComp {
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
 			}
-			.message{
+			.message {
 				max-width: 80%;
 				padding: 8px 12px;
 				border-radius: 10px;
@@ -489,16 +521,21 @@ main.mainPage {
 		text-align: center;
 		width: 60px;
 		height: 60px;
+		cursor: pointer;
 
 		border-radius: 35px;
 		background-color: var(--primary);
 		box-shadow: inset -5px -5px 15px color-mix(in srgb, var(--primary) 30%, #000),
 			inset 5px 5px 15px color-mix(in srgb, var(--primary) 70%, #fff), 5px 5px 15px #00000099;
+		transition: transform 0.1s linear;
 		svg {
 			display: block;
 
 			fill: currentColor;
 			filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.35));
+		}
+		&:hover {
+			transform: scale(1.05);
 		}
 	}
 }
