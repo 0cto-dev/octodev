@@ -198,7 +198,10 @@ main.mainPage {
 					position: relative;
 					cursor: default;
 
-					filter: grayscale(80%) brightness(50%);
+					filter: grayscale(80%) brightness(60%);
+					@media (prefers-color-scheme: dark) {
+						filter: grayscale(80%) brightness(50%);
+					}
 					&::after {
 						content: 'Em breve...';
 						position: absolute;
@@ -209,7 +212,7 @@ main.mainPage {
 						font-size: 2rem;
 						font-weight: 700;
 						font-family: var(--roboto);
-						color: var(--foreground);
+						color: color-mix(in srgb, var(--foreground) 70%, transparent);
 					}
 				}
 
