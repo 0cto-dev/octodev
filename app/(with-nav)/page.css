@@ -522,7 +522,7 @@ main.mainPage {
 		width: 60px;
 		height: 60px;
 		cursor: pointer;
-
+		color: var(--white);
 		border-radius: 35px;
 		background-color: var(--primary);
 		box-shadow: inset -5px -5px 15px color-mix(in srgb, var(--primary) 30%, #000),

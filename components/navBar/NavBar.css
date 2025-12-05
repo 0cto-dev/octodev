@@ -214,12 +214,14 @@ body > header {
 				}
 			}
 			&#pfp {
+				
 				> a {
 					line-height: 0;
 					color: var(--disabled-foreground);
 					transition: color 0.3s, transform 0.3s, box-shadow 0.3s;
 					margin-right: 7px;
 					border-radius: 50px;
+					border: 1px solid var(--lighter-border);
 					overflow: hidden;
 					&:hover {
 						color: color-mix(in srgb, var(--foreground) 70%, var(--disabled-foreground));
