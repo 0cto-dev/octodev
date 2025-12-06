@@ -115,6 +115,7 @@ body > header {
 	background-color: var(--card);
 	box-shadow: 7px 7px 12px #00000099;
 	border-radius: 15px;
+	z-index: 1000 !important;
 	width: calc(100% - 40px);
 
 	@media (orientation: portrait) {
@@ -128,6 +129,11 @@ body > header {
 		justify-content: space-between;
 		list-style: none;
 		padding: 15px;
+		@media (orientation: portrait) {
+			padding: 5px;
+			padding-top: 15px;
+			padding-bottom: 15px;
+		}
 
 		li {
 			display: flex;
@@ -205,16 +211,13 @@ body > header {
 						-webkit-background-clip: text;
 						background-clip: text;
 						-webkit-text-fill-color: transparent;
-						
 					}
-					p{
+					p {
 						line-height: 1.5rem;
-
 					}
 				}
 			}
 			&#pfp {
-				
 				> a {
 					line-height: 0;
 					color: var(--disabled-foreground);

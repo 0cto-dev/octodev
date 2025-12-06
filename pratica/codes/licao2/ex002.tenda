@@ -1,0 +1,5 @@
+seja x = 8
+seja y = 12
+
+seja teste = (x * 2) >= y
+exiba (teste)

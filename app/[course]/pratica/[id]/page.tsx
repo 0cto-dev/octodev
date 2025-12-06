@@ -22,7 +22,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExerciseNum: 1,
+		currentExerciseNum: 4,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,

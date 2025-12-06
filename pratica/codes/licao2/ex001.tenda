@@ -1,0 +1,6 @@
+seja a = 4
+seja b = 2
+seja c = 3
+
+seja resultado = a + b * c
+exiba(resultado)

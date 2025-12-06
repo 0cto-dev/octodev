@@ -1,0 +1,154 @@
+[
+	{
+		"id": "licao1",
+		"titulo": "Olá Tenda",
+		"descricao": "Introdução à linguagem tenda",
+		"exercicios": [
+			{
+				"id": "ex001",
+				"tipo": "alternativas",
+				"pergunta": "Qual é a forma correta de escrever \"Hello World\" utilizando a Linguagem Tenda?",
+				"alternativas": [
+					{ "id": 1, "valor": "mostrar(\"Hello World\")", "correto": false },
+					{ "id": 2, "valor": "exiba(\"Hello World\")", "correto": true },
+					{ "id": 3, "valor": "escreva(\"Hello World\")", "correto": false },
+					{ "id": 4, "valor": "print(\"Hello World\")", "correto": false }
+				]
+			},	
+			{
+				"id": "ex002",
+				"tipo":"alternativas",
+				"pergunta": "Qual é a forma correta de declarar uma variável chamada num com valor 10?",
+				"alternativas": [
+					{ "id":1,"valor": "numero num = 10", "correto": false },
+					{ "id":2,"valor": "seja num = 10", "correto": true },
+					{ "id":3,"valor": "int num = 10", "correto": false },
+					{ "id":4,"valor": "computo num = 10", "correto": false }
+				]
+			},
+			{
+				"id": "ex003",
+				"tipo":"alternativas",
+				"pergunta": "Analise o código e responda o que será exibido na tela?",
+				"codigo":"licao1/ex003.tenda",
+
+				"alternativas": [
+					{ "id":1,"valor": "soma(3,2)", "correto": false },
+					{ "id":2,"valor": "5", "correto": true },
+					{ "id":3,"valor": "32", "correto": false },
+					{ "id":4,"valor": "Erro de sintaxe", "correto": false }
+				]
+			},
+			{
+				"id": "ex004",
+				"tipo":"alternativas",
+				"pergunta": "Qual das opções abaixo representa um número hexadecimal válido em Tenda?",
+
+				"alternativas": [
+					{ "id":1,"valor": "#AA33FF", "correto": false },
+					{ "id":2,"valor": "0xAA33FF", "correto": true },
+					{ "id":3,"valor": "hex(AA33FF)", "correto": false },
+					{ "id":4,"valor": "0hAA33FF", "correto": false }
+				]
+			},
+			{
+				"id": "ex005",
+				"tipo":"alternativas",
+				"pergunta": "Analise o código e responda o que será exibido?",
+				"codigo":"licao1/ex005.tenda",
+
+
+				"alternativas": [
+					{ "id":1,"valor": "0", "correto": false },
+					{ "id":2,"valor": "10", "correto": true },
+					{ "id":3,"valor": "5", "correto": false },
+					{ "id":4,"valor": "15", "correto": false }
+				]
+			},
+			{
+				"id": "ex006",
+				"tipo":"alternativas",
+				"pergunta": "Para verificar se uma chave existe em um dicionário, usamos o operador:",
+
+
+				"alternativas": [
+					{ "id":1,"valor": "possui", "correto": false },
+					{ "id":2,"valor": "tem", "correto": true },
+					{ "id":3,"valor": "contém", "correto": false },
+					{ "id":4,"valor": "in", "correto": false }
+				]
+			},
+			{
+				"id": "ex007",
+				"tipo":"alternativas",
+				"pergunta": "Qual dessas opções mostra uma lista vazia em Tenda?",
+
+
+				"alternativas": [
+					{ "id":1,"valor": "{}", "correto": false },
+					{ "id":2,"valor": "[]", "correto": true },
+					{ "id":3,"valor": "Nada", "correto": false },
+					{ "id":4,"valor": "()", "correto": false }
+				]
+			}
+
+		]
+	},
+	{
+		"id": "licao2",
+		"titulo": "Operando com Tenda",
+		"descricao": "Operações e expressões",
+		"exercicios": [
+			{
+				"id": "ex001",
+				"tipo": "alternativas",
+				"pergunta": "Observe o código abaixo e responda qual será o valor exibido?",
+				"codigo":"licao2/ex001.tenda",
+
+				"alternativas": [
+				
+
+					{ "id": 1, "valor": "18", "correto": false },
+					{ "id": 2, "valor": "10", "correto": true },
+					{ "id": 3, "valor": "14", "correto": false },
+					{ "id": 4, "valor": "9", "correto": false }
+				]
+			},
+			{
+				"id": "ex002",
+				"tipo": "alternativas",
+				"pergunta": "Observe o código abaixo e responda qual será o valor exibido?",
+				"codigo":"licao2/ex002.tenda",
+
+				"alternativas": [
+				
+					{ "id": 1, "valor": "8", "correto": false },
+					{ "id": 2, "valor": "Verdadeiro", "correto": true },
+					{ "id": 3, "valor": "Falso", "correto": false },
+					{ "id": 4, "valor": "16", "correto": false }
+				]
+			},		
+			{
+				"id": "ex003",
+				"tipo": "codigo",
+				"pergunta": "Corrija o código abaixo",
+				"codigo":"licao2/ex003.tenda",
+				"autocompletar": true,
+				"respostaCodigo": "verdadeiro"
+
+			},	
+			{
+				"id": "ex004",
+				"tipo": "codigo",
+				"pergunta": "Corrija o código abaixo",
+				"codigo":"licao2/ex004.tenda",
+				"autocompletar": true,
+				"respostaCodigo": "10",
+				"verificadorTrapaca": "^\\s*seja a = 7\\s*seja b = 3\\s*seja resultado = a \\+ b\\s*exiba\\(resultado\\)\\s*$"
+
+			}	
+	
+
+		]
+	}
+]

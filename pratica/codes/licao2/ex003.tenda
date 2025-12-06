@@ -1,0 +1,6 @@
+// exiba verdadeiro ou falso para a condição: x é maior do que y
+seja x = 15
+seja y = 10
+
+seja teste = x >=< y
+exiba(teste)

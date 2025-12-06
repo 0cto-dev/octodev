@@ -71,14 +71,12 @@ export default async function submitAnswer(
 
 		setOutput([output, result || '', error || '']);
 
-		const hardCoded = await verifyHardCode(code[0], output, currentExercise.verificadorTrapaca || '');
-		console.log(output.trim(), currentExercise.respostaCodigo?.trim());
-
+		const hardCoded = await verifyHardCode(code[0], output, `utilizando a linguagem ${lesson.course}: `+currentExercise.verificadorTrapaca || '');
+		console.log(error)
 		userGuessedRight =
 			(currentExercise.respostaCodigo ? output.trim() === currentExercise.respostaCodigo.trim() : true) &&
-			!hardCoded;
+			!hardCoded[0]&&!error;
 	}
-
 	if (!userGuessedRight) {
 		exercise.exerciseStatus !== 'wrong' && lives > 0 && setLives(lives => lives - 1);
 		setTimeout(() => {
