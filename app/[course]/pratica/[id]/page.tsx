@@ -1,7 +1,7 @@
 'use client';
 import './page.exercicios.css';
-import React, { useEffect, useMemo, useState } from 'react';
-import { alternativasType, errorFetch, fakeData, lessonType, nullAlternative, paramsType } from '@/types/types';
+import { useEffect, useMemo, useState } from 'react';
+import { alternativasType, errorFetch, lessonType, nullAlternative, paramsType } from '@/types/types';
 import NavBar from './NavBar/NavBar';
 import shuffle from './shuffler';
 import LessonSection from './LessonSection/section';
@@ -14,6 +14,7 @@ import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
 import PopUp from '@/components/popUp/PopUp';
 import { useIsMobile } from '@/lib/isMobile';
 import TargetCursor from '@/components/targetCursor/TargetCursor';
+import { runCode } from './lib/runCode';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States
@@ -22,7 +23,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	const [goingToNextExercise, setGoingToNextExercise] = useState(false);
 	const [exercise, setExercise] = useState({
 		selectedAlternative: nullAlternative as alternativasType,
-		currentExerciseNum: 4,
+		currentExerciseNum: 1,
 		completedExercises: 0,
 		exerciseStatus: '',
 		lastExercise: false,
@@ -146,6 +147,9 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 						setmouseOverSection={setMouseOverSection}
 					/>
 					<footer>
+						{currentExercise.tipo === 'codigo' && (
+							<button onClick={() => runCode(lesson, code, setCode, setOutput)}>Verificar</button>
+						)}
 						<button
 							onClick={() => {
 								exercise.exerciseStatus === '' &&
@@ -169,7 +173,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 									});
 							}}
 						>
-							Verificar
+							{currentExercise.tipo === 'codigo' ? 'Enviar' : 'Verificar'}
 						</button>
 					</footer>
 				</main>

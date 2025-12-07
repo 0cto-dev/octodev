@@ -1,9 +1,8 @@
-import fetchResultPiston from '@/app/[course]/pratica/[id]/lib/pistonApi/pistonApi';
-import { runTenda } from '@/app/api/tenda/tendaFetch';
 import verifyHardCode from '@/app/[course]/pratica/[id]/lib/verifyHardCode';
 import { submitAnswerType } from '@/types/types';
 import StartNextExercise from './startNewExercise';
-import { getSession } from 'next-auth/react';
+import { saveProgress } from './saveProgrss';
+import { runCode } from './runCode';
 
 export default async function submitAnswer(
 	// #region Área de região
@@ -32,52 +31,21 @@ export default async function submitAnswer(
 		userGuessedRight = userAnswer.id === correctAnswer.id;
 	}
 	if (typeOfExercise === 'codigo') {
-		let response;
-		let output = '';
-		let result = '';
-		let error = '';
+		let { output, result, error } = await runCode(lesson, code, setCode, setOutput);
 
-		if (lesson.course === 'logica') {
-			// Tratamento para a linguagem tenda
-			response = await runTenda(code, setCode);
-			output = response
-				.filter((output: { type: string; payload: string }) => output.type === 'output')
-				.map((output: { type: string; payload: string }) => {
-					return output.payload;
-				})
-				.join('');
-			result = JSON.stringify(
-				response.filter((output: { type: string; payload: string }) => {
-					return output.type === 'result';
-				})[0]
-			);
-			error = response.filter((output: { type: string; payload: string }) => output.type === 'error')[0]
-				?.payload[0];
-		}
-
-		if (lesson.course !== 'logica') {
-			// Tratamento para python e possiveis próximas linguagens utilizando a piston API
-			const fetchPythonResult = await fetchResultPiston(code[0], lesson.course);
-			console.log(fetchPythonResult);
-
-			let preparedResult = fetchPythonResult.run.stdout.split('\n');
-			preparedResult.pop();
-			const finalResult = preparedResult.at(-1) || 'Nada';
-
-			output = fetchPythonResult.run.output;
-			result = JSON.stringify({ value: finalResult });
-			error = fetchPythonResult.run.stderr;
-		}
-
-		setOutput([output, result || '', error || '']);
-
-		const hardCoded = await verifyHardCode(code[0], output, `utilizando a linguagem ${lesson.course}: `+currentExercise.verificadorTrapaca || '');
-		console.log(error)
+		const hardCoded = await verifyHardCode(
+			code[0],
+			output,
+			`utilizando a linguagem ${lesson.course}: ` + currentExercise.verificadorTrapaca || ''
+		);
+		console.log(error);
 		userGuessedRight =
 			(currentExercise.respostaCodigo ? output.trim() === currentExercise.respostaCodigo.trim() : true) &&
-			!hardCoded[0]&&!error;
+			!hardCoded[0] &&
+			!error;
 	}
 	if (!userGuessedRight) {
+		// Diminui a vida e finaliza animação de erro que dura 500ms
 		exercise.exerciseStatus !== 'wrong' && lives > 0 && setLives(lives => lives - 1);
 		setTimeout(() => {
 			setExercise(exercise => ({
@@ -86,52 +54,21 @@ export default async function submitAnswer(
 			}));
 		}, 500);
 	}
-	lives > 0 &&
+
+	// Marca lição como errada ou como perdida
+	if (lives > 0) {
 		setExercise(exercise => ({
 			...exercise,
-			exerciseStatus: userGuessedRight ? 'correct' : 'wrong',
+			exerciseStatus: userGuessedRight ? 'correct' : lives > 1 ? 'wrong' : 'lose',
 		}));
-
-	lives === 1 &&
-		setExercise(exercise => ({
-			...exercise,
-			exerciseStatus: userGuessedRight ? 'correct' : 'lose',
-		}));
-
-	if (userGuessedRight && !exercise.lastExercise) {
-		setGoingToNextExercise(true);
-		StartNextExercise(setExercise, setCode);
 	}
-	if (userGuessedRight && exercise.lastExercise) {
+	if (!userGuessedRight) return;
+
+	if (exercise.lastExercise) {
 		setExercise(exercise => ({ ...exercise, exerciseStatus: 'finish' }));
 		saveProgress(lesson.course, lesson.id);
-	}
-}
-
-async function saveProgress(course: string, id: string) {
-	if (typeof window !== 'undefined') {
-		const session = await getSession();
-		// Salva o progresso do usuário no curso
-		await fetch('/api/progress', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				userId: session?.user?.id,
-				courseName: course,
-				lessonId: +id.replace('licao', ''),
-			}),
-		});
-		console.log('test');
-
-		// Salva a sequência diária
-		await fetch('/api/streak', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				userId: session?.user?.id,
-			}),
-		});
+	} else {
+		setGoingToNextExercise(true);
+		StartNextExercise(setExercise, setCode);
 	}
 }

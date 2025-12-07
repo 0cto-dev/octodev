@@ -1,4 +1,4 @@
-import { lessonType, fakeData, paramsType, Setters } from '@/types/types';
+import { lessonType, fakeData, paramsType } from '@/types/types';
 import { Dispatch, SetStateAction } from 'react';
 
 export async function getLesson(course: string, id: string | undefined): Promise<lessonType | lessonType[]> {

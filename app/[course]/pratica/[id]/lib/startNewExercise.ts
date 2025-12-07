@@ -13,6 +13,7 @@ export default async function StartNextExercise(
 	>,
 	setCode: Dispatch<SetStateAction<string[]>>
 ) {
+	
 	setTimeout(() => {
 		setCode([''])
 		setExercise(exercise => ({
