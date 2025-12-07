@@ -4,10 +4,10 @@ import Image from 'next/image';
 import './NavBar.css';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import iconImage from '@/public/images/octoSemFundo.png';
 import LeaderBoard from './LeaderBoardLink';
 import { Streak } from './StreakLink';
 import ProfilePicture from './ProfilePicture';
+import OctoDevLogo from './OctoDevLogo';
 
 export default function NavBar() {
 	const [isClient, setIsClient] = useState(false);
@@ -22,12 +22,7 @@ export default function NavBar() {
 		<>
 			<header>
 				<ul>
-					<li id="octo">
-						<a href="/">
-							<div className="blur"></div>
-							<Image src={iconImage} alt="logo" loading="eager" width={40} height={40}></Image>
-						</a>
-					</li>
+					<OctoDevLogo />
 					<li id="title">
 						<p>
 							{courseName ||
@@ -37,8 +32,8 @@ export default function NavBar() {
 					</li>
 					{session && (
 						<>
-							<LeaderBoard/>
 							<Streak />
+							<LeaderBoard/>
 						</>
 					)}
 					<ProfilePicture />

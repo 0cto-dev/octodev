@@ -1,5 +1,25 @@
-export const useIsMobile = () => {
-	let isMobile = window.innerHeight>window.innerWidth&&window.innerWidth<500;
+import { useState, useEffect } from 'react';
 
-  return isMobile
+export const useIsMobile = () => {
+	const [isMobile, setIsMobile] = useState(calculateIsMobile);
+
+	function calculateIsMobile() {
+		if (typeof window === 'undefined') {
+			return false;
+		}
+		return window.innerHeight > window.innerWidth && window.innerWidth < 500;
+	}
+
+	useEffect(() => {
+		function handleResize() {
+			setIsMobile(calculateIsMobile());
+		}
+		const listener = window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
+	return isMobile;
 };
