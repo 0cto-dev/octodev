@@ -1,33 +1,14 @@
 'use client ';
 import { errorFetch, exercisesType, LessonSectionType } from '@/types/types';
 import Options from './section.options';
-import AnsiToHtml from 'ansi-to-html';
 import dynamic from 'next/dynamic';
-import { useEffect, useRef } from 'react';
-import hljs from 'highlight.js';
 import '@/public/tendaHljs';
+import { CodeBlock } from './section.codeBlock';
+import CodeSPace from './section.codeLesson';
 
 const MonacoEditor = dynamic(() => import('@/components/exercícios/MonacoEditor'), {
 	ssr: false,
 });
-
-const ansiConvert = new AnsiToHtml({
-	colors: {
-		5: '#00ff00',
-		1: '#e7000b',
-		231: '#00ff00',
-		115: '#00c4a3',
-		240: '#8d8e9b',
-		246: '#8d8e9b',
-		249: '#8d8e9b',
-	},
-});
-
-function TerminalOutput({ ansiString }: { ansiString: string }) {
-	const html = ansiConvert.toHtml(ansiString);
-
-	return <pre className="error" dangerouslySetInnerHTML={{ __html: html }} />;
-}
 
 export default function LessonSection({
 	lesson,
@@ -68,32 +49,15 @@ export default function LessonSection({
 			return (
 				<>
 					{title}
-					<div className="codeSpace">
-						<MonacoEditor
-							value={
-								goingToNextExercise
-									? ''
-									: exercise.exerciseStatus === 'finish' || exercise.exerciseStatus === 'lose'
-									? ''
-									: code[0]
-							}
-							language={lesson.course === 'logica' ? 'tenda' : lesson.course}
-							onChange={value => value !== undefined && setCode([value])}
-							autocomplete={exerciseObj.autocompletar ? exerciseObj.autocompletar : false}
-						/>
-
-						{/* o curso de logica é a unica exceção em que o nome do curso vai ser diferente do nome da linguagem */}
-
-						{result && !error && (
-							<pre className="output">
-								<code>
-									<div className="output">{outputValue}</div>
-									<div className="result">{result}</div>
-								</code>
-							</pre>
-						)}
-						{error && <TerminalOutput ansiString={error} />}
-					</div>
+					<CodeSPace
+						code={code}
+						exercise={exercise}
+						setCode={setCode}
+						lesson={lesson}
+						exerciseObj={exerciseObj}
+						goingToNextExercise={goingToNextExercise}
+						output={{outputValue,result,error}}
+					/>
 				</>
 			);
 		}
@@ -108,23 +72,5 @@ export default function LessonSection({
 		<section onMouseEnter={() => setmouseOverSection(true)} onMouseLeave={() => setmouseOverSection(false)}>
 			{RenderLessonExercise(lesson.data.exercicios[exercise.currentExerciseNum - 1] || errorFetch.exercicios[0])}
 		</section>
-	);
-}
-
-function CodeBlock({ language, children }: { language: string; children: string[] }) {
-	const codeRef = useRef<HTMLElement | null>(null);
-
-	useEffect(() => {
-		if (codeRef.current) {
-			delete codeRef.current.dataset.highlighted;
-			hljs.highlightElement(codeRef.current);
-		}
-	}, [children]);
-	return (
-		<pre className="code">
-			<code className={language} ref={codeRef}>
-				{children[0]}
-			</code>
-		</pre>
 	);
 }
