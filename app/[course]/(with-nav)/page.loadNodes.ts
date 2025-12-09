@@ -20,6 +20,7 @@ type loadNodesType = {
 	lessonIdMenuOpen: string;
 	setNodes: Dispatch<SetStateAction<Node[]>>;
 	nodesType: 'teorica' | 'pratica';
+	isMobile:boolean
 };
 let xPositions: number[] = [];
 let positionOfCurrentLessonNode = 0;
@@ -35,8 +36,8 @@ export default function loadNodes({
 	nodeSize,
 	setNodes,
 	nodesType,
+	isMobile
 }: loadNodesType) {
-	const isMobile = useIsMobile();
 
 	// console.log(`${lessons.course}Progress: `+localStorage.getItem(`${lessons.course}Progress`))
 

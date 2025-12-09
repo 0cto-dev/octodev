@@ -25,6 +25,7 @@ import { FaArrowDown } from 'react-icons/fa';
 import { BiCurrentLocation } from 'react-icons/bi';
 import { computeProgress } from '@/app/api/progress/progress';
 import { getSession } from 'next-auth/react';
+import { useIsMobile } from '@/lib/isMobile';
 
 const NODE_TYPES = {
 	lessonsNode: LessonsNode,
@@ -46,6 +47,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const [nodesType, setNodesType] = useState<'pratica' | 'teorica'>('pratica');
 	// #endregion
 
+	const isMobile = useIsMobile()
 	const nodeSize = 40;
 
 	const [lastMadeLesson, setLastMadeLesson] = useState<number>(0);
@@ -122,6 +124,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			nodeSize,
 			setNodes,
 			nodesType,
+			isMobile
 		});
 	}, [lessons, lessonIdMenuOpen, nodesType, lastMadeLesson]);
 

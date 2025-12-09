@@ -3,6 +3,7 @@ import iconImage from '@/public/images/octoSemFundo.png';
 import { useIsMobile } from "@/lib/isMobile";
 
 export default function OctoDevLogo() {
+	const isMobile = useIsMobile()
     const octoSize = useIsMobile()?35:40
 	return (
 		<li id="octo">

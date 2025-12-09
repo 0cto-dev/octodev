@@ -42,6 +42,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #endregion
 
 	const swrCode = useCode(lesson, currentExercise);
+	const isMobile = useIsMobile()
 
 	// #region Memos
 	const shuffledAlternatives = useMemo(() => {
@@ -96,7 +97,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 			}, 1500);
 
 		goingToNextExercise &&
-			useIsMobile() &&
+			isMobile &&
 			setTimeout(() => {
 				setGoingToNextExercise(false);
 			}, 200);

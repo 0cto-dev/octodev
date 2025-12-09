@@ -1,12 +1,14 @@
 import { useIsMobile } from "@/lib/isMobile";
 import { currentDate } from "@/types/types";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { HiMiniFire } from "react-icons/hi2";
 
 export function Streak() {
 	const { data: session } = useSession();
+	const isMobile = useIsMobile();
 	const isLastLessonToday = ((session?.user?.lastLessonDate || '') === currentDate) as boolean;
-	const svgSize = useIsMobile()?25:30;
+	const svgSize = isMobile?25:30;
 
 	return (
 		<li id="streak" className={isLastLessonToday ? 'active' : ''}>
