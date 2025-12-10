@@ -12,12 +12,12 @@ export default function LoginPage() {
 	const [isRedirecting, setIsRedirecting] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	useEffect(() => {
-		if (!window ) return;
+		if (!window) return;
+
 		if (session) {
 			setIsRedirecting(true);
 			window.location.href = '/';
-			console.log(!isLoading, !isRedirecting);
-		}else{
+		} else {
 			setIsLoading(false);
 		}
 	}, [session]);
@@ -50,6 +50,7 @@ export default function LoginPage() {
 						<FaLinkedinIn size={20} />
 						Entrar com LinkedIn
 					</button>
+					<p className="enterWithoutLogin">Entrar sem criar um conta</p>
 				</div>
 				<footer>
 					<p>

@@ -33,10 +33,11 @@ body:has(.loginPage) > header {
 }
 main.loginPage {
 	min-width: 30%;
-	--color-radial-bg: var(--pink) 20%, var(--primary) 40%,var(--primary) 60%,var(--blue) 70%,var(--blue) 80%, var(--green);
-	background: radial-gradient(ellipse 55% 50%  at center, var(--color-radial-bg));
+	--color-radial-bg: var(--pink) 20%, var(--primary) 40%, var(--primary) 60%, var(--blue) 70%, var(--blue) 80%,
+		var(--green);
+	background: radial-gradient(ellipse 55% 50% at center, var(--color-radial-bg));
 	@media (orientation: portrait) {
-		background: radial-gradient(ellipse 60% 60%  at center, var(--color-radial-bg));
+		background: radial-gradient(ellipse 60% 60% at center, var(--color-radial-bg));
 	}
 	background-size: 200% 200%;
 	animation: backgroundAnimation 7s linear infinite;
@@ -147,7 +148,7 @@ main.loginPage {
 				color: var(--disabled-foreground);
 				font-size: 1.3rem;
 				font-weight: 500;
-				font-family: 'Roboto', sans-serif;
+				font-family: var(--roboto);
 				position: relative;
 				svg {
 					position: absolute;
@@ -184,6 +185,23 @@ main.loginPage {
 				}
 			}
 		}
+		.enterWithoutLogin {
+			color: var(--disabled-foreground);
+			cursor: pointer;
+			font-weight: 500;
+			font-family: var(--roboto);
+			border-radius: 12px;
+			padding: 5px 10px;
+			/* margin: 0 10px; */
+			border: 2px solid var(--lighter-border);
+			transition: 0.2s color ease, 0.2s background ease, .2s border ease, .2s transform ease;
+			&:hover {
+				border: 2px solid var(--disabled-foreground);
+				background: var(--disabled-foreground);
+				color: var(--card);
+				transform: scale(1.05);
+			}
+		}
 		footer {
 			color: var(--disabled-foreground);
 			font-family: var(--lato);
@@ -198,7 +216,7 @@ main.loginPage {
 				transform: translateX(-50%);
 				width: calc(100% - 60px);
 			}
-			a{
+			a {
 				color: var(--primary);
 				text-decoration: none;
 				font-weight: 600;
