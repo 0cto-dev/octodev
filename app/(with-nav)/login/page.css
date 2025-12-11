@@ -11,6 +11,7 @@ body:has(.loginPage) {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
 }
 body:has(.loginPage) > header {
 	position: absolute;
@@ -186,20 +187,22 @@ main.loginPage {
 			}
 		}
 		.enterWithoutLogin {
-			color: var(--disabled-foreground);
-			cursor: pointer;
-			font-weight: 500;
-			font-family: var(--roboto);
-			border-radius: 12px;
-			padding: 5px 10px;
-			/* margin: 0 10px; */
-			border: 2px solid var(--lighter-border);
-			transition: 0.2s color ease, 0.2s background ease, .2s border ease, .2s transform ease;
-			&:hover {
-				border: 2px solid var(--disabled-foreground);
-				background: var(--disabled-foreground);
-				color: var(--card);
-				transform: scale(1.05);
+			> p {
+				color: var(--disabled-foreground);
+				cursor: pointer;
+				font-weight: 500;
+				font-family: var(--roboto);
+				border-radius: 12px;
+				padding: 5px 10px;
+				/* margin: 0 10px; */
+				border: 2px solid var(--lighter-border);
+				transition: 0.2s color ease, 0.2s background ease, 0.2s border ease, 0.2s transform ease;
+				&:hover {
+					border: 2px solid var(--disabled-foreground);
+					background: var(--disabled-foreground);
+					color: var(--card);
+					transform: scale(1.05);
+				}
 			}
 		}
 		footer {
@@ -207,7 +210,7 @@ main.loginPage {
 			font-family: var(--lato);
 			height: 20px;
 			width: 100%;
-			margin-top: 30px;
+			margin-top: 20px;
 			margin-bottom: 0;
 			p {
 				position: absolute;
@@ -225,6 +228,72 @@ main.loginPage {
 				&:hover {
 					text-shadow: 0 0 5px var(--primary);
 				}
+			}
+		}
+	}
+}
+
+.filterDark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 200vw;
+	height: 200dvh;
+	transition: 0.3s background;
+	z-index: 9998;
+	visibility: hidden;
+	&.active {
+		visibility: visible;
+		background-color: #00000099;
+	}
+}
+.popUp {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 42vw;
+	transform: translate(-50%, -50%) scale(0);
+	background: var(--background);
+	padding: 18px;
+	border: 1px solid var(--lighter-border);
+	border-radius: 15px;
+	text-align: center;
+	z-index: 9999;
+	transition: transform .3s ease;
+	&.active {
+		transition: transform .3s cubic-bezier(0.17, 0.4, 0.24, 2.03);
+		transform: translate(-50%, -50%) scale(1);
+	}
+	@media (orientation: portrait) {
+		width: 95vw;
+	}
+	p {
+		font-size: 1.3rem;
+	}
+	.options {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+		margin-top: 20px;
+		button {
+			flex: 1;
+			background-color: var(--input);
+			color: var(--foreground);
+			text-decoration: none;
+			height: 50px;
+			border: none;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			border-radius: 5px;
+			font-family: var(--lato);
+			font-weight: 700;
+			border: 1px solid var(--lighter-border);
+			transition: transform 0.3s ease, background 0.3s ease;
+			&:hover {
+				transform: scale(1.03);
+				background-color: color-mix(in srgb, var(--input) 95%, var(--foreground));
 			}
 		}
 	}
