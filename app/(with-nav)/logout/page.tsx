@@ -17,10 +17,10 @@ export default function logoutPage() {
 				<div className="options">
 					<button onClick={() => signOut()} className="logout-btn">
 						<TbLogout size={25} />
-						Sim, tchau
+						Sim
 					</button>
 					<Link href="/" className="cancel-btn">
-						Não, só brincando
+						Não
 					</Link>
 				</div>
 			</div>

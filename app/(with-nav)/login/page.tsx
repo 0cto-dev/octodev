@@ -18,6 +18,9 @@ export default function LoginPage() {
 
 		if (session) {
 			setIsRedirecting(true);
+			// Uma vez que o usuário está logado, os cookies de visitante devem ser removidos
+			document.cookie = 'visitor=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax';
+
 			window.location.href = '/';
 		} else {
 			setIsLoading(false);
@@ -31,20 +34,17 @@ export default function LoginPage() {
 		const target = e.target as HTMLElement;
 		if (target.closest('.enterWithoutLogin')) setIsPopUpOpened(true);
 		if (target.closest('.filterDark.active') || target.closest('.cancelBtn')) setIsPopUpOpened(false);
-	}
-	function handleTransition(e: React.TransitionEvent<HTMLElement>) {
-		const target = e.target as HTMLElement;
-		console.log(target);
+		if (target.closest('.enterWithoutLoginBtn')) allowEnterWithoutLogin()
 	}
 
 	return (
 		<main className="loginPage">
 			<div className={`filterDark ${isPopUpOpened ? 'active' : ''}`} onClick={handleClick}></div>
 			<div className={`popUp ${isPopUpOpened ? 'active' : ''}`}>
-				<p>Tem certeza que deseja entrar sem criar uma conta?</p>
-				<p>Todo o seu progresso durante esta sessão será perdido!</p>
+				<h1>Tem certeza que deseja entrar sem fazer login?</h1>
+				<p>Caso entre sem criar uma conta todo o seu progresso durante esta sessão será perdido!</p>
 				<div className="options">
-					<button className="enterWithoutLoginBtn">Sim</button>
+					<button className="enterWithoutLoginBtn" onClick={handleClick}>Sim</button>
 					<button className="cancelBtn" onClick={handleClick}>
 						Não
 					</button>
@@ -87,4 +87,13 @@ export default function LoginPage() {
 			</div>
 		</main>
 	);
+}
+
+export function allowEnterWithoutLogin(){
+	// Cria um cookie que dura 1 hora para que o visitante desfrute do site
+	const oneHour = 60 * 60 * 1000;
+    const expirationDate = new Date(Date.now() + oneHour).toUTCString();
+    document.cookie = `visitor=true; expires=${expirationDate}; path=/; SameSite=Lax`;
+
+	window.location.href = "/"
 }

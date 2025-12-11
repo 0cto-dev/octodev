@@ -321,6 +321,10 @@ body > header {
 								font-weight: 400;
 								font-size: 1.05rem;
 								text-wrap: nowrap;
+								&.disabled {
+									pointer-events: none;
+									color: var(--disabled-foreground);
+								}
 							}
 							&.logout a {
 								background: color-mix(
@@ -335,6 +339,19 @@ body > header {
 									background: color-mix(
 										in srgb,
 										var(--error) 80%,
+										color-mix(in srgb, var(--foreground) 20%, transparent)
+									);
+								}
+							}
+							&.login a {
+								background: var(--primary);
+								padding: 0px 8px;
+								border-radius: 5px;
+								transition: 0.3s background;
+								&:hover {
+									background: color-mix(
+										in srgb,
+										var(--primary) 50%,
 										color-mix(in srgb, var(--foreground) 20%, transparent)
 									);
 								}

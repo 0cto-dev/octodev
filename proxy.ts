@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
+import Cookies from 'js-cookie';
+
 // check nextauth
 import { getServerSession } from 'next-auth/next';
 export async function proxy(req: NextRequest) {
     const session = await getServerSession();
-    const connected = session?.user ? true : false;
+	const isLoggedIn = (session?.user ? true : false)
+	const isVisitor = req.cookies.get('visitor') ? true : false;
+	
+    const connected = isLoggedIn||isVisitor;
     
 
 	if (!connected) {

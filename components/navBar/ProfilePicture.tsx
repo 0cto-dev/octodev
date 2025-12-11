@@ -11,7 +11,7 @@ export default function ProfilePicture() {
 	function handleClick(e: React.MouseEvent<HTMLElement, MouseEvent>) {
 		const target = e.target as HTMLElement;
 
-		if (target.closest('#pfp>a') || target.closest('.menu>ul>li')) setMenuOpen(menuOpen => !menuOpen);
+		if (target.closest('#pfp>a') || (target.closest('.menu>ul>li>a')&&!target.closest('.menu>ul>li>a.disabled'))) setMenuOpen(menuOpen => !menuOpen);
 	}
 	return (
 		<li id="pfp" onClick={handleClick} className={`${menuOpen ? 'open' : ''}`}>

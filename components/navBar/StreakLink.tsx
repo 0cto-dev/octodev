@@ -12,7 +12,7 @@ export function Streak() {
 
 	return (
 		<li id="streak" className={isLastLessonToday ? 'active' : ''}>
-			<p>{session?.user?.streak}</p>
+			<p>{session?.user?.streak||0}</p>
 			<svg width={svgSize} height={svgSize}>
 				<linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
 					<stop stopColor="var(--yellow)" offset="30%" />

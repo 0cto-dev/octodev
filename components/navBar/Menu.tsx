@@ -1,22 +1,37 @@
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
+import useIsVisitor from '@/lib/isVisitor';
 
 export function Menu() {
 	const { data: session } = useSession();
-
-	return session ? (
+	const isVisitor = useIsVisitor();
+	return session || isVisitor ? (
 		<>
 			<li>
-				<a href="/profile">Perfil</a>
+				<a href={isVisitor ? '#' : `/profile`} className={isVisitor ? 'disabled' : ''}>
+					Perfil
+				</a>
 			</li>
 			<li>
-				<a href="/achievements">Conquistas</a>
+				<a href={isVisitor ? '#' : `/achievements`} className={isVisitor ? 'disabled' : ''}>
+					Conquistas
+				</a>
 			</li>
 			<li>
-				<a href="/settings">Configurações</a>
+				<a href={isVisitor ? '#' : `/settings`} className={isVisitor ? 'disabled' : ''}>
+					Configurações
+				</a>
 			</li>
-			<li className="logout">
-				<a href="/api/auth/signout">Sair</a>
-			</li>
+			{isVisitor ? (
+				<li className="login">
+					<a href={`/api/auth/signin`}>Fazer Login</a>
+				</li>
+			) : (
+				<li className="logout">
+					<a href={isVisitor ? '#' : `/api/auth/signout`} className={isVisitor ? 'disabled' : ''}>
+						Sair
+					</a>
+				</li>
+			)}
 		</>
 	) : (
 		<>

@@ -8,10 +8,12 @@ import LeaderBoard from './LeaderBoardLink';
 import { Streak } from './StreakLink';
 import ProfilePicture from './ProfilePicture';
 import OctoDevLogo from './OctoDevLogo';
+import useIsVisitor from '@/lib/isVisitor';
 
 export default function NavBar() {
 	const [isClient, setIsClient] = useState(false);
 	const { data: session } = useSession();
+	const isVisitor = useIsVisitor();
 	let courseName = isClient ? window.location.pathname.split('/')[1] || '' : '';
 	courseName = courseName === 'logica' ? 'Tenda' : courseName;
 
@@ -30,7 +32,7 @@ export default function NavBar() {
 						`}
 						</p>
 					</li>
-					{session && (
+					{(session?true:false)||isVisitor && (
 						<>
 							<Streak />
 							<LeaderBoard/>

@@ -244,14 +244,14 @@ main.loginPage {
 	visibility: hidden;
 	&.active {
 		visibility: visible;
-		background-color: #00000099;
+		background-color: #000000aa;
 	}
 }
 .popUp {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	width: 42vw;
+	width: 40vw;
 	transform: translate(-50%, -50%) scale(0);
 	background: var(--background);
 	padding: 18px;
@@ -259,16 +259,22 @@ main.loginPage {
 	border-radius: 15px;
 	text-align: center;
 	z-index: 9999;
-	transition: transform .3s ease;
+	transition: transform 0.3s ease;
 	&.active {
-		transition: transform .3s cubic-bezier(0.17, 0.4, 0.24, 2.03);
+		transition: transform 0.3s cubic-bezier(0.17, 0.4, 0.38, 1.53);
 		transform: translate(-50%, -50%) scale(1);
 	}
 	@media (orientation: portrait) {
 		width: 95vw;
 	}
+	h1 {
+		font-size: 1.5rem;
+	}
 	p {
-		font-size: 1.3rem;
+		font-size: 1.2rem;
+		color: var(--disabled-foreground);
+		padding: 0 10px;
+		padding-bottom: 10px;
 	}
 	.options {
 		display: flex;
@@ -294,6 +300,12 @@ main.loginPage {
 			&:hover {
 				transform: scale(1.03);
 				background-color: color-mix(in srgb, var(--input) 95%, var(--foreground));
+			}
+			&.enterWithoutLoginBtn {
+				background-color: var(--red);
+				&:hover {
+					background-color: color-mix(in srgb, var(--red) 85%, var(--foreground));
+				}
 			}
 		}
 	}
