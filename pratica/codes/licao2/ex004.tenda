@@ -1,5 +1,0 @@
-seja a = 7
-seja b = 3
-
-seja resultado = somar(a, b)
-exiba(resultado)

@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import './NavBar.css';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
@@ -9,6 +8,7 @@ import { Streak } from './StreakLink';
 import ProfilePicture from './ProfilePicture';
 import OctoDevLogo from './OctoDevLogo';
 import useIsVisitor from '@/lib/isVisitor';
+import ToolTip from '@/components/tooltip/ToolTip';
 
 export default function NavBar() {
 	const [isClient, setIsClient] = useState(false);
@@ -26,19 +26,23 @@ export default function NavBar() {
 				<ul>
 					<OctoDevLogo />
 					<li id="title">
-						<p>
+						<p className="bg-primary">
 							{courseName ||
 								`Olá, ${(session?.user?.name || ('' as string)).split(' ')[0] || 'visitante'}!
 						`}
 						</p>
 					</li>
-					{(session?true:false)||isVisitor && (
-						<>
-							<Streak />
-							<LeaderBoard/>
-						</>
-					)}
-					<ProfilePicture />
+					{(session ? true : false) ||
+						(isVisitor && (
+							<>
+								<Streak />
+								<LeaderBoard />
+							</>
+						))}
+
+					<ToolTip text={isVisitor ?'Os itens do menu são apenas ilustrativos no modo visitante!':''}>
+						<ProfilePicture />
+					</ToolTip>
 				</ul>
 			</header>
 		</>

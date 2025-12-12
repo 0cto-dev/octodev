@@ -1,3 +1,16 @@
+@import 'tailwindcss';
+@import "tailwindcss/preflight";
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --chad-background: 0 0% 100%;
+	--chad-primary: 222.2 47.4% 11.2%;
+	--chad-primary-foreground: 210 40% 98%; 
+	--chad-popover: 0 0% 100%; 
+	--chad-popover-foreground: 222.2 47.4% 11.2%;
+  }
+}
 :root {
 	--background: oklch(0.95 0.04 285); /* text color */
 	--foreground: oklch(0.16 0.03 285); /* background color for body */

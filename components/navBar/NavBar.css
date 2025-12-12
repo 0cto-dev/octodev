@@ -440,3 +440,9 @@ body > header {
 		}
 	}
 }
+.tooltip {
+	background-color: var(--input);
+	border: 1px solid var(--lighter-border);
+	color: var(--foreground);
+	padding: 5px;
+}
