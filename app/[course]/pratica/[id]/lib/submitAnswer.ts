@@ -20,6 +20,7 @@ export default async function submitAnswer(
 		lives,
 		setLives,
 		setGoingToNextExercise,
+		isVisitor,
 	}: // #endregion
 	submitAnswerType
 ) {
@@ -66,7 +67,7 @@ export default async function submitAnswer(
 
 	if (exercise.lastExercise) {
 		setExercise(exercise => ({ ...exercise, exerciseStatus: 'finish' }));
-		saveProgress(lesson.course, lesson.id);
+		saveProgress(lesson.course, lesson.id,isVisitor);
 	} else {
 		setGoingToNextExercise(true);
 		StartNextExercise(setExercise, setCode);

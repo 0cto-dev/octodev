@@ -59,10 +59,16 @@ function CourseProgressBar({ course, len }: { course: courseType; len: number })
 export async function getProgress(course: courseType, LessonsNum: number) {
 	const session = await getSession();
 	const courseName = getCourseName(course.nome);
+	let last: string | number = 0;
 
-	const last = session?.user?.courses?.find((c: any) => c.courseName === courseName)?.lastLessonMade ?? 0;
+	if (session) {
+		last = session?.user?.courses?.find((c: any) => c.courseName === courseName)?.lastLessonMade ?? 0;
+	}
+	if (!session) {
+		last = localStorage.getItem(`lastLessonMade_${courseName}`) || 0;
+	}
 
-	return computeProgress(last, LessonsNum || 1);
+	return computeProgress(Number(last), LessonsNum || 1);
 }
 
 function ProgressBar({ children }: { children: React.ReactNode }) {

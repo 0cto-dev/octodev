@@ -211,6 +211,12 @@ body > header {
 						color: var(--primary);
 					}
 				}
+				&.disabled {
+					p {
+						pointer-events: none;
+						color: var(--disabled-foreground);
+					}
+				}
 			}
 			&#streak {
 				padding-right: 20px;

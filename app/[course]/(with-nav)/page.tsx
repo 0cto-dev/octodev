@@ -26,6 +26,7 @@ import { BiCurrentLocation } from 'react-icons/bi';
 import { computeProgress } from '@/app/api/progress/progress';
 import { getSession } from 'next-auth/react';
 import { useIsMobile } from '@/lib/isMobile';
+import useIsVisitor from '@/lib/isVisitor';
 
 const NODE_TYPES = {
 	lessonsNode: LessonsNode,
@@ -47,7 +48,8 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	const [nodesType, setNodesType] = useState<'pratica' | 'teorica'>('pratica');
 	// #endregion
 
-	const isMobile = useIsMobile()
+	const isMobile = useIsMobile();
+	const isVisitor = useIsVisitor();
 	const nodeSize = 40;
 
 	const [lastMadeLesson, setLastMadeLesson] = useState<number>(0);
@@ -55,9 +57,15 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	useEffect(() => {
 		async function loadLastMadeLesson() {
 			if (!isLoaded) return;
-			
+
 			const session = await getSession();
-			const last = session?.user?.courses?.find((c: any) => c.courseName === lessons.course)?.lastLessonMade ?? 0;
+			let last: string | number = 0;
+			if (session) {
+				last = session?.user?.courses?.find((c: any) => c.courseName === lessons.course)?.lastLessonMade ?? 0;
+			}
+			if (!session && isVisitor) {
+				last = localStorage.getItem(`lastLessonMade_${lessons.course}`) || '0';
+			}
 
 			setLastMadeLesson(Number(last) || 0);
 		}
@@ -77,26 +85,36 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 	}, []);
 
 	useEffect(() => {
+		// Sempre que o progresso for atualizado, esse useEffect é chamado para atualizar o progresso no banco de dados ou localStorage
 		if (lessons.data.length === 0) return;
 
 		async function updateProgress() {
 			const session = await getSession();
 
-			const lastLesson =
-				session?.user?.courses?.find((c: any) => c.courseName === lessons.course)?.lastLessonMade || 0;
+			if (session) {
+				const lastLesson =
+					session?.user?.courses?.find((c: any) => c.courseName === lessons.course)?.lastLessonMade || 0;
 
-			const progressPercent = computeProgress(lastLesson, lessons.data.length);
+				const progressPercent = computeProgress(lastLesson, lessons.data.length);
 
-			await fetch('/api/progress/', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					userId: session?.user?.id,
-					courseName: lessons.course,
-					lessonId: lastLesson,
-					progress: progressPercent,
-				}),
-			});
+				await fetch('/api/progress/', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						userId: session?.user?.id,
+						courseName: lessons.course,
+						lessonId: lastLesson,
+						progress: progressPercent,
+					}),
+				});
+			}
+			if (!session && isVisitor) {
+				// Se for visitante, salva o progresso no localStorage
+				const lastLesson = localStorage.getItem(`lastLessonMade_${lessons.course}`) || '0';
+				const progressPercent = computeProgress(Number(lastLesson), lessons.data.length);
+				localStorage.setItem(`progressPercent_${lessons.course}`, progressPercent.toString());
+			}
+			
 		}
 
 		updateProgress();
@@ -124,7 +142,7 @@ export default function Home({ params }: { params: Promise<{ course: paramsType[
 			nodeSize,
 			setNodes,
 			nodesType,
-			isMobile
+			isMobile,
 		});
 	}, [lessons, lessonIdMenuOpen, nodesType, lastMadeLesson]);
 

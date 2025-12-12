@@ -174,6 +174,7 @@ export type submitAnswerType = {
 	lives: number;
 	setLives: Dispatch<SetStateAction<number>>;
 	setGoingToNextExercise: (value: React.SetStateAction<boolean>) => void;
+	isVisitor: boolean;
 };
 
 export const emptyNodes = [

@@ -31,6 +31,7 @@ export default function Section({ avaliableCourses, courses }: SectionType) {
 	};
 
 	useEffect(() => {
+		// Pre-calcula o progresso de cada curso
 		const preCalculateProgress = async () => {
 			const calculatedCourses = await Promise.all(
 				avaliableCourses.map(async course => {
@@ -46,6 +47,7 @@ export default function Section({ avaliableCourses, courses }: SectionType) {
 	}, [avaliableCourses, courses]);
 
 	useEffect(() => {
+		// Filtra e ordena os cursos sempre que houver uma mudança nos filtros, ordenação ou cursos com progresso calculado
 		if (coursesWithProgress.length === 0 && avaliableCourses.length > 0) return;
 
 		let processingCourses = [...coursesWithProgress];

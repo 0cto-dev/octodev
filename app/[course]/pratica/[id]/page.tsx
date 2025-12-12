@@ -15,6 +15,7 @@ import PopUp from '@/components/popUp/PopUp';
 import { useIsMobile } from '@/lib/isMobile';
 import TargetCursor from '@/components/targetCursor/TargetCursor';
 import { runCode } from './lib/runCode';
+import useIsVisitor from '@/lib/isVisitor';
 
 export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #region States
@@ -43,6 +44,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 
 	const swrCode = useCode(lesson, currentExercise);
 	const isMobile = useIsMobile()
+	const isVisitor = useIsVisitor();
 
 	// #region Memos
 	const shuffledAlternatives = useMemo(() => {
@@ -171,6 +173,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 										lives,
 										setLives,
 										setGoingToNextExercise,
+										isVisitor
 									});
 							}}
 						>

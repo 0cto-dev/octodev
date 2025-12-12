@@ -6,7 +6,6 @@ export default function CourseImage({ course }: { course: courseType }) {
 	const altSrc = `https://placehold.co/45x20/${course.cor.replace('#', '')}/f7f8ff?text=${encodeURIComponent(
 		'Banner ' + course.nome
 	)}`;
-	console.log(`/images/courseImages/${course.banner}`)
 	return (
 		<div className="image">
 			{course.banner ? (
