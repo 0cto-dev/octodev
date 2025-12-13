@@ -3,7 +3,7 @@ import { Tooltip } from "radix-ui";
 import "./ToolTip.css";
 
 export default function ToolTip({children,text}:{text?:string,children:React.ReactElement}){
-    if(!text || text.length===0) return null;
+    if(!text || text.length===0) return children;
 	return (
 		<Tooltip.Provider>
 			<Tooltip.Root>
