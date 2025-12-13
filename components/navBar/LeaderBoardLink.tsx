@@ -10,7 +10,8 @@ export default function LeaderBoard() {
 
 	}
 	return (
-		<li id="leaderboard" onClick={handleClick} className={isVisitor ? 'disabled' : ''}>
+		// Quando pagina de leaderboard estiver pronta, remover a classe disabled
+		<li id="leaderboard" onClick={handleClick} className={`disabled`+isVisitor ? 'disabled' : ''}>
 			<p>Placar de Lideres</p>
 		</li>
 	);

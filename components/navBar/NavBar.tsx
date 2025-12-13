@@ -16,7 +16,7 @@ export default function NavBar() {
 	const isVisitor = useIsVisitor();
 	let courseName = isClient ? window.location.pathname.split('/')[1] || '' : '';
 	courseName = courseName === 'logica' ? 'Tenda' : courseName;
-
+	console.log(session);
 	useEffect(() => {
 		setIsClient(true);
 	}, []);
@@ -32,15 +32,14 @@ export default function NavBar() {
 						`}
 						</p>
 					</li>
-					{(session ? true : false) ||
-						(isVisitor && (
-							<>
-								<Streak />
-								<LeaderBoard />
-							</>
-						))}
+					{(session ? true : false || isVisitor) && (
+						<>
+							<Streak />
+							<LeaderBoard />
+						</>
+					)}
 
-					<ToolTip text={isVisitor ?'Os itens do menu são apenas ilustrativos no modo visitante!':''}>
+					<ToolTip text={isVisitor ? 'Os itens do menu são apenas ilustrativos no modo visitante!' : ''}>
 						<ProfilePicture />
 					</ToolTip>
 				</ul>
