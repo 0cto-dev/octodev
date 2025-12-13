@@ -30,7 +30,7 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 		});
 		if (autocomplete) {
 			monaco.languages.registerCompletionItemProvider('tenda', {
-				provideCompletionItems: (model, position) => {
+				provideCompletionItems: (model: { getWordUntilPosition: (arg0: any) => any; }, position: { lineNumber: any; }) => {
 					const word = model.getWordUntilPosition(position);
 					const range = {
 						startLineNumber: position.lineNumber,
@@ -314,7 +314,7 @@ export default function MonacoEditor({ value, language, onChange, autocomplete }
 				},
 			});
 			monaco.languages.registerCompletionItemProvider('python', {
-				provideCompletionItems: (model, position) => {
+				provideCompletionItems: (model: { getWordUntilPosition: (arg0: any) => any; }, position: { lineNumber: any; }) => {
 					const word = model.getWordUntilPosition(position);
 					const range = {
 						startLineNumber: position.lineNumber,
