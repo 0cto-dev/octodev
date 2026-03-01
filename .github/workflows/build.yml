@@ -1,0 +1,42 @@
+name: "Build OctoDev"
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  publish-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android 
+
+      - name: install dependencies (ubuntu only)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev
+
+      - name: install frontend dependencies
+        run: npm install
+
+      - name: setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: build android apk
+        run: npx tauri android build --debug
+
+      - name: upload apk
+        uses: actions/upload-artifact@v4
+        with:
+          name: OctoDev-Android
+          path: src-tauri/gen/android/app/build/outputs/apk/debug/*.apk
