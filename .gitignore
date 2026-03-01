@@ -42,3 +42,6 @@ next-env.d.ts
 
 # private codes
 /data
+
+# Android signature files
+*.keystore

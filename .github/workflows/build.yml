@@ -53,6 +53,22 @@ jobs:
         env:
           GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1g"
 
+      - name: Sign APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDirectory: src-tauri/gen/android/app/build/outputs/apk/debug
+          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASS }}
+
+      - name: upload signed apk
+        uses: actions/upload-artifact@v4
+        with:
+          name: OctoDev-Signed
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
+
       - name: upload apk
         uses: actions/upload-artifact@v4
         with:
