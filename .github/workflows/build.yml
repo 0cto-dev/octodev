@@ -53,11 +53,20 @@ jobs:
         env:
           GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1g"
 
+      - name: Find APK Path
+        id: find_apk
+        run: |
+          # Busca o arquivo APK gerado dentro da pasta gen/android
+          APK_FILE=$(find src-tauri/gen/android -name "*.apk" | head -n 1)
+          APK_DIR=$(dirname "$APK_FILE")
+          echo "dir=$APK_DIR" >> $GITHUB_OUTPUT
+          echo "Sucesso: APK encontrado em $APK_DIR"
+
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: src-tauri/gen/android/app/build/outputs/apk/debug
+          releaseDirectory: ${{ steps.find_apk.outputs.dir }}
           signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
           alias: ${{ secrets.ANDROID_KEY_ALIAS }}
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASS }}
@@ -69,8 +78,8 @@ jobs:
           name: OctoDev-Signed
           path: ${{ steps.sign_app.outputs.signedReleaseFile }}
 
-      - name: upload apk
+      - name: upload unsigned apk (fallback)
         uses: actions/upload-artifact@v4
         with:
-          name: OctoDev-Android
+          name: OctoDev-Unsigned
           path: src-tauri/gen/android/**/*.apk
