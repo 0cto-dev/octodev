@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm' 
+          cache: 'npm'
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -37,12 +37,9 @@ jobs:
 
       - name: setup Android SDK
         uses: android-actions/setup-android@v3
-        
-      - name: setup Android SDK
-        uses: android-actions/setup-android@v3
         with:
-            build-tools: "29.0.3"
-            
+          build-tools: "29.0.3"
+
       - name: Gradle Cache
         uses: actions/cache@v4
         with:
@@ -61,11 +58,9 @@ jobs:
       - name: Find APK Path
         id: find_apk
         run: |
-          # Busca o arquivo APK gerado dentro da pasta gen/android
           APK_FILE=$(find src-tauri/gen/android -name "*.apk" | head -n 1)
           APK_DIR=$(dirname "$APK_FILE")
           echo "dir=$APK_DIR" >> $GITHUB_OUTPUT
-          echo "Sucesso: APK encontrado em $APK_DIR"
 
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
@@ -76,6 +71,8 @@ jobs:
           alias: ${{ secrets.ANDROID_KEY_ALIAS }}
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASS }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASS }}
+        env:
+          BUILD_TOOLS_VERSION: "29.0.3"
 
       - name: upload signed apk
         uses: actions/upload-artifact@v4
