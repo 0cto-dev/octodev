@@ -55,21 +55,14 @@ jobs:
 
       - name: Sign APK Manually
         run: |
-          # 1. Localizar o APK gerado
           APK_PATH=$(find src-tauri/gen/android -name "*.apk" | head -n 1)
-          echo "APK encontrado em: $APK_PATH"
           
-          # 2. Decodificar a Keystore
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
           
-          # 3. Pegar a versão mais recente dos Build Tools instalada no GitHub
           BUILD_TOOL_PATH=$(ls -d ${ANDROID_HOME}/build-tools/* | tail -1)
-          echo "Usando Build Tools de: $BUILD_TOOL_PATH"
           
-          # 4. Alinhamento (ZipAlign)
           $BUILD_TOOL_PATH/zipalign -v 4 "$APK_PATH" OctoDev-Aligned.apk
           
-          # 5. Assinatura Final (Apksigner)
           $BUILD_TOOL_PATH/apksigner sign --ks release.keystore \
             --ks-key-alias "${{ secrets.ANDROID_KEY_ALIAS }}" \
             --ks-pass "pass:${{ secrets.ANDROID_KEYSTORE_PASS }}" \
