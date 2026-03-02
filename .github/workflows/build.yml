@@ -57,7 +57,7 @@ jobs:
         run: |
           APK_PATH=$(find src-tauri/gen/android -name "*.apk" | head -n 1)
           
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
+          echo -n "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
           
           BUILD_TOOL_PATH=$(ls -d ${ANDROID_HOME}/build-tools/* | tail -1)
           
