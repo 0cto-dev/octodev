@@ -37,8 +37,6 @@ jobs:
 
       - name: setup Android SDK
         uses: android-actions/setup-android@v3
-        with:
-          build-tools: "29.0.3"
 
       - name: Gradle Cache
         uses: actions/cache@v4
@@ -55,33 +53,31 @@ jobs:
         env:
           GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=1g"
 
-      - name: Find APK Path
-        id: find_apk
+      - name: Sign APK Manually
         run: |
-          APK_FILE=$(find src-tauri/gen/android -name "*.apk" | head -n 1)
-          APK_DIR=$(dirname "$APK_FILE")
-          echo "dir=$APK_DIR" >> $GITHUB_OUTPUT
+          # 1. Localizar o APK gerado
+          APK_PATH=$(find src-tauri/gen/android -name "*.apk" | head -n 1)
+          echo "APK encontrado em: $APK_PATH"
+          
+          # 2. Decodificar a Keystore
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > release.keystore
+          
+          # 3. Pegar a versão mais recente dos Build Tools instalada no GitHub
+          BUILD_TOOL_PATH=$(ls -d ${ANDROID_HOME}/build-tools/* | tail -1)
+          echo "Usando Build Tools de: $BUILD_TOOL_PATH"
+          
+          # 4. Alinhamento (ZipAlign)
+          $BUILD_TOOL_PATH/zipalign -v 4 "$APK_PATH" OctoDev-Aligned.apk
+          
+          # 5. Assinatura Final (Apksigner)
+          $BUILD_TOOL_PATH/apksigner sign --ks release.keystore \
+            --ks-key-alias "${{ secrets.ANDROID_KEY_ALIAS }}" \
+            --ks-pass "pass:${{ secrets.ANDROID_KEYSTORE_PASS }}" \
+            --key-pass "pass:${{ secrets.ANDROID_KEY_PASS }}" \
+            --out OctoDev-Official.apk OctoDev-Aligned.apk
 
-      - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        id: sign_app
-        with:
-          releaseDirectory: ${{ steps.find_apk.outputs.dir }}
-          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASS }}
-          keyPassword: ${{ secrets.ANDROID_KEY_PASS }}
-        env:
-          BUILD_TOOLS_VERSION: "29.0.3"
-
-      - name: upload signed apk
+      - name: upload official apk
         uses: actions/upload-artifact@v4
         with:
-          name: OctoDev-Signed
-          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
-
-      - name: upload unsigned apk (fallback)
-        uses: actions/upload-artifact@v4
-        with:
-          name: OctoDev-Unsigned
-          path: src-tauri/gen/android/**/*.apk
+          name: OctoDev-Official
+          path: OctoDev-Official.apk
