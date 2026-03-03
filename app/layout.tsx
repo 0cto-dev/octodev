@@ -7,6 +7,26 @@ export const metadata: Metadata = {
 	title: 'OctoDev',
 	description:
 		'OctoDev é uma aplicação web educacional voltada para o ensino de programação por meio de uma abordagem gamificada.',
+	keywords: ['programação', 'educação', 'gamificação', 'aprendizado', 'coding'],
+	authors: [{ name: 'OctoDev Team' }],
+	openGraph: {
+		title: 'OctoDev',
+		description: 'OctoDev é uma aplicação web educacional voltada para o ensino de programação por meio de uma abordagem gamificada.',
+		type: 'website',
+		locale: 'pt_BR',
+		url: 'https://octodev.vercel.app',
+		siteName: 'OctoDev',
+	},
+	robots: 'index, follow',
+	alternates: {
+		canonical: 'https://octodev.vercel.app',
+	},
+	verification: {
+		google: 'aDOPi6ctOVGByWjhEwth9BDdeQOK3jO6KT2mGa09AQc',
+	},
+	icons: {
+		icon: '/favicon.png',
+	},
 };
 const roboto = Roboto({ subsets: ['latin'], weight: ['400', '700'], variable: '--roboto' });
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700'], variable: '--lato' });
@@ -34,7 +54,6 @@ export default function RootLayout({
 			className={`${roboto.variable} ${lato.variable} ${nunito.variable} ${inter.variable} ${fredoka.variable} ${varela.variable}`}
 		>
 			<head>
-				<meta name="google-site-verification" content="aDOPi6ctOVGByWjhEwth9BDdeQOK3jO6KT2mGa09AQc" />
 				<link rel="icon" href="/favicon.png" sizes="any" />
 			</head>
 			<body>
