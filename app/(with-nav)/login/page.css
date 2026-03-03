@@ -237,8 +237,8 @@ main.loginPage {
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 200vw;
-	height: 200dvh;
+	width: 100vw;
+	height: 100lvh;
 	transition: 0.3s background;
 	z-index: 9998;
 	visibility: hidden;
