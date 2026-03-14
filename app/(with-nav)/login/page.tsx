@@ -24,6 +24,7 @@ export default function LoginPage() {
 			window.location.href = '/';
 		} else {
 			setIsLoading(false);
+			
 		}
 	}, [session]);
 

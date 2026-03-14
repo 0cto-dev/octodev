@@ -2,9 +2,10 @@ import { useSession } from 'next-auth/react';
 import useIsVisitor from '@/lib/isVisitor';
 
 export function Menu() {
+	const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
 	const { data: session } = useSession();
 	const isVisitor = useIsVisitor();
-	return session || isVisitor ? (
+	return session || (isVisitor && pathname !=='/login') ? (
 		<>
 			<li>
 				<a href={isVisitor ? '#' : `/profile`} className={isVisitor ? 'disabled' : ''}>
