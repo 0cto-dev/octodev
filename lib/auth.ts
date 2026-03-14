@@ -7,8 +7,6 @@ import { connectDB } from '@/lib/mongodb';
 import { NextAuthOptions } from 'next-auth';
 import { LinkedinProvider } from './linkedinProvider';
 
-
-
 export const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),
 	providers: [
@@ -28,7 +26,7 @@ export const authOptions: NextAuthOptions = {
 			type: 'oauth',
 			clientId: process.env.LINKEDIN_ID!,
 			clientSecret: process.env.LINKEDIN_SECRET!,
-			issuer: "https://www.linkedin.com",
+			issuer: 'https://www.linkedin.com',
 			authorization: {
 				params: {
 					scope: 'openid profile email',
@@ -40,7 +38,7 @@ export const authOptions: NextAuthOptions = {
 
 	pages: {
 		signIn: '/login',
-		signOut: '/logout'
+		signOut: '/logout',
 	},
 
 	session: {
@@ -48,6 +46,15 @@ export const authOptions: NextAuthOptions = {
 	},
 
 	callbacks: {
+		async signIn({ user, account}) {
+			// Toda vez que o usuário logar via LinkedIn, atualizamos a foto no DB por que o LinkedIn
+			// muda frequentemente a URL da imagem de perfil, diferente do Google e GitHub que mantém a mesma URL
+			if (account?.provider === 'linkedin' && user.image) {
+				await connectDB();
+				await User.updateOne({ email: user.email }, { $set: { image: user.image } });
+			}
+			return true;
+		},
 		async jwt({ token, user }) {
 			if (user) {
 				token.id = user.id;
@@ -59,9 +66,10 @@ export const authOptions: NextAuthOptions = {
 			if (dbUser) {
 				token.name = dbUser.name;
 				token.email = dbUser.email;
+				token.picture = dbUser.image;
 				token.courses = dbUser.courses;
 				token.streak = dbUser.streak;
-				token.lastLessonDate = dbUser.lastLessonDate
+				token.lastLessonDate = dbUser.lastLessonDate;
 			}
 
 			return token;
@@ -72,6 +80,7 @@ export const authOptions: NextAuthOptions = {
 				session.user.id = token.id as string;
 				session.user.name = token.name as string;
 				session.user.email = token.email as string;
+				session.user.image = token.picture as string; 
 				session.user.courses = token.courses as any[];
 				session.user.streak = token.streak as number;
 				session.user.lastLessonDate = token.lastLessonDate as string | undefined;

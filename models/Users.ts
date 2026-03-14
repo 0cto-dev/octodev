@@ -9,6 +9,7 @@ export interface ICourses {
 export interface IUser extends Document {
 	name: string;
 	email: string;
+	image: string;
 	courses: ICourses[];
 	streak: number;
 	lastLessonDate: string;
@@ -24,6 +25,7 @@ const UserSchema: Schema<IUser> = new Schema(
 	{
 		name: { type: String, required: true },
 		email: { type: String, required: true, unique: true },
+		image: { type: String, required: false },
 		courses: { type: [LessonMadeSchema], default: [] },
 		streak: { type: Number, default: 0 },
 		lastLessonDate: { type: String, default: '' },

@@ -9,6 +9,7 @@ import ProfilePicture from './ProfilePicture';
 import OctoDevLogo from './OctoDevLogo';
 import useIsVisitor from '@/lib/isVisitor';
 import ToolTip from '@/components/tooltip/ToolTip';
+import { pathname } from '@/types/types';
 
 export default function NavBar() {
 	const [isClient, setIsClient] = useState(false);
@@ -39,7 +40,7 @@ export default function NavBar() {
 						</>
 					)}
 
-					<ToolTip text={isVisitor ? 'Os itens do menu são apenas ilustrativos no modo visitante!' : ''}>
+					<ToolTip text={isVisitor&&pathname!='login'  ? 'Os itens do menu são apenas ilustrativos no modo visitante!' : ''}>
 						<ProfilePicture />
 					</ToolTip>
 				</ul>
