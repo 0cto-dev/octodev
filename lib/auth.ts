@@ -6,6 +6,13 @@ import User from '@/models/Users';
 import { connectDB } from '@/lib/mongodb';
 import { NextAuthOptions } from 'next-auth';
 import { LinkedinProvider } from './linkedinProvider';
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export const authOptions: NextAuthOptions = {
 	adapter: MongoDBAdapter(clientPromise),
@@ -46,12 +53,43 @@ export const authOptions: NextAuthOptions = {
 	},
 
 	callbacks: {
-		async signIn({ user, account}) {
-			// Toda vez que o usuário logar via LinkedIn, atualizamos a foto no DB por que o LinkedIn
-			// muda frequentemente a URL da imagem de perfil, diferente do Google e GitHub que mantém a mesma URL
+		async signIn({ user, account }) {
 			if (account?.provider === 'linkedin' && user.image) {
-				await connectDB();
-				await User.updateOne({ email: user.email }, { $set: { image: user.image } });
+				try {
+					await connectDB();
+
+					// 1. Baixar a imagem do LinkedIn como um Buffer
+					const response = await fetch(user.image);
+					const arrayBuffer = await response.arrayBuffer();
+					const buffer = Buffer.from(arrayBuffer);
+
+					// 2. Upload para o Cloudinary usando stream
+					const uploadResponse = (await new Promise((resolve, reject) => {
+						cloudinary.uploader
+							.upload_stream(
+								{
+									folder: 'user_profiles', // Organiza em pastas
+									public_id: `user_${user.email}`, // Sobrescreve se o usuário mudar a foto
+									overwrite: true,
+								},
+								(error, result) => {
+									if (error) reject(error);
+									else resolve(result);
+								},
+							)
+							.end(buffer);
+					})) as any;
+
+					// 3. Atualizar o banco com a URL permanente do Cloudinary
+					const permanentImageUrl = uploadResponse.secure_url;
+					await User.updateOne({ email: user.email }, { $set: { image: permanentImageUrl } });
+
+					// Atualizamos o objeto user para que o restante do callback
+					// e o JWT usem a nova URL imediatamente
+					user.image = permanentImageUrl;
+				} catch (error) {
+					console.error('Erro ao processar imagem do LinkedIn:', error);
+				}
 			}
 			return true;
 		},
@@ -80,7 +118,7 @@ export const authOptions: NextAuthOptions = {
 				session.user.id = token.id as string;
 				session.user.name = token.name as string;
 				session.user.email = token.email as string;
-				session.user.image = token.picture as string; 
+				session.user.image = token.picture as string;
 				session.user.courses = token.courses as any[];
 				session.user.streak = token.streak as number;
 				session.user.lastLessonDate = token.lastLessonDate as string | undefined;

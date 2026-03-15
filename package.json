@@ -21,6 +21,7 @@
     "ansi-to-html": "^0.7.2",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
     "gsap": "^3.13.0",
     "highlight.js": "^11.11.1",

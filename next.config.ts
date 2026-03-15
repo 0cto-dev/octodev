@@ -25,6 +25,12 @@ export default (phase: string, { defaultConfig }: { defaultConfig: NextConfig })
 					hostname: 'avatars.githubusercontent.com',
 					pathname: '/**',
 				},
+				{
+					protocol: 'https',
+					hostname: 'res.cloudinary.com',
+					pathname: '/**',
+					port: '',
+				}
 			],
 		},
 	};
