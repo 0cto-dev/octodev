@@ -15,7 +15,7 @@ Cada módulo combina **explicações teóricas**, **exercícios práticos** e **
 ---
 
 ## Features
-
+-   **Conexão Direta com o Mercado** — Contratantes podem selecionar quais certificados de cursos lhes interessam para monitorar novos talentos.
 -   **Aprendizado Gamificado** — Avance em trilhas, complete desafios e conquiste medalhas. ✅
 -   **Suporte com IA Integrada** — Tire dúvidas em tempo real com o auxílio de uma inteligência artificial.
 -   **Lições Teóricas** — Exercícios curtos e diretos baseados em situações reais de desenvolvimento. ✅
@@ -42,8 +42,8 @@ Cada módulo combina **explicações teóricas**, **exercícios práticos** e **
 
 O **OctoDev** é ideal para:
 
--   **Iniciantes** — que estão dando seus primeiros passos no mundo da programação.
--   **Intermediários** — que desejam aprofundar seus conhecimentos com foco prático e desafios reais.
+-   **Alunos** — que estão dando seus primeiros passos no mundo da programação ou desejam aprofundar conhecimentos com foco prático.
+-   **Contratantes** — que buscam talentos qualificados de forma automatizada com base em certificações específicas.
 
 ---
 
