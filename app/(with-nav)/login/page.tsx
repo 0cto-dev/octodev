@@ -21,10 +21,14 @@ export default function LoginPage() {
 			// Uma vez que o usuário está logado, os cookies de visitante devem ser removidos
 			document.cookie = 'visitor=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax';
 
-			window.location.href = '/';
+			if (!session.user.role) {
+				// Se não tem role, ele precisa se identificar
+				window.location.href = '/login/setup';
+			} else {
+				window.location.href = '/';
+			}
 		} else {
 			setIsLoading(false);
-			
 		}
 	}, [session]);
 
@@ -35,7 +39,7 @@ export default function LoginPage() {
 		const target = e.target as HTMLElement;
 		if (target.closest('.enterWithoutLogin')) setIsPopUpOpened(true);
 		if (target.closest('.filterDark.active') || target.closest('.cancelBtn')) setIsPopUpOpened(false);
-		if (target.closest('.enterWithoutLoginBtn')) allowEnterWithoutLogin()
+		if (target.closest('.enterWithoutLoginBtn')) allowEnterWithoutLogin();
 	}
 
 	return (
@@ -45,7 +49,9 @@ export default function LoginPage() {
 				<h1>Tem certeza que deseja entrar sem fazer login?</h1>
 				<p>Caso entre sem criar uma conta todo o seu progresso durante esta sessão será perdido!</p>
 				<div className="options">
-					<button className="enterWithoutLoginBtn" onClick={handleClick}>Sim</button>
+					<button className="enterWithoutLoginBtn" onClick={handleClick}>
+						Sim
+					</button>
 					<button className="cancelBtn" onClick={handleClick}>
 						Não
 					</button>
@@ -76,7 +82,7 @@ export default function LoginPage() {
 						Entrar com LinkedIn
 					</button>
 					<div className="enterWithoutLogin" onClick={handleClick}>
-						<p>Entrar sem criar um conta</p>
+						<p>Entrar como aluno sem criar um conta</p>
 					</div>
 				</div>
 				<footer>
@@ -90,11 +96,11 @@ export default function LoginPage() {
 	);
 }
 
-export function allowEnterWithoutLogin(){
+export function allowEnterWithoutLogin() {
 	// Cria um cookie que dura 1 hora para que o visitante desfrute do site
 	const oneHour = 60 * 60 * 1000;
-    const expirationDate = new Date(Date.now() + oneHour).toUTCString();
-    document.cookie = `visitor=true; expires=${expirationDate}; path=/; SameSite=Lax`;
+	const expirationDate = new Date(Date.now() + oneHour).toUTCString();
+	document.cookie = `visitor=true; expires=${expirationDate}; path=/; SameSite=Lax`;
 
-	window.location.href = "/"
+	window.location.href = '/';
 }

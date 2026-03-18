@@ -58,18 +58,18 @@ export const authOptions: NextAuthOptions = {
 				try {
 					await connectDB();
 
-					// 1. Baixar a imagem do LinkedIn como um Buffer
+					// Baixar a imagem do LinkedIn como um Buffer
 					const response = await fetch(user.image);
 					const arrayBuffer = await response.arrayBuffer();
 					const buffer = Buffer.from(arrayBuffer);
 
-					// 2. Upload para o Cloudinary usando stream
+					// Upload para o Cloudinary usando stream
 					const uploadResponse = (await new Promise((resolve, reject) => {
 						cloudinary.uploader
 							.upload_stream(
 								{
-									folder: 'user_profiles', // Organiza em pastas
-									public_id: `user_${user.email}`, // Sobrescreve se o usuário mudar a foto
+									folder: 'user_profiles',
+									public_id: `user_${user.email}`,
 									overwrite: true,
 								},
 								(error, result) => {
@@ -80,7 +80,7 @@ export const authOptions: NextAuthOptions = {
 							.end(buffer);
 					})) as any;
 
-					// 3. Atualizar o banco com a URL permanente do Cloudinary
+					// Atualizar o banco com a URL permanente do Cloudinary
 					const permanentImageUrl = uploadResponse.secure_url;
 					await User.updateOne({ email: user.email }, { $set: { image: permanentImageUrl } });
 
@@ -98,6 +98,10 @@ export const authOptions: NextAuthOptions = {
 				token.id = user.id;
 			}
 
+			if (!token.id && token.sub) {
+				token.id = token.sub;
+			}
+
 			await connectDB();
 			const dbUser = await User.findById(token.id).lean();
 
@@ -108,6 +112,7 @@ export const authOptions: NextAuthOptions = {
 				token.courses = dbUser.courses;
 				token.streak = dbUser.streak;
 				token.lastLessonDate = dbUser.lastLessonDate;
+				token.role = dbUser.role;
 			}
 
 			return token;
@@ -122,6 +127,7 @@ export const authOptions: NextAuthOptions = {
 				session.user.courses = token.courses as any[];
 				session.user.streak = token.streak as number;
 				session.user.lastLessonDate = token.lastLessonDate as string | undefined;
+				session.user.role = token.role as 'Aluno' | 'Contratante' | undefined;
 			}
 			return session;
 		},

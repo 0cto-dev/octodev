@@ -231,3 +231,14 @@ export type sortType = 'Ordem alfabética' | 'Dificuldade' | 'Progresso' | '';
 
 export const currentDate = new Date().toISOString().split("T")[0];
 export const pathname = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] || '' : '';
+
+export type SetupPayload = {
+	role?: 'Aluno' | 'Contratante' | null;
+	nickname?: string;
+	email?: string;
+	linkedin?: string;
+	github?: string;
+	bio?: string;
+	empresa?: string;
+	descricaoContratante?: string;
+};
