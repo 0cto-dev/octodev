@@ -1,0 +1,5 @@
+src-tauri
+*.apk
+octodev.keystore
+node_modules
+.next
