@@ -8,6 +8,7 @@ import { courseType, lessonType } from '../../types/types';
 import SectionCourses from './page.section';
 import getCourseName from '@/lib/getCourseName';
 import Chat from './Chat';
+import ContractorPage from './page.contractor';
 
 export default function Home() {
 	const { data: session } = useSession();
@@ -59,10 +60,7 @@ export default function Home() {
 	if (role === 'Contratante') {
 		return (
 			<main className="mainPage">
-				<div style={{ padding: '24px', color: '#fff' }}>
-					<h1>Área do Contratante</h1>
-					<p>Em breve.</p>
-				</div>
+				<ContractorPage />
 			</main>
 		);
 	} else {

@@ -14,7 +14,6 @@ export interface IUser extends Document {
 	courses: ICourses[];
 	streak: number;
 	lastLessonDate: string;
-	// "Aluno" | "Contratante"
 	role: 'Aluno' | 'Contratante';
 	linkedin?: string;
 	github?: string;
