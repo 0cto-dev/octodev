@@ -109,10 +109,8 @@ export default function ContractorPage() {
 	return (
 		<main className="contractorPage">
 			<h1>Encontrar Alunos</h1>
-			<p>Selecione os cursos que você deseja filtrar para encontrar alunos qualificados</p>
-
 			<div className="contractorFilters">
-				<strong>Certificados de interesse:</strong>
+				<span>Certificados de interesse:</span>
 				<div className="contractorCertificates">
 					{isCoursesLoaded && sortedCourses.length > 0 ? (
 						sortedCourses.map(course => {

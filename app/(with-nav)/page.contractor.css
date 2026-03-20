@@ -21,7 +21,7 @@
 main.contractorPage {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 10px;
     padding: 32px;
     justify-content: center;
     align-items: center;
@@ -36,7 +36,7 @@ main.contractorPage {
         inset: 0;
         background:
             radial-gradient(circle at 15% 15%, var(--primary), transparent 35%),
-            radial-gradient(circle at 85% 0%, color-mix(in srgb, var(--secondary) 16%, transparent), transparent 28%);
+            radial-gradient(circle at 85% 0%, var(--secondary), transparent 28%);
         pointer-events: none;
         z-index: -1;
     }
@@ -44,14 +44,10 @@ main.contractorPage {
     h1 {
         font-size: 2.35rem;
         font-family: var(--nunito);
+        font-weight: 500;
         color: var(--primary);
-        text-shadow: 0 0 10px var(--primary);
+        text-shadow: 0 0 20px var(--primary);
         margin: 0;
-    }
-
-    & > p {
-        color: color-mix(in srgb, var(--foreground) 75%, transparent);
-        margin: -8px 0 0;
     }
 
     .contractorFilters {
@@ -59,8 +55,11 @@ main.contractorPage {
         flex-direction: column;
         gap: 10px;
 
-        strong {
-            color: var(--primary);
+        span {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--foreground);
         }
 
         .contractorCertificates {
@@ -108,9 +107,9 @@ main.contractorPage {
             button.certificateDisabledBtn {
                 padding: 8px 12px;
                 border-radius: 10px;
-                background: color-mix(in srgb, var(--input) 80%, transparent);
+                background: var(--input);
                 border: 1px solid var(--primary);
-                color: color-mix(in srgb, var(--foreground) 55%, transparent);
+                color: var(--disabled-foreground);
                 cursor: not-allowed;
                 opacity: 0.75;
             }
@@ -120,13 +119,13 @@ main.contractorPage {
     section.contractorStudents {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        /* align-self: center; */
+        gap: 30px;
+        padding: 20px;
         max-width: 80%;
 
         h2 {
             font-size: 1.6rem;
-            color: var(--primary);
+            color: var(--foreground);
         }
 
         ul {
@@ -146,8 +145,8 @@ main.contractorPage {
                 gap: 10px;
                 padding: 16px;
                 border-radius: 12px;
-                background: color-mix(in srgb, var(--secondary) 85%, transparent);
-                border: 2px solid var(--primary);
+                background: var(--secondary);
+                border: 2px solid var(--lighter-border);
                 max-width: 550px;
                 height: 250px;
                 position: relative;
@@ -167,7 +166,7 @@ main.contractorPage {
                     background: linear-gradient(
                         105deg,
                         transparent,
-                        color-mix(in srgb, var(--foreground) 8%, transparent),
+                        color-mix(in srgb, var(--foreground) 5%, transparent),
                         transparent
                     );
                     transition: left 0.5s ease;
@@ -176,7 +175,7 @@ main.contractorPage {
                 &:hover {
                     transform: translateY(-4px);
                     border-color: var(--primary);
-                    box-shadow: 0 8px 20px #0000002b;
+                    box-shadow: 0 8px 20px var(--primary);
                     animation: cardFloat 2.2s ease-in-out infinite;
 
                     &::before {
@@ -218,7 +217,7 @@ main.contractorPage {
                             border-radius: 8px;
                             border: 1px solid var(--primary);
                             color: var(--foreground);
-                            background: color-mix(in srgb, var(--input) 90%, transparent);
+                            background: var(--input);
                             text-decoration: none;
                             transition:
                                 0.2s background,
@@ -234,7 +233,7 @@ main.contractorPage {
 
                 p.studentDescription {
                     margin: 0;
-                    color: color-mix(in srgb, var(--foreground) 85%, transparent);
+                    color: var(--foreground);
                     flex: 1;
                 }
 
@@ -249,25 +248,22 @@ main.contractorPage {
                     justify-content: center;
                     span {
                         font-size: 0.78rem;
+                        font-weight: 600;
                         border: 1px solid var(--primary);
                         background: var(--primary);
-                        padding: 4px 8px;
-                        border-radius: 999px;
+                        padding: 6px 10px;
+                        border-radius: 50px;
                         text-transform: uppercase;
                         letter-spacing: 0.03em;
+                        min-width: 50px;
                     }
-                }
-
-                span {
-                    font-size: 0.9rem;
-                    color: color-mix(in srgb, var(--foreground) 70%, transparent);
                 }
             }
         }
     }
 
     p.contractorEmpty {
-        color: color-mix(in srgb, var(--foreground) 70%, transparent);
+        color: var(--foreground);
     }
 }
 
