@@ -33,6 +33,6 @@ export async function proxy(req: NextRequest) {
 export const config = {
 	// all pages except /login /api/auth/* and static files
 	matcher: [
-		'/((?!login|privacidade|termos|api/auth|_next/static|_next/image|images|favicon.ico|favicon.png|robots.txt|sitemap.xml|manifest.webmanifest).*)',
+	'/((?!login|privacidade|termos|api/auth|_next/static|_next/image|images|favicon.ico|favicon.png|robots.txt|sitemap.xml|manifest.webmanifest).*)',
 	],
 };
