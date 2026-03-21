@@ -147,8 +147,10 @@ main.contractorPage {
                 border-radius: 12px;
                 background: var(--secondary);
                 border: 2px solid var(--lighter-border);
-                max-width: 550px;
-                height: 250px;
+                max-width: 650px;
+                width: fit-content;
+                min-height: 250px;
+                flex-wrap: nowrap;
                 position: relative;
                 overflow: hidden;
                 transition:

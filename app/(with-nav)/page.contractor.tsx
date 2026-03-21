@@ -1,5 +1,6 @@
 'use client';
 
+import getCourseName from '@/lib/getCourseName';
 import getCourses from '@/lib/readCoursesNames';
 import { courseType } from '@/types/types';
 import { useEffect, useMemo, useState } from 'react';
@@ -11,82 +12,59 @@ export default function ContractorPage() {
 	const [selectedCertificates, setSelectedCertificates] = useState<string[]>([]);
 	const [availableCourses, setAvailableCourses] = useState<courseType[]>([]);
 	const [isCoursesLoaded, setIsCoursesLoaded] = useState(false);
-
-	const studentsMock = [
+	const [students, setStudents] = useState<
 		{
-			name: 'Maria Silva',
-			email: 'maria@email.com',
-			description: 'Desenvolvedora full stack focada em Python e lógica aplicada a produtos digitais.',
-			profileImage: 'https://i.pravatar.cc/150?img=47',
-			linkedin: 'https://www.linkedin.com/in/mariasilva',
-			github: 'https://github.com/mariasilva',
-			certificates: ['python', 'tenda'],
-		},
-		{
-			name: 'João Souza',
-			email: 'joao@email.com',
-			description: 'Frontend com foco em JavaScript moderno e construção de interfaces escaláveis.',
-			profileImage: 'https://i.pravatar.cc/150?img=12',
-			linkedin: 'https://www.linkedin.com/in/joaosouza',
-			certificates: ['javascript'],
-		},
-		{
-			name: 'Jorge Fuller',
-			email: 'jorge@email.com',
-			description: 'Back-end com experiência em Python e APIs orientadas a performance.',
-			profileImage: 'https://i.pravatar.cc/150?img=61',
-			github: 'https://github.com/jorgefuller',
-			certificates: ['python'],
-		},
-		{
-			name: 'Vera Black',
-			email: 'vera@email.com',
-			description: 'Engenheira de software com foco em Rust e programação de baixo nível.',
-			profileImage: 'https://i.pravatar.cc/150?img=5',
-			linkedin: 'https://www.linkedin.com/in/verablack',
-			github: 'https://github.com/verablack',
-			certificates: ['rust', 'c', 'c++'],
-		},
-		{
-			name: 'Elnora Young',
-			email: 'elnora@email.com',
-			description: 'Generalista em lógica, JavaScript e Python, com perfil colaborativo.',
-			profileImage: 'https://i.pravatar.cc/150?img=32',
-			linkedin: 'https://www.linkedin.com/in/elnorayoung',
-			certificates: ['tenda', 'javascript', 'python'],
-		},
-		{
-			name: 'Lucile Adams',
-			email: 'lucile@email.com',
-			description: 'Desenvolvedora com base sólida em C# e PHP para sistemas corporativos.',
-			profileImage: 'https://i.pravatar.cc/150?img=24',
-			github: 'https://github.com/lucileadams',
-			certificates: ['c#', 'php'],
-		},
-		{
-			name: 'Bill Williamson',
-			email: 'bill@email.com',
-			description: 'Atua com bancos de dados MySQL e resolução de problemas com lógica.',
-			profileImage: 'https://i.pravatar.cc/150?img=19',
-			linkedin: 'https://www.linkedin.com/in/billwilliamson',
-			certificates: ['mysql', 'tenda'],
-		},
-		{
-			name: 'Steve Glover',
-			email: 'steve@email.com',
-			description: 'Full stack com foco em JavaScript, Python e arquitetura modular.',
-			profileImage: 'https://i.pravatar.cc/150?img=68',
-			linkedin: 'https://www.linkedin.com/in/steveglover',
-			github: 'https://github.com/steveglover',
-			certificates: ['javascript', 'python', 'c++'],
-		},
-	];
+			name: string;
+			email: string;
+			description: string;
+			profileImage: string;
+			linkedin?: string;
+			github?: string;
+			certificates: string[];
+		}[]
+	>([]);
+	const [isStudentsLoading, setIsStudentsLoading] = useState(true);
+	const [studentsError, setStudentsError] = useState('');
 
 	useEffect(() => {
 		getCourses(setAvailableCourses, setIsCoursesLoaded);
 	}, []);
 
+	useEffect(() => {
+		const loadStudents = async () => {
+			setIsStudentsLoading(true);
+			setStudentsError('');
+
+			try {
+				const res = await fetch('/api/users');
+				if (!res.ok) {
+					throw new Error('Não foi possível carregar os alunos.');
+				}
+
+				const data = await res.json();
+				const mappedStudents = (data.students || []).map((student: any) => ({
+					name: student.name || 'Sem nome',
+					email: student.email || 'Sem e-mail',
+					description: student.bio || 'Sem descrição.',
+					profileImage: student.image || 'https://www.gravatar.com/avatar/0?d=mp&f=y',
+					linkedin: student.linkedin || '',
+					github: student.github || '',
+					certificates: Array.isArray(student.certificates) ? student.certificates : [],
+				}));
+
+				setStudents(mappedStudents);
+			} catch (error) {
+				setStudentsError(error instanceof Error ? error.message : 'Erro ao buscar alunos.');
+			} finally {
+				setIsStudentsLoading(false);
+			}
+		};
+
+		loadStudents();
+	}, []);
+
 	const normalizeCertificateName = (value: string) => value.trim().toLowerCase();
+	const courseToCertificateSlug = (courseName: string) => normalizeCertificateName(getCourseName(courseName));
 
 	const sortedCourses = useMemo(() => {
 		return [...availableCourses].sort((firstCourse, secondCourse) => {
@@ -99,12 +77,12 @@ export default function ContractorPage() {
 	}, [availableCourses]);
 
 	const filteredStudents = useMemo(() => {
-		if (selectedCertificates.length === 0) return studentsMock;
+		if (selectedCertificates.length === 0) return students;
 		const selectedNormalized = selectedCertificates.map(normalizeCertificateName);
-		return studentsMock.filter(student =>
+		return students.filter(student =>
 			student.certificates.some(cert => selectedNormalized.includes(normalizeCertificateName(cert))),
 		);
-	}, [selectedCertificates]);
+	}, [selectedCertificates, students]);
 
 	return (
 		<main className="contractorPage">
@@ -114,6 +92,7 @@ export default function ContractorPage() {
 				<div className="contractorCertificates">
 					{isCoursesLoaded && sortedCourses.length > 0 ? (
 						sortedCourses.map(course => {
+							const courseSlug = courseToCertificateSlug(course.nome);
 							if (!course.disponivel) {
 								return (
 									<button key={course.nome} type="button" className="certificateDisabledBtn" disabled>
@@ -126,13 +105,13 @@ export default function ContractorPage() {
 								<label key={course.nome} className="certificateItem">
 									<input
 										type="checkbox"
-										checked={selectedCertificates.includes(course.nome)}
+										checked={selectedCertificates.includes(courseSlug)}
 										onChange={e => {
 											if (e.target.checked) {
-												setSelectedCertificates([...selectedCertificates, course.nome]);
+												setSelectedCertificates([...selectedCertificates, courseSlug]);
 											} else {
 												setSelectedCertificates(
-													selectedCertificates.filter(c => c !== course.nome),
+													selectedCertificates.filter(c => c !== courseSlug),
 												);
 											}
 										}}
@@ -149,43 +128,56 @@ export default function ContractorPage() {
 
 			<section className="contractorStudents">
 				<h2>Alunos encontrados</h2>
+				{isStudentsLoading && <p className="contractorEmpty">Carregando alunos...</p>}
+				{studentsError && <p className="contractorEmpty">{studentsError}</p>}
 				<ul>
-					{filteredStudents.map(student => (
-						<li key={student.email}>
-							<div className="studentCardTop">
-								<img src={student.profileImage} alt={`${student.name}`} />
-								<div className="studentIdentity">
-									<strong>{student.name}</strong>
-									<span>{student.email}</span>
+					{!isStudentsLoading &&
+						!studentsError &&
+						filteredStudents.map(student => (
+							<li key={student.email}>
+								<div className="studentCardTop">
+									<img src={student.profileImage} alt={`${student.name}`} />
+									<div className="studentIdentity">
+										<strong>{student.name}</strong>
+										<span>{student.email}</span>
+									</div>
+									<div className="studentActions">
+										{student.linkedin && (
+											<a
+												href={student.linkedin}
+												target="_blank"
+												rel="noreferrer"
+												aria-label="LinkedIn"
+											>
+												<FaLinkedinIn />
+											</a>
+										)}
+										{student.github && (
+											<a
+												href={student.github}
+												target="_blank"
+												rel="noreferrer"
+												aria-label="GitHub"
+											>
+												<FiGithub />
+											</a>
+										)}
+									</div>
 								</div>
-								<div className="studentActions">
-									{student.linkedin && (
-										<a
-											href={student.linkedin}
-											target="_blank"
-											rel="noreferrer"
-											aria-label="LinkedIn"
-										>
-											<FaLinkedinIn />
-										</a>
-									)}
-									{student.github && (
-										<a href={student.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-											<FiGithub />
-										</a>
-									)}
+								<p className="studentDescription">{student.description}</p>
+								<div className="studentCertificates">
+									{student.certificates.map(certificate => (
+										<span key={`${student.email}-${certificate}`}>
+											{certificate === 'logica' ? 'Tenda' : certificate}
+										</span>
+									))}
 								</div>
-							</div>
-							<p className="studentDescription">{student.description}</p>
-							<div className="studentCertificates">
-								{student.certificates.map(certificate => (
-									<span key={`${student.email}-${certificate}`}>{certificate}</span>
-								))}
-							</div>
-						</li>
-					))}
+							</li>
+						))}
 				</ul>
-				{filteredStudents.length === 0 && <p className="contractorEmpty">Nenhum aluno encontrado.</p>}
+				{!isStudentsLoading && !studentsError && filteredStudents.length === 0 && (
+					<p className="contractorEmpty">Nenhum aluno encontrado.</p>
+				)}
 			</section>
 		</main>
 	);

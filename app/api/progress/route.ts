@@ -28,9 +28,21 @@ export async function POST(req: Request) {
 				progress: 0, // calculado apenas na trilha pois a página de exercícios(que chama a função saveProgress) não tem acesso ao total de lições
 			});
 		} else {
-      user.courses[courseIndex].progress = progress;
+			user.courses[courseIndex].progress = progress;
 			if (lessonId > user.courses[courseIndex].lastLessonMade) {
 				user.courses[courseIndex].lastLessonMade = lessonId;
+			}
+			// Adiciona/remover certificado automaticamente
+			if (progress === 100) {
+				if (!user.certificates) user.certificates = [];
+				if (!user.certificates.includes(courseName)) {
+					user.certificates.push(courseName);
+				}
+			} else {
+				// Remove certificado se progresso cair abaixo de 100
+				if (user.certificates && user.certificates.includes(courseName)) {
+					user.certificates = user.certificates.filter((c: string) => c !== courseName);
+				}
 			}
 		}
 		await user.save();
