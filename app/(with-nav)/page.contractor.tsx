@@ -25,6 +25,7 @@ export default function ContractorPage() {
 	>([]);
 	const [isStudentsLoading, setIsStudentsLoading] = useState(true);
 	const [studentsError, setStudentsError] = useState('');
+	const [isInterestsReady, setIsInterestsReady] = useState(false);
 
 	useEffect(() => {
 		getCourses(setAvailableCourses, setIsCoursesLoaded);
@@ -63,6 +64,30 @@ export default function ContractorPage() {
 		loadStudents();
 	}, []);
 
+	useEffect(() => {
+		const loadInterests = async () => {
+			try {
+				const response = await fetch('/api/contractor/interests');
+				if (!response.ok) {
+					setIsInterestsReady(true);
+					return;
+				}
+
+				const data = await response.json();
+				const interests = Array.isArray(data?.interests)
+					? data.interests.map((interest: string) => normalizeCertificateName(interest))
+					: [];
+
+				setSelectedCertificates(Array.from(new Set(interests)));
+			} catch {
+			} finally {
+				setIsInterestsReady(true);
+			}
+		};
+
+		loadInterests();
+	}, []);
+
 	const normalizeCertificateName = (value: string) => value.trim().toLowerCase();
 	const courseToCertificateSlug = (courseName: string) => normalizeCertificateName(getCourseName(courseName));
 
@@ -83,6 +108,22 @@ export default function ContractorPage() {
 			student.certificates.some(cert => selectedNormalized.includes(normalizeCertificateName(cert))),
 		);
 	}, [selectedCertificates, students]);
+
+	useEffect(() => {
+		if (!isInterestsReady) return;
+
+		const saveInterests = async () => {
+			try {
+				await fetch('/api/contractor/interests', {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ interests: selectedCertificates }),
+				});
+			} catch {}
+		};
+
+		saveInterests();
+	}, [selectedCertificates, isInterestsReady]);
 
 	return (
 		<main className="contractorPage">

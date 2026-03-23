@@ -141,6 +141,7 @@ main.contractorPage {
             li {
                 display: flex;
                 flex-direction: column;
+                align-items: center;
                 flex: 1 1 320px;
                 gap: 10px;
                 padding: 16px;
@@ -148,8 +149,9 @@ main.contractorPage {
                 background: var(--secondary);
                 border: 2px solid var(--lighter-border);
                 max-width: 650px;
-                width: fit-content;
-                min-height: 250px;
+                min-width: fit-content;
+                min-height: 300px;
+                width: 110ch;
                 flex-wrap: nowrap;
                 position: relative;
                 overflow: hidden;
@@ -190,6 +192,7 @@ main.contractorPage {
                     grid-template-columns: 56px 1fr auto;
                     align-items: center;
                     gap: 12px;
+                    width: 100%;
 
                     img {
                         width: 56px;
@@ -203,6 +206,9 @@ main.contractorPage {
                         display: flex;
                         flex-direction: column;
                         gap: 4px;
+                        span{
+                            color: var(--disabled-foreground);
+                        }
                     }
 
                     div.studentActions {
@@ -237,6 +243,7 @@ main.contractorPage {
                     margin: 0;
                     color: var(--foreground);
                     flex: 1;
+                    max-width: 40ch;
                 }
 
                 div.studentCertificates {

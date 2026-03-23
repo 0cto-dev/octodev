@@ -21,6 +21,7 @@ export interface IUser extends Document {
 	empresa?: string;
 	descricaoContratante?: string;
 	certificates?: string[];
+	contractorInterests?: string[];
 }
 
 const LessonMadeSchema = new Schema<ICourses>({
@@ -45,6 +46,7 @@ const UserSchema: Schema<IUser> = new Schema(
 		empresa: { type: String, default: '' },
 		descricaoContratante: { type: String, default: '' },
 		certificates: { type: [String], default: [] },
+		contractorInterests: { type: [String], default: [] },
 	},
 	{ timestamps: true },
 );
