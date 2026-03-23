@@ -62,16 +62,16 @@ export async function PUT(req: NextRequest) {
 		const result = await getContractorUser(req);
 		if ('error' in result) return result.error;
 
-		const body = await req.json();
-		const rawInterests = Array.isArray(body?.interests) ? body.interests : [];
+		const body: { interests?: unknown } = await req.json();
+		const rawInterests: string[] = Array.isArray(body?.interests)
+			? body.interests.filter((interest: unknown): interest is string => typeof interest === 'string')
+			: [];
 
-		const interests = Array.from(
-			new Set(
-				rawInterests
-					.map((interest: string) => normalizeCourseName(String(interest || '')))
-					.filter((interest: string) => validCourseNames.has(interest)),
-			),
-		);
+		const normalizedInterests: string[] = rawInterests
+			.map(interest => normalizeCourseName(interest))
+			.filter((interest: string) => validCourseNames.has(interest));
+
+		const interests: string[] = [...new Set(normalizedInterests)];
 
 		result.user.contractorInterests = interests;
 		await result.user.save();
