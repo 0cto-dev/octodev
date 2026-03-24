@@ -201,6 +201,11 @@ main.loginPage {
                     color: var(--disabled-foreground);
                     margin-bottom: 3px;
                     font-weight: 500;
+
+                    .requiredMark {
+                        color: var(--primary);
+                        font-weight: 700;
+                    }
                 }
 
                 input,
@@ -233,6 +238,15 @@ main.loginPage {
                 }
             }
 
+            .requiredHint {
+                width: 100%;
+                text-align: left;
+                color: var(--disabled-foreground);
+                font-size: 0.92rem;
+                font-family: var(--nunito);
+                margin-top: 2px;
+            }
+
             .button[type="submit"] {
                 margin-top: 6px;
                 width: 100%;
@@ -252,11 +266,31 @@ main.loginPage {
                     transform 0.2s;
                 cursor: pointer;
 
+                &:disabled {
+                    opacity: 0.8;
+                    cursor: not-allowed;
+                    transform: none;
+                }
+
+                &.ready {
+                    background: var(--primary);
+                    color: #fff;
+                    border-color: var(--primary);
+                }
+
                 &:hover {
                     color: var(--foreground);
                     background: color-mix(in srgb, var(--primary) 10%, var(--input));
                     border-color: var(--primary);
                     transform: scale(1.02);
+                }
+
+                &.ready:hover {
+                    color: #fff;
+                    background: var(--primary);
+                    border-color: var(--primary);
+                    transform: scale(1.02);
+                    box-shadow: 0 0 8px var(--primary);
                 }
             }
         }

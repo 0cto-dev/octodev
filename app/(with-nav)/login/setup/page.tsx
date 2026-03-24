@@ -19,6 +19,16 @@ export default function SetupPage() {
 	const [descricaoContratante, setDescricaoContratante] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
+	const nicknameFilled = apelido.trim().length > 0;
+	const emailFilled = email.trim().length > 0;
+	const contractorFieldsFilled = empresa.trim().length > 0 && descricaoContratante.trim().length > 0;
+	const hasMinimumRequirements =
+		role === 'Aluno'
+			? nicknameFilled && emailFilled
+			: role === 'Contratante'
+				? nicknameFilled && emailFilled && contractorFieldsFilled
+				: false;
+
 	useEffect(() => {
 		if (status === 'authenticated' && session?.user?.role) {
 			router.replace('/');
@@ -30,6 +40,11 @@ export default function SetupPage() {
 
 		if (!role) {
 			alert('Selecione o perfil antes de continuar.');
+			return;
+		}
+
+		if (!hasMinimumRequirements) {
+			alert('Preencha todos os campos obrigatórios para continuar.');
 			return;
 		}
 
@@ -93,7 +108,9 @@ export default function SetupPage() {
 					</div>
 					<div className="setupGrid">
 						<div className="inputGroup">
-							<label htmlFor="apelido">Apelido</label>
+							<label htmlFor="apelido">
+								Apelido <span className="requiredMark">*</span>
+							</label>
 							<input
 								id="apelido"
 								name="apelido"
@@ -103,7 +120,9 @@ export default function SetupPage() {
 							/>
 						</div>
 						<div className="inputGroup">
-							<label htmlFor="email">Email</label>
+							<label htmlFor="email">
+								Email <span className="requiredMark">*</span>
+							</label>
 							<input
 								id="email"
 								name="email"
@@ -152,7 +171,9 @@ export default function SetupPage() {
 						{role === 'Contratante' && (
 							<>
 								<div className="inputGroup">
-									<label htmlFor="empresa">Nome da Empresa</label>
+									<label htmlFor="empresa">
+										Nome da Empresa <span className="requiredMark">*</span>
+									</label>
 									<input
 										id="empresa"
 										name="empresa"
@@ -163,7 +184,9 @@ export default function SetupPage() {
 									/>
 								</div>
 								<div className="inputGroup inputGroupFull">
-									<label htmlFor="descricaoContratante">Descrição</label>
+									<label htmlFor="descricaoContratante">
+										Descrição <span className="requiredMark">*</span>
+									</label>
 									<textarea
 										id="descricaoContratante"
 										name="descricaoContratante"
@@ -178,8 +201,17 @@ export default function SetupPage() {
 							</>
 						)}
 					</div>
-					<button className="button" type="submit" disabled={isSubmitting}>
-						{isSubmitting ? 'Salvando...' : 'Finalizar'}
+					<span className="requiredHint">* Campos obrigatórios</span>
+					<button
+						className={`button ${hasMinimumRequirements ? 'ready' : ''}`}
+						type="submit"
+						disabled={isSubmitting || !hasMinimumRequirements}
+					>
+						{isSubmitting
+							? 'Salvando...'
+							: hasMinimumRequirements
+								? 'Finalizar'
+								: 'Preencha os obrigatórios'}
 					</button>
 				</form>
 				<footer>
