@@ -228,7 +228,9 @@ main {
 				justify-content: center;
 				border-radius: 8px;
 				background: color-mix(in srgb, var(--input) 75%, var(--background));
-				transition: transform 0.3s ease, background 0.3s ease;
+				transition:
+					transform 0.3s ease,
+					background 0.3s ease;
 				&:hover {
 					background: color-mix(in srgb, color-mix(in srgb, var(--input) 75%, var(--background)) 95%, #fff);
 
@@ -334,7 +336,10 @@ main {
 
 				&:hover,
 				&.selected {
-					transition: box-shadow 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+					transition:
+						box-shadow 0.3s ease,
+						background-color 0.3s ease,
+						transform 0.3s ease;
 				}
 				&:hover {
 					transform: scale(1.03);
@@ -417,6 +422,8 @@ main {
 		display: flex;
 		justify-content: flex-end;
 		align-items: flex-end;
+		gap: 10px;
+		flex-wrap: wrap;
 		margin: 20px;
 		margin-top: 30px;
 
@@ -433,6 +440,16 @@ main {
 
 			&:hover {
 				background: color-mix(in srgb, var(--primary) 70%, var(--background));
+			}
+
+			&.skipButton {
+				background: var(--primary);
+				color: var(--foreground);
+				border-color: var(--lighter-border);
+			}
+
+			&.skipButton:hover {
+				background: color-mix(in srgb, var(--primary) 80%, var(--background));
 			}
 		}
 	}

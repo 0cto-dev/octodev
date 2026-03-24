@@ -2,6 +2,7 @@ import { connectDB } from '@/lib/mongodb';
 import User from '@/models/Users';
 import getCourseName from '@/lib/getCourseName';
 import coursesData from '@/data/courses.json';
+import { sendCourseCompletedEmail } from '../../../lib/resend';
 
 function normalizeCourseName(courseName: string) {
 	if (!courseName || typeof courseName !== 'string') return '';
@@ -21,6 +22,9 @@ function normalizeCourseName(courseName: string) {
 }
 
 const validCourseNames = new Set((coursesData || []).map(course => normalizeCourseName(getCourseName(course.nome))));
+const courseDisplayNameBySlug = new Map(
+	(coursesData || []).map(course => [normalizeCourseName(getCourseName(course.nome)), course.nome]),
+);
 
 function sanitizeCourses(courses: any[]) {
 	const safeCourses = Array.isArray(courses) ? courses : [];
@@ -86,35 +90,72 @@ export async function POST(req: Request) {
 
 		// verifica se o usuário já tem progresso do curso
 		const courseIndex = user.courses.findIndex((c: any) => c.courseName === normalizedCourseName);
+		const previousProgress = courseIndex === -1 ? 0 : Number(user.courses[courseIndex].progress) || 0;
 
 		if (courseIndex === -1) {
 			// Caso não tenha progresso
 			user.courses.push({
 				courseName: normalizedCourseName,
 				lastLessonMade: lessonIdNumber,
-				progress: 0, // calculado apenas na trilha pois a página de exercícios(que chama a função saveProgress) não tem acesso ao total de lições
+				progress: progressNumber,
 			});
 		} else {
 			user.courses[courseIndex].progress = progressNumber;
 			if (lessonIdNumber > user.courses[courseIndex].lastLessonMade) {
 				user.courses[courseIndex].lastLessonMade = lessonIdNumber;
 			}
-			// Adiciona/remover certificado automaticamente
-			if (progressNumber === 100) {
-				if (!user.certificates) user.certificates = [];
-				if (!user.certificates.includes(normalizedCourseName)) {
-					user.certificates.push(normalizedCourseName);
-				}
-			} else {
-				// Remove certificado se progresso cair abaixo de 100
-				if (user.certificates && user.certificates.includes(normalizedCourseName)) {
-					user.certificates = user.certificates.filter((c: string) => c !== normalizedCourseName);
-				}
+		}
+
+		// Adiciona/remover certificado automaticamente
+		if (progressNumber === 100) {
+			if (!user.certificates) user.certificates = [];
+			if (!user.certificates.includes(normalizedCourseName)) {
+				user.certificates.push(normalizedCourseName);
+			}
+		} else {
+			if (user.certificates && user.certificates.includes(normalizedCourseName)) {
+				user.certificates = user.certificates.filter((c: string) => c !== normalizedCourseName);
 			}
 		}
+
+		const justCompletedCourse = previousProgress < 100 && progressNumber === 100;
 		await user.save();
 
-		return Response.json({ success: true });
+		let notificationsSent = 0;
+		if (justCompletedCourse) {
+			const interestedContractors = await User.find({
+				role: 'Contratante',
+				contractorInterests: normalizedCourseName,
+				email: { $exists: true, $ne: '' },
+			})
+				.select('name email')
+				.lean();
+
+			const courseDisplayName = courseDisplayNameBySlug.get(normalizedCourseName) || normalizedCourseName;
+			const studentName = user.name || user.nickname || 'Aluno';
+			const studentEmail = user.email || '';
+
+			if (studentEmail) {
+				await Promise.all(
+					interestedContractors.map(async contractor => {
+						try {
+							await sendCourseCompletedEmail({
+								to: String(contractor.email),
+								contractorName: String(contractor.name || ''),
+								studentName,
+								studentEmail,
+								courseDisplayName,
+							});
+							notificationsSent += 1;
+						} catch (emailError) {
+							console.error('Erro ao enviar notificação Resend:', emailError);
+						}
+					}),
+				);
+			}
+		}
+
+		return Response.json({ success: true, notificationsSent });
 	} catch (err) {
 		console.log(err);
 		return new Response('Server error: ' + err, { status: 500 });

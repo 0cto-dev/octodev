@@ -11,6 +11,8 @@ import submitAnswer from '@/app/[course]/pratica/[id]/lib/submitAnswer';
 import mainAnimationHandler from '@/app/[course]/pratica/[id]/lib/ExerciseMainAnimationHandler';
 import updateTimer from '@/app/[course]/pratica/[id]/lib/timer';
 import { fetchData } from '@/app/[course]/pratica/[id]/lib/lessonsData';
+import StartNextExercise from '@/app/[course]/pratica/[id]/lib/startNewExercise';
+import { saveProgress } from '@/app/[course]/pratica/[id]/lib/saveProgrss';
 import PopUp from '@/components/popUp/PopUp';
 import { useIsMobile } from '@/lib/isMobile';
 import TargetCursor from '@/components/targetCursor/TargetCursor';
@@ -43,7 +45,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	// #endregion
 
 	const swrCode = useCode(lesson, currentExercise);
-	const isMobile = useIsMobile()
+	const isMobile = useIsMobile();
 	const isVisitor = useIsVisitor();
 
 	// #region Memos
@@ -64,7 +66,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 					if (cur.tipo === 'alternativas') increaseValue = 30;
 					if (cur.tipo === 'codigo') increaseValue = 240;
 					return acc + increaseValue;
-				}, 0)
+				}, 0),
 			);
 	}, [exercicios[0].id]);
 	useEffect(() => {
@@ -118,6 +120,21 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 	if (!lesson.data) return <h1>ERRO, A LIÇÃO QUE VOCÊ TENTOU ACESSAR NÃO EXISTE</h1>;
 
 	const totalExercises = exercicios.length;
+	const isPistonCourse = lesson.course !== 'logica';
+	// Estamos enfrentando um problema com o pistonAPI, e enquanto isso não é resolvido, estamos dando a opção do aluno aceitar o resultado do código e pular para o próximo exercício, caso o exercício seja do tipo código e o curso não seja o de lógica (que é o único que não utiliza o pistonAPI)
+	function acceptAndSkipCodeExercise() {
+		if (exercise.exerciseStatus !== '' || currentExercise.tipo !== 'codigo') return;
+
+		if (exercise.lastExercise) {
+			setExercise(current => ({ ...current, exerciseStatus: 'finish' }));
+			saveProgress(lesson.course, lesson.id, isVisitor);
+			return;
+		}
+
+		setExercise(current => ({ ...current, exerciseStatus: 'correct' }));
+		setGoingToNextExercise(true);
+		StartNextExercise(setExercise, setCode);
+	}
 
 	return (
 		loaded && (
@@ -153,6 +170,11 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 						{currentExercise.tipo === 'codigo' && (
 							<button onClick={() => runCode(lesson, code, setCode, setOutput)}>Verificar</button>
 						)}
+						{currentExercise.tipo === 'codigo' && isPistonCourse && (
+							<button className="skipButton" onClick={acceptAndSkipCodeExercise}>
+								Aceitar e pular
+							</button>
+						)}
 						<button
 							onClick={() => {
 								exercise.exerciseStatus === '' &&
@@ -173,7 +195,7 @@ export default function Home({ params }: { params: Promise<paramsType> }) {
 										lives,
 										setLives,
 										setGoingToNextExercise,
-										isVisitor
+										isVisitor,
 									});
 							}}
 						>
