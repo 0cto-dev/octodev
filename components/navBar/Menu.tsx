@@ -5,6 +5,7 @@ export function Menu() {
 	const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
 	const { data: session } = useSession();
 	const isVisitor = useIsVisitor();
+	const isStudent = session?.user?.role === 'Aluno';
 	return session || (isVisitor && pathname !=='/login') ? (
 		<>
 			<li>
@@ -12,11 +13,13 @@ export function Menu() {
 					Perfil
 				</a>
 			</li>
-			<li>
-				<a href={isVisitor ? '#' : `/achievements`} className={isVisitor ? 'disabled' : ''}>
-					Conquistas
-				</a>
-			</li>
+			{isStudent && (
+				<li>
+					<a href={isVisitor ? '#' : `/achievements`} className={isVisitor ? 'disabled' : ''}>
+						Conquistas
+					</a>
+				</li>
+			)}
 			<li>
 				<a href={isVisitor ? '#' : `/settings`} className={isVisitor ? 'disabled' : ''}>
 					Configurações

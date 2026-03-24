@@ -15,6 +15,7 @@ export default function NavBar() {
 	const [isClient, setIsClient] = useState(false);
 	const { data: session } = useSession();
 	const isVisitor = useIsVisitor();
+	const isStudent = session?.user?.role === 'Aluno';
 	let courseName = isClient ? window.location.pathname.split('/')[1] || '' : '';
 	courseName = courseName === 'logica' ? 'Tenda' : courseName;
 	console.log(session);
@@ -33,7 +34,7 @@ export default function NavBar() {
 						`}
 						</p>
 					</li>
-					{(session ? true : false || isVisitor) && (
+					{isStudent && (
 						<>
 							<Streak />
 							<LeaderBoard />
