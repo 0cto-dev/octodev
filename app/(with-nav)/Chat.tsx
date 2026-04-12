@@ -10,12 +10,15 @@ export default function Chat({ avaliableCourses }: { avaliableCourses: courseTyp
 	const [userMessages, setUserMessages] = useState<string[]>([]);
 	const [aIMessages, setAIMessages] = useState<string[]>([]);
 
+	function handleSendMessage() {
+		addMessage({ message, setUserMessages, setMessage, avaliableCourses, aIMessages, setAIMessages });
+	}
+
 	function handleClick(e: React.MouseEvent<HTMLElement, MouseEvent>) {
 		const target = e.target as HTMLElement;
 		if (target.closest('.chat>.button')) setChatOpened(chatOpened => !chatOpened);
 		// Se o click for no botão de enviar mensagem, chama a função de adicionar mensagem e faz a requisição para a API do OpenAI
-		if (target.closest('.ChatMenuSubmitBtn'))
-			addMessage({ message, setUserMessages, setMessage, avaliableCourses, aIMessages, setAIMessages });
+		if (target.closest('.ChatMenuSubmitBtn')) handleSendMessage();
 	}
 	return (
 		<div className="chat">
@@ -38,6 +41,12 @@ export default function Chat({ avaliableCourses }: { avaliableCourses: courseTyp
 						placeholder="Faça a sua pergunta"
 						value={message}
 						onChange={e => setMessage(e.currentTarget.value)}
+						onKeyDown={e => {
+							if (e.key === 'Enter' && !e.shiftKey) {
+								e.preventDefault();
+								handleSendMessage();
+							}
+						}}
 						onInput={e => {
 							const textarea = e.currentTarget;
 
