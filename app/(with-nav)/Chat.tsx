@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
 import { IoChatboxEllipses } from 'react-icons/io5';
-import openaiApi from '../api/openAI/OpenAIAPI';
 import { courseType, emptyCourse } from '@/types/types';
 import addMessage from './Chat.addMessage';
 
@@ -14,6 +13,7 @@ export default function Chat({ avaliableCourses }: { avaliableCourses: courseTyp
 	function handleClick(e: React.MouseEvent<HTMLElement, MouseEvent>) {
 		const target = e.target as HTMLElement;
 		if (target.closest('.chat>.button')) setChatOpened(chatOpened => !chatOpened);
+		// Se o click for no botão de enviar mensagem, chama a função de adicionar mensagem e faz a requisição para a API do OpenAI
 		if (target.closest('.ChatMenuSubmitBtn'))
 			addMessage({ message, setUserMessages, setMessage, avaliableCourses, aIMessages, setAIMessages });
 	}

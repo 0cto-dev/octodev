@@ -30,7 +30,8 @@ export default async function addMessage({
 			informações sobre o aplicativo(OctoDev): OctoDev é uma plataforma educacional gamificada focada no ensino de programação, 
 			oferecendo uma abordagem interativa e divertida para aprender a programar.
 			na tela inicial do aplicativo, o usuário pode escolher entre várias linguagens de programação, 
-			aqui está um json mostrando os cursos disponíveis no momento: ${JSON.stringify(
+			Use a lista de cursos abaixo para responder às perguntas. Não mencione a estrutura técnica ou termos como JSON,
+			objetos ou propriedades para o usuário. Apenas use os nomes dos cursos: ${JSON.stringify(
 				avaliableCourses.length > 0 ? avaliableCourses : [emptyCourse]
 			)}.
 			Recomende bastante tenda, pois é uma ótima linguagem para iniciantes. principalmente para pessoas que não dominam o inglês.
