@@ -7,8 +7,7 @@ export async function GET(request: Request) {
 		const message = searchParams.get('message') || '';
 		const roleSystem = JSON.parse(searchParams.get('roleSystem') || '[]');
 
-		if (!message.trim() || !roleSystem[0])
-			return NextResponse.json({ error: 'Mensagem vazia' }, { status: 400 });
+		if (!message.trim() || !roleSystem[0]) return NextResponse.json({ error: 'Mensagem vazia' }, { status: 400 });
 
 		const response = await runOpenAI(message, roleSystem);
 
@@ -21,12 +20,12 @@ export async function GET(request: Request) {
 async function runOpenAI(message: string, roleSystem: string): Promise<string> {
 	try {
 		const openai = new OpenAI({
-			baseURL: ' https://generativelanguage.googleapis.com/v1beta/openai/',
-			apiKey: process.env.GOOGLE_AI_API_KEY || '',
+			baseURL: 'https://api.groq.com/openai/v1',
+			apiKey: process.env.GROQ_API_KEY || '',
 		});
 
 		const completion = await openai.chat.completions.create({
-			model: 'gemini-2.5-flash',
+			model: 'llama-3.3-70b-versatile',
 			messages: [
 				{
 					role: 'system',
