@@ -1,7 +1,6 @@
 # OctoDev
 
-**OctoDev** é um aplicativo web educacional voltado ao ensino de **programação** por meio de uma abordagem **gamificada, dinâmica e acessível**.  
-Inspirado em plataformas de ensino Gamificado, o OctoDev transforma o aprendizado de linguagens de programação em uma experiência **envolvente e interativa**, unindo **teoria, prática e suporte em tempo real**.
+**OctoDev** é uma plataforma educacional Full Stack desenvolvida com Next.js e React, focada no ensino de programação através de uma abordagem gamificada e acessível. O sistema utiliza MongoDB para gestão de progresso e um motor dinâmico de lições, integrando Inteligência Artificial (Hugging Face/OpenRouter) para suporte e correção automatizada de código em tempo real. A plataforma transforma o aprendizado em uma experiência interativa, com suporte a múltiplas linguagens e destaque para a inclusão da linguagem brasileira Tenda.
 
 ---
 
