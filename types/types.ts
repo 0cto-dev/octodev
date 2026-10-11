@@ -137,10 +137,15 @@ export type MonacoEditorProps = {
 	autocomplete: boolean;
 };
 
-export type fetchResultPistonType = {
-	language: string;
-	run: { code: number; output: string; signal: null; stderr: string; stdout: string };
-	version: string;
+export type OnlineCompilerResponseType = {
+    output: string;
+    error: string;
+    status: string;
+    exit_code: number;
+    signal: string | null;
+    time: string;
+    memory: string;
+    total: string;
 };
 export type submitAnswerType = {
 	userAnswer: alternativasType;

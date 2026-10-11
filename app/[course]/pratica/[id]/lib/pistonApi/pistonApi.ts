@@ -1,16 +1,18 @@
-import { fetchResultPistonType } from "@/types/types";
+import { OnlineCompilerResponseType } from "@/types/types";
 
-export default async function fetchResultPiston(code:string,language:string):Promise<fetchResultPistonType> {
-	const response = await fetch('https://emkc.org/api/v2/piston/execute', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			language: language,
-			version: '3.10.0',
-			files: [{ name: 'main.py', content: code}],
-		}),
-	});
+export default async function fetchResultPiston(code: string, language: string): Promise<OnlineCompilerResponseType> {
+    const response = await fetch('/api/run-code', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code, language }),
+    });
 
-	const result = await response.json();
-	return result;
+    if (!response.ok) {
+        throw new Error('Falha na comunicação com o servidor.');
+    }
+
+    const result = await response.json();
+    return result;
 }

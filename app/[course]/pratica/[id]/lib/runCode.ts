@@ -35,13 +35,13 @@ export async function runCode(
 		const fetchPythonResult = await fetchResultPiston(code[0], lesson.course);
 		console.log(fetchPythonResult);
 
-		let preparedResult = fetchPythonResult.run.stdout.split('\n');
+		let preparedResult = fetchPythonResult.output.split('\n');
 		preparedResult.pop();
 		const finalResult = preparedResult.at(-1) || 'Nada';
 
-		output = fetchPythonResult.run.output;
+		output = fetchPythonResult.output;
 		result = JSON.stringify({ value: finalResult });
-		error = fetchPythonResult.run.stderr;
+		error = fetchPythonResult.error;
 	}
 	setOutput([output, result || '', error || '']);
 	return {output,result,error}
