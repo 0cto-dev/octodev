@@ -1,7 +1,6 @@
 # OctoDev
 
-**OctoDev** é um aplicativo web educacional voltado ao ensino de **programação** por meio de uma abordagem **gamificada, dinâmica e acessível**.  
-Inspirado em plataformas de ensino Gamificado, o OctoDev transforma o aprendizado de linguagens de programação em uma experiência **envolvente e interativa**, unindo **teoria, prática e suporte em tempo real**.
+**OctoDev** é uma plataforma educacional Full Stack desenvolvida com Next.js e React, focada no ensino de programação através de uma abordagem gamificada e acessível. O sistema utiliza MongoDB para gestão de progresso e um motor dinâmico de lições, integrando Inteligência Artificial (Hugging Face/OpenRouter) para suporte e correção automatizada de código em tempo real. A plataforma transforma o aprendizado em uma experiência interativa, com suporte a múltiplas linguagens e destaque para a inclusão da linguagem brasileira Tenda.
 
 ---
 
@@ -16,9 +15,9 @@ Cada módulo combina **explicações teóricas**, **exercícios práticos** e **
 
 ## Features
 -   **Conexão Direta com o Mercado** — Contratantes podem selecionar quais certificados de cursos lhes interessam para monitorar novos talentos.
--   **Aprendizado Gamificado** — Avance em trilhas, complete desafios e conquiste medalhas. ✅
+-  ~~**Aprendizado Gamificado** — Avance em trilhas, complete desafios e conquiste medalhas.~~
 -   **Suporte com IA Integrada** — Tire dúvidas em tempo real com o auxílio de uma inteligência artificial.
--   **Lições Teóricas** — Exercícios curtos e diretos baseados em situações reais de desenvolvimento. ✅
+-   ~~**Lições Teóricas** — Exercícios curtos e diretos baseados em situações reais de desenvolvimento.~~
 -   **Lições Práticas** — Vídeo-Aulas divertidas e descontraidas explicando do básico ao avançado da linguagem.
 -   **Sistema de Progresso e Recompensas** — Acompanhe sua evolução e ganhe pontos conforme aprende.
 -   **Fornecimento de Certificados** — Ganhe certificados ao concluir cada curso.
@@ -28,11 +27,11 @@ Cada módulo combina **explicações teóricas**, **exercícios práticos** e **
     -   C#
     -   Rust
     -   PHP
-    -   Python ✅
+    -   ~~Python~~
     -   JavaScript
 -   **Conteúdos Extras**
-    -   Lógica de programação usando a linguagem **Tenda** ✅
-    -   Banco de dados ✅
+    -   ~~Lógica de programação usando a linguagem **Tenda**~~
+    -   ~~Banco de dados ~~
     -   Tutoriais em vídeo
     -   Rankings e conquistas
 

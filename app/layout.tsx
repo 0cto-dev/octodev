@@ -4,9 +4,9 @@ import { Lato, Roboto, Nunito, Inter, Fredoka, Varela_Round } from 'next/font/go
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-	title: 'OctoDev',
+	title: 'OctoDev | Plataforma para aprender programação com gamificação',
 	description:
-		'OctoDev é uma aplicação web educacional voltada para o ensino de programação por meio de uma abordagem gamificada.',
+		'Aprenda programação de forma gamificada com desafios, inteligência artificial, ranking, conquistas e exercícios interativos.',
 	metadataBase: new URL('https://octodev.vercel.app'),
 	keywords: ['programação', 'educação', 'gamificação', 'aprendizado', 'coding', "Intelligência Artificial", "IA", "tecnologia", "desenvolvimento", "software", "jogos educacionais"],
 	authors: [{ name: 'Renan Rodrigues de Meneses' }, { name: 'Pedro Henrique Resende Gomes'}, { name: 'Gabriel Chagas Madureira' }],
@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 	applicationName: 'OctoDev',
 	category: 'education',
 	openGraph: {
-		title: 'OctoDev',
+		title: 'OctoDev | Plataforma para aprender programação com gamificação',
 		description:
-			'OctoDev é uma aplicação web educacional voltada para o ensino de programação por meio de uma abordagem gamificada.',
+			'Aprenda programação de forma gamificada com desafios, inteligência artificial, ranking, conquistas e exercícios interativos.',
 		type: 'website',
 		locale: 'pt_BR',
 		url: 'https://octodev.vercel.app',
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'OctoDev',
+		title: 'OctoDev | Plataforma para aprender programação com gamificação',
 		description:
-			'OctoDev é uma aplicação web educacional voltada para o ensino de programação por meio de uma abordagem gamificada.',
+			'Aprenda programação de forma gamificada com desafios, inteligência artificial, ranking, conquistas e exercícios interativos.',
 		images: ['/favicon.png'],
 	},
 	robots: {
